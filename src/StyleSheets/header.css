@@ -1,0 +1,96 @@
+.container {
+
+}
+
+#header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* магия */
+    border-bottom: 1px solid #DEE2E6;
+    padding: 15px 16px;
+}
+
+body{
+    padding: 0;
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+}
+ul{
+    padding: 0;
+    margin: 0;
+}
+ul li{
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+.navigation-tabs{
+    line-height: 30px;
+    float: left;
+}
+
+.navigation-tabs ul {
+    display: flex;
+    gap: 16px;          /* расстояние между вкладками */
+    padding-left: 20px; /* отступ слева */
+    align-items: center;
+}
+
+.navigation-tabs ul li {
+    float: none; /* на всякий случай */
+
+}
+
+.infoTab{
+    line-height: 30px;
+}
+
+.infoTab span{
+    color: #ffa81b;
+}
+
+.infoTab ul {
+    display: flex;
+    gap: 16px;          /* расстояние между вкладками */
+    padding-left: 20px; /* отступ слева */
+    align-items: center;
+}
+
+.infoTab ul li {
+    float: none; /* на всякий случай */
+    padding-right: 17px;
+}
+
+.infoTab ul li.nav-item{
+    border-right: 1px solid #DEE2E6;
+}
+
+.navigation-tabs ul li a:hover{
+    color: #000000;
+}
+
+.nav-link {
+    display: block;
+    padding: 0px 10px;  /* кликабельная зона */
+    border-radius: 8px;
+}
+
+a{
+    text-decoration: none;
+    color: #343a40;
+}
+
+#header{
+   /* background: antiquewhite; */
+
+}
+
+.clear{
+    clear: both;
+}
+
+.search {
+    position: relative;
+}
+
