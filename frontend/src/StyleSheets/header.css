@@ -94,49 +94,4 @@ a{
     position: relative;
 }
 
-.beetwen{
-    height: 20px;
-}
 
-.body-container .member-name{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid #DEE2E6;
-    padding: 18px 46px;
-    font-size: 20px;
-    background: #fff;
-}
-
-.body-container .member-list{
-    display: flex;
-
-    background: #fff;
-    margin-top: 20px;
-}
-
-.body-container .member-list table{
-    width: 100%;
-}
-.body-container .member-list td{
-    padding: 5px;
-}
-
-.member-list th.id{
-
-}
-
-.member-list th{
-    color: #343a40;
-}
-.member-list td{
-    color: #343a40;
-}
-
-.member-list tr{
-    border-bottom: 1px solid #DEE2E6;
-}
-
-.member-list tr:nth-of-type(odd) {
-    background-color: rgba(0, 0, 0, .05);
-}

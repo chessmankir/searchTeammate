@@ -13,7 +13,7 @@ function App() {
     <div className="container">
       <LeftSideBar/>
       <Header/>
-        <Body/>
+      <Body/>
     </div>
   );
 }

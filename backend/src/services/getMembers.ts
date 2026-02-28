@@ -6,13 +6,16 @@ interface GetMembersParams {
     number?: number | null;
     limit?: number | null;
     id?: number | null;
+    modes: string[] | null;
 }
 
 export async function getMembers({
     clan_id = null,
     number = null,
-    limit = 50,
-    id = null}: GetMembersParams = {}): Promise<Member>{
+    limit = 20,
+    id = null,
+    modes = ["classic"]
+    }: GetMembersParams = {}): Promise<Member>{
     const where: string[] = [];
     const params: (number | null)[] = [];
 
@@ -23,7 +26,14 @@ export async function getMembers({
 
     if(number !=  null){
         params.push(number);
-        where.push(`number=$${params.length}`);
+        where.push(`gm.name = ANY($${params.length})`);a
+    }
+
+    if (modes && modes.length > 0) {
+        const joinSql = "JOIN member_modes mm cm.id = mm.member_id" +
+            "JOIN game_modes gm ON gm.id = mm.mode_id";
+        params.push(modes);
+        where.push();
     }
 
     params.push(limit);

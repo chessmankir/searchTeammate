@@ -1,0 +1,158 @@
+.beetwen{
+    height: 20px;
+}
+
+.body-container .member-name{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #DEE2E6;
+    padding: 18px 46px;
+    font-size: 20px;
+    background: #fff;
+}
+
+.body-container .member-list{
+    display: flex;
+
+    background: #fff;
+    margin-top: 20px;
+}
+
+.body-container .member-list table{
+    width: 100%  ;
+}
+.body-container .member-list td{
+
+}
+
+.member-list th.id{
+    width: 20px;
+    text-align: center;
+}
+
+.member-list td.id{
+    text-align: center;
+}
+.member-list th{
+    color: #343a40;
+    text-align: left;
+    padding: 20px 10px;
+    background: #fff;
+    font-weight: normal;
+}
+.member-list td{
+    color: #343a40;
+    padding: 20px 10px;
+}
+
+.member-list tr{
+    border-bottom: 2px solid #DEE2E6;
+}
+
+.member-list tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, .05);
+}
+
+.member-list table{
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.member-list table tr.id{
+    padding: 5px;
+    text-align: center;
+}
+
+.member-list table .icon{
+    display: flex;
+    float: left;
+}
+
+.member-list table .icon img{
+    width: 40px;
+}
+
+.member-list table .nameWrapper{
+    margin-left: 50px;
+}
+
+.member-list .tg img{
+    width: 20px;
+    height: 20px;
+    background: #368ee9;
+}
+
+.member-list .tg .iconTg {
+    background: #368ee9;
+    width: 70px;
+    padding: 10px 10px 5px 10px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.member-list .nameWrapper .name{
+    font-size: 16px;
+    color: #343a40;
+    margin-bottom: 6px;
+}
+
+.member-list .nameWrapper .nick{
+    font-size: 12px;
+    color: #343a40;
+}
+
+.member-list th.city{
+    width: 190px;
+}
+
+.member-list .regim{
+
+}
+
+.modeChips{
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.member-list th.regimth {
+    width: 150px;
+}
+
+.member-list .regims{
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.member-list .regim{
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    line-height: 1;
+    border: 1px solid rgba(0,0,0,.12);
+    background: rgba(0,0,0,.04);
+    white-space: nowrap;
+}
+
+.member-list .regim.classic {
+    background-color: #007bff;
+    border-bottom: 1px solid rgba(0, 0, 0, .125);
+    color: #fff;
+}
+
+/* Метро — фиолетовый */
+.member-list .regim.metro {
+    background: #28a745;
+    color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, .125);
+}
+
+/* ТДМ — зелёный */
+.member-list .regim.tdm {
+    background: #6610f2;
+    color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, .125);
+}

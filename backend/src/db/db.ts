@@ -3,9 +3,6 @@ import {errorMonitor} from "node:events";
 import dotenv from "dotenv";
 dotenv.config();
 
-
-console.log("process.env.SUPABASE_DATABASE_URL");
-console.log(process.env.SUPABASE_DATABASE_URL);
 export const pool = new Pool({
      connectionString: process.env.SUPABASE_DATABASE_URL,
     ssl: {

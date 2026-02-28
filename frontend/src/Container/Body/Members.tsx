@@ -1,27 +1,12 @@
 import { useEffect, useState } from "react";
 import { fetchClanMembers, ClanMember } from "../../api/members.tsx";
+import "../../StyleSheets/members.css";
+import {useMembers} from "../../Hooks/Body/membersHook.tsx";
 
 export function Members() {
 
-    const [members, setMembers] = useState<ClanMember[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-
-    useEffect(() => {
-        async function load() {
-            try {
-                setLoading(true);
-                const data = await fetchClanMembers();
-                setMembers(data);
-            } catch (e: any) {
-                setError(e.message);
-            } finally {
-                setLoading(false);
-            }
-        }
-        load();
-    }, []);
-
+    const { members, loading } = useMembers();
+    const  error = false;
     if (loading) return <div>Загрузка...</div>;
     if (error) return <div style={{ color: "red" }}>Ошибка: {error}</div>;
 
@@ -43,7 +28,8 @@ export function Members() {
                             <th className="pubgid">PUBG ID</th>
                             <th className="age">Возраст</th>
                             <th className="city">Город</th>
-                            <th className="tg">Клан</th>
+                            <th className="regimth">Режим</th>
+                            <th className="tg">Связаться</th>
                         </tr>
                         </thead>
 
@@ -52,21 +38,33 @@ export function Members() {
                             <tr key={m.id ?? i}>
                                 <td className="id">{i + 1}</td>
                                 <td className="nameContainer" className="iconMan">
-                                    <div className="icon"></div>
+                                    <div className="icon">
+                                        <img src="src/assets/iconMan.png" alt=""/>
+                                    </div>
                                     <div className="nameWrapper">
-                                        <div className="name">{m.username ? `@${m.username.replace("@", "")}` : "—"}</div>
-                                        <div className="nick"></div>
+                                        <div className="name">{m.name}</div>
+                                        <div className="nick">{m.nickname}</div>
                                     </div>
                                 </td>
                                 <td className="pubgid">{m.pubg_id ?? "—"}</td>
                                 <td className="age">
-                                    {m.clan_id ?? "—"}{m.number != null ? ` (№${m.number})` : ""}
+                                    {m.age ?? ""}
                                 </td>
                                 <td className="city">
-                                    {m.clan_id ?? "—"}{m.number != null ? ` (№${m.number})` : ""}
+                                    {m.city ?? ""}
+                                </td>
+                                <td className="regim-wrapper">
+                                    <div className="regims">
+                                        <div className="regim metro">Метро</div>
+                                        <div className="regim tdm">TDM</div>
+                                        <div className="regim classic">Классика</div>
+                                    </div>
+
                                 </td>
                                 <td className="tg">
-                                    {m.clan_id ?? "—"}{m.number != null ? ` (№${m.number})` : ""}
+                                    <div className="iconTg">
+                                    <img src="src/assets/tg1.gif" alt=""/>
+                                    </div>
                                 </td>
                             </tr>
                         ))}

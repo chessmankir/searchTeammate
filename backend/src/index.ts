@@ -19,7 +19,7 @@ app.use("/api/health", healthRouter);
 app.use("/api/members", memberRouter)
 
 app.get('/api', (req,res) => {
-   res.json({ok: true, message: "Welcome Backend API"});
+   return res.json({ok: true, message: "Welcome Backend API"});
 });
 
 const PORT = Number(process.env.PORT) || 4000;
