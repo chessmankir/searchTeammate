@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { fetchClanMembers, ClanMember } from "../../api/members.tsx";
 import "../../StyleSheets/members.css";
 import {useMembers} from "../../Hooks/Body/membersHook.tsx";
+import {Pagination} from "./Pagination.tsx";
 
 export function Members() {
 
-    const { members, loading } = useMembers();
-    const  error = false;
+    const { members, loading, error} = useMembers();
     if (loading) return <div>Загрузка...</div>;
     if (error) return <div style={{ color: "red" }}>Ошибка: {error}</div>;
 
@@ -14,7 +14,7 @@ export function Members() {
         <div className="member-container">
             <div className="beetwen"></div>
             <div className="member-name">Игроки</div>
-
+            <Pagination/>
             {loading && <div>Загрузка...</div>}
             {error && <div style={{ color: "red" }}>Ошибка: {error}</div>}
 

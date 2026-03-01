@@ -11,7 +11,6 @@ export function Filters(){
                 <div className="filters__title">Фильтры</div>
                 <FilterGameMode />
                 <FIlterTime />
-                <FIlterKD />
                 <FilterAge />
             </div>
         </div>

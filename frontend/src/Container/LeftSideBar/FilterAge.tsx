@@ -8,14 +8,20 @@ export function FilterAge(){
     const setAgeFrom = useFiltersStore((s) => s.setAgeFrom);
    return(
        <div className="filter-age-wrapper">
-        <div className="filter-age">
-            <input type="number" value={ageFrom}
-                   onChange={(e) => setAgeFrom(e.target.value)}
-                   className="filter-age-input-before" placeholder="От"/>
-            <input type="number" value={ageTo}
-                   onChange={(e) => setAgeTo(e.target.value)}
-                   className="filter-age-input-after" placeholder="До"/>
-        </div>
-    </div>
+           <div className="filter-block__label">Возраст (от до)</div>
+           <div className="filter-age">
+               <div className="filter-ageto-wrapper">
+                   <input type="number" value={ageFrom}
+                          onChange={(e) => setAgeFrom(e.target.value)}
+                          className="filter-age-input-before" placeholder="От"/>
+               </div>
+               <div className="filter-agefrom-wrapper">
+                   <input type="number" value={ageTo}
+                          onChange={(e) => setAgeTo(e.target.value)}
+                          className="filter-age-input-after" placeholder="До"/>
+               </div>
+               <div className="clear"></div>
+           </div>
+       </div>
    );
 }
