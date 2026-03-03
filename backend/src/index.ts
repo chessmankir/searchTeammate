@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import healthRouter from "./routes/health";
 import memberRouter from "./routes/member";
+import tournamentRouter from "./routes/tournamentRoute";
 
 dotenv.config();
 
@@ -16,7 +17,8 @@ app.use(
 );
 
 app.use("/api/health", healthRouter);
-app.use("/api/members", memberRouter)
+app.use("/api/members", memberRouter);
+app.use("/api/tournaments", tournamentRouter);
 
 app.get('/api', (req,res) => {
    return res.json({ok: true, message: "Welcome Backend API"});
