@@ -46,13 +46,15 @@ export const useFiltersStore = create<FiltersState>((set,get) => ({
             else{
                 next.add(mode);
             }
-            return {timeMode: next};
+            return {timeMode: next, page: 1};
 
     }),
     toggleMode:(mode) => {
         const current = get().mode;
+
         set({
-            mode: current !== mode ? mode : current
+            mode: current !== mode ? mode : current,
+            page: 1
         })
     },
     /*setPage: (page) => {

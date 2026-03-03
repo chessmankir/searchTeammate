@@ -3,7 +3,7 @@ import "../../StyleSheets/pagination.css";
 import {Members} from "./Members";
 import {Pagination} from "./Pagination.tsx";
 
-export  function Body(){
+export  function MembersPage(){
     return (
         <div id="body">
             <div className="name-body"></div>

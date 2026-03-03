@@ -22,19 +22,34 @@ export function Pagination(){
             <nav aria-label="Contacts Page Navigation">
                 <ul className="pagination justify-content-center m-0">
                     <li className={(page == 1) ? "page-item active" : "page-item"}>
-                        <a className="page-link" onClick={() => setPage(1)} href="#">1</a>
+                        <a className="page-link"  onClick={(e) => {
+                            e.preventDefault();
+                            setPage(3);
+                        }} href="#">1</a>
                     </li>
                     <li className={(page == 2) ? "page-item active" : "page-item"}>
-                        <a className="page-link" onClick={() => setPage(2)} href="#">2</a>
+                        <a className="page-link" onClick={(e) => {
+                            e.preventDefault();
+                            setPage(2);
+                        }} href="#">2</a>
                     </li>
                     <li className={(page == 3) ? "page-item active" : "page-item"}>
-                        <a className="page-link" onClick={() => setPage(3)} href="#">3</a>
+                        <a className="page-link" onClick={(e) => {
+                            e.preventDefault();
+                            setPage(3);
+                        }} href="#">3</a>
                     </li>
                     <li className={(page == 4) ? "page-item active" : "page-item"}>
-                        <a className="page-link" onClick={() => setPage(4)} href="#">4</a>
+                        <a className="page-link" onClick={(e) => {
+                            e.preventDefault();
+                            setPage(4);
+                        }} href="#">4</a>
                     </li>
                     <li className={(page == 5) ? "page-item active" : "page-item"}>
-                        <a className="page-link" onClick={() => setPage(5)} href="#">5</a>
+                        <a className="page-link" onClick={(e) => {
+                            e.preventDefault();
+                            setPage(5);
+                        }} href="#">5</a>
                     </li>
 
                 </ul>
