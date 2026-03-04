@@ -1,15 +1,14 @@
 import "../../StyleSheets/tournaments.css";
-import {useMembers} from "../../Hooks/Body/membersHook.tsx";
 import {Pagination} from "./Pagination.tsx";
-
+import {useTournamentHook} from "../../Hooks/Body/tournamentHook.tsx";
 
 export function Tournaments() {
-
+    const {tournaments} = useTournamentHook();
     const loading = false;
     const error = false;
     if (loading) return <div>Загрузка...</div>;
     if (error) return <div style={{ color: "red" }}>Ошибка: {error}</div>;
-    const tournaments = [];
+    //const tournaments = [];
     return (
         <div className="tournament-container">
             <div className="beetwen"></div>
@@ -22,6 +21,9 @@ export function Tournaments() {
                     <table className="table table-striped projects">
                         <thead>
                         <tr>
+                            <th className="image">
+
+                            </th>
                             <th className="id">Турнир</th>
                             <th className="data">Дата</th>
                             <th className="time">Время</th>
@@ -33,98 +35,26 @@ export function Tournaments() {
                         </thead>
 
                         <tbody>
-                        <tr>
-                            <td className="id">Tati international Cup</td>
-                            <td className="data">24.02.26</td>
-                            <td className="time">18:00</td>
-                            <td className="format">Сквад</td>
-                            <td className="maps">Мирамар, Эрангель, Ливик</td>
-                            <td className="places">44</td>
-                            <td className="position">
-                                <div className="pdf">
-                                    <img src="src/assets/pdf.gif"/>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="id">Checkmate Dup Cup #2</td>
-                            <td className="data">17.02.26</td>
-                            <td className="time">18:00</td>
-                            <td className="format">Дуо</td>
-                            <td className="maps">Мирамар, Эрангель, Ливик</td>
-                            <td className="places">44</td>
-                            <td className="position">
-                                <div className="pdf">
-                                    <img src="src/assets/pdf.gif"/>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="id">Christam international Cup</td>
-                            <td className="data">19.03.26</td>
-                            <td className="time">18:00</td>
-                            <td className="format">Сквад</td>
-                            <td className="maps">Мирамар, Эрангель, Эрангель</td>
-                            <td className="places">17</td>
-                            <td className="position">
-                                <div className="pdf">
-                                    <img src="src/assets/pdf.gif"/>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="id">Pubg mobile Cup</td>
-                            <td className="data">18.03.26</td>
-                            <td className="time">18:00</td>
-                            <td className="format">Соло</td>
-                            <td className="maps">Мирамар, Эрангель, Ливик</td>
-                            <td className="places">13</td>
-                            <td className="position">
-                                <div className="pdf">
-                                    <img src="src/assets/pdf.gif"/>
-                                </div>
-                            </td>
-                        </tr>
-                        {tournaments.map((m, i) => (
-                            <tr key={m.id ?? i}>
-                                <td className="id">{i + 1}</td>
-                                <td className="nameContainer" className="iconMan">
-                                    <div className="icon">
-                                        <img src="src/assets/iconMan.png" alt=""/>
-                                    </div>
-                                    <div className="nameWrapper">
-                                        <div className="name">{m.name}</div>
-                                        <div className="nick">{m.nickname}</div>
+                        {tournaments.map((t) => (
+                            <tr key={t.id}>
+                                <td className="image">
+                                    <div className="logo">
+                                        <img src="./src/assets/logo.jpg"/>
                                     </div>
                                 </td>
-                                <td className="pubgid">{m.pubg_id ?? "—"}</td>
-                                <td className="age">
-                                    {m.age ?? ""}
-                                </td>
-                                <td className="city">
-                                    {m.city ?? ""}
-                                </td>
-                                <td className="regim-wrapper">
-                                    <div className="regims">
-                                        <div className="regim metro">Метро</div>
-                                        <div className="regim tdm">TDM</div>
-                                        <div className="regim classic">Классика</div>
-                                    </div>
-
-                                </td>
-                                <td className="tg">
-                                    <div className="iconTg">
-                                        <img src="src/assets/tg1.gif" alt=""/>
+                                <td className="id">{t.name}</td>
+                                <td className="data">{t.date}</td>
+                                <td className="time">{t.time}</td>
+                                <td className="format">{t.team_size}</td>
+                                <td className="maps">{t.maps}</td>
+                                <td className="places">{100 - t.count}</td>
+                                <td className="position">
+                                    <div className="pdf">
+                                        <img src="/src/assets/pdf.gif"/>
                                     </div>
                                 </td>
                             </tr>
                         ))}
-
-                        {tournaments.length === 0 && (
-                            <tr>
-                                <td colSpan={5}>Нет участников</td>
-                            </tr>
-                        )}
                         </tbody>
                     </table>
                 </div>

@@ -114,3 +114,11 @@
 .tournaments-list .pdf img{
     width: 34px;
 }
+
+.body-container .tournaments-list td.maps{
+    width: 200px;
+}
+
+.body-container .tournaments-list td.image img{
+    width: 75px;
+}
