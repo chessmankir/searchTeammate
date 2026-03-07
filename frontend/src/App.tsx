@@ -1,19 +1,14 @@
-import { useState } from 'react'
-import {Body} from "./Container/Body/Body";
-import {Header} from "./Container/Header/Header";
-import {LeftSideBar} from "./Container/LeftSideBar/LeftSideBar";
 import {Navigate, Route, Routes} from "react-router-dom";
 import {MembersLayout} from "./Container/Body/MembersLayout.tsx";
 import {MembersPage} from "./Container/Body/MembersPage.tsx";
+import {TournamentsLayout} from "./Container/Body/TournamentsLayout.tsx";
 import {TournamentsPage} from "./Container/Body/TournamentsPage.tsx";
-
+import {ClanLayout} from "./Container/Body/ClanLayout.tsx";
+import {ClanPage} from "./Container/Body/ClanPage.tsx"
 import './StyleSheets/header.css'
 import './StyleSheets/leftSideBar.css'
-import {TournamentsLayout} from "./Container/Body/TournamentsLayout.tsx";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <Routes>
         <Route path="/" element={<Navigate to="/players" replace />} />
@@ -23,6 +18,9 @@ function App() {
         </Route>
         <Route path="/tournaments" element={<TournamentsLayout />}>
             <Route index  element={<TournamentsPage />} />
+        </Route>
+        <Route path="/clans" element={<ClanLayout />}>
+            <Route index element={<ClanPage />}></Route>
         </Route>
     </Routes>
   );

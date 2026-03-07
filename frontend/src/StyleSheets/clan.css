@@ -1,0 +1,161 @@
+.beetwen{
+    height: 20px;
+}
+
+.body-container .clan-name{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #DEE2E6;
+    padding: 18px 46px;
+    font-size: 20px;
+    background: #fff;
+}
+
+.body-container .clan-list{
+    display: flex;
+
+    background: #fff;
+    margin-top: 20px;
+}
+
+.body-container .clan-list table{
+    width: 100%  ;
+}
+.body-container .clan-list td{
+
+}
+
+.clan-list th.id{
+    width: 20px;
+    text-align: center;
+}
+
+.clan-list td.id{
+    text-align: center;
+}
+.clan-list th{
+    color: #343a40;
+    text-align: left;
+    padding: 20px 10px;
+    background: #fff;
+    font-weight: normal;
+}
+.clan-list td{
+    color: #343a40;
+    padding: 20px 10px;
+}
+
+.clan-list tr{
+    border-bottom: 2px solid #DEE2E6;
+}
+
+.clan-list tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, .05);
+}
+
+.clan-list table{
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.clan-list table tr.id{
+    padding: 5px;
+    text-align: center;
+}
+
+.clan-list table .icon{
+    display: flex;
+    float: left;
+}
+
+.clan-list table .icon img{
+    width: 40px;
+}
+
+.clan-list table .nameWrapper{
+    margin-left: 50px;
+}
+
+.clan-list .tg img{
+    width: 20px;
+    height: 20px;
+    background: #368ee9;
+}
+
+.clan-list .tg .iconTg {
+    background: #368ee9;
+    width: 70px;
+    padding: 10px 10px 5px 10px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.clan-list .nameWrapper .name{
+    font-size: 16px;
+    color: #343a40;
+    margin-bottom: 6px;
+}
+
+.clan-list .nameWrapper .nick{
+    font-size: 12px;
+    color: #343a40;
+}
+
+.clan-list th.city{
+    width: 190px;
+}
+
+.clan-list .regim{
+
+}
+
+.modeChips{
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.clan-list th.regimth {
+    width: 150px;
+}
+
+.clan-list .regims{
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.clan-list .regim{
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    line-height: 1;
+    border: 1px solid rgba(0,0,0,.12);
+    background: rgba(0,0,0,.04);
+    white-space: nowrap;
+}
+
+.clan-list .regim.classic {
+    background-color: #007bff;
+    border-bottom: 1px solid rgba(0, 0, 0, .125);
+    color: #fff;
+}
+
+.clan-list .recruit-open{
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    background: #2b6cb0;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+
+.clan-list .tag{
+    text-align: center;
+}
