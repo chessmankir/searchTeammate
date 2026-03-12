@@ -22,7 +22,6 @@ export function Tournaments() {
                         <thead>
                         <tr>
                             <th className="image">
-
                             </th>
                             <th className="id">Турнир</th>
                             <th className="data">Дата</th>

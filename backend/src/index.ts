@@ -5,10 +5,14 @@ import healthRouter from "./routes/health";
 import memberRouter from "./routes/member";
 import tournamentRouter from "./routes/tournamentRoute";
 import clanRoute from "./routes/clanRoute";
+import sendCodeRouter from "./routes/sendCodeRouter";
+import verifyCodeRouter from "./routes/verifyCodeRouter";
 
 dotenv.config();
 
 const app = express();
+
+
 
 app.use(
     cors({
@@ -16,11 +20,14 @@ app.use(
         credentials:true
     })
 );
+app.use(express.json());
 
 app.use("/api/health", healthRouter);
 app.use("/api/members", memberRouter);
 app.use("/api/tournaments", tournamentRouter);
 app.use("/api/clans", clanRoute);
+app.use("/api/sendcode", sendCodeRouter);
+app.use("/api/verifycode", verifyCodeRouter);
 
 app.get('/api', (req,res) => {
    return res.json({ok: true, message: "Welcome Backend API"});

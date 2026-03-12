@@ -7,6 +7,7 @@ import {ClanLayout} from "./Container/Body/ClanLayout.tsx";
 import {ClanPage} from "./Container/Body/ClanPage.tsx"
 import './StyleSheets/header.css'
 import './StyleSheets/leftSideBar.css'
+import {LoginPage} from "./Container/Body/Login/LoginPage.tsx";
 
 function App() {
   return (
@@ -21,6 +22,8 @@ function App() {
         </Route>
         <Route path="/clans" element={<ClanLayout />}>
             <Route index element={<ClanPage />}></Route>
+        </Route>
+        <Route path="/login" element={<LoginPage />}>
         </Route>
     </Routes>
   );
