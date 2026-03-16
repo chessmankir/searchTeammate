@@ -1,15 +1,14 @@
 import {Router, Request, Response} from 'express';
 import {pool} from "../db/db";
 import {getLoginCode} from "../auth/codes";
+import {createSession} from "../auth/session";
 
 const router = Router();
 router.post('/', async ( req: Request , res: Response) => {
-    console.log(req.body);
     const {code, pubgId } = req.body;
-    console.log("req.body");
+    console.log('роутер проверки');
     console.log(code);
     console.log(pubgId);
-
     try{
         if(!code){
             return res.status(400).json({
@@ -18,8 +17,28 @@ router.post('/', async ( req: Request , res: Response) => {
             });
         }
         const codeByPubgId = getLoginCode(pubgId);
+        console.log("codeByPubgId");
+        console.log(codeByPubgId);
         if(codeByPubgId?.code === code){
-            console.log("equal");
+            //совпало
+            console.log("совпало");
+            const query = `Select * from clan_members where pubg_id = $1`;
+            const result = await pool.query(query,[pubgId]);
+            console.log(result?.rows);
+            if(result.rows.length === 0){
+                return res.json({ok:false});
+            }
+
+            const user = result.rows[0];
+            console.log(user.id);
+            const sessionToken = await createSession(user.id);
+            console.log(sessionToken);
+            const k = await res.cookie('sid', sessionToken, {
+                httpOnly: true,
+                sameSite: "lax",
+                secure: false,
+                maxAge: 1000*60*60*24*30
+            });
             return  res.json({
                 ok: true
             });
@@ -27,8 +46,6 @@ router.post('/', async ( req: Request , res: Response) => {
         return  res.json({
             ok: false
         });
-
-
     }
     catch (e){
         console.log(e);

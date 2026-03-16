@@ -97,8 +97,6 @@ router.get("/", async (req: Request, res: Response) => {
       LIMIT $${paramsData.length - 1}
       OFFSET $${paramsData.length}
     `;
-     console.log(paramsData);
-        console.log(paramsData);
         const result = await pool.query<Member>(sql, paramsData);
 
         return res.json({

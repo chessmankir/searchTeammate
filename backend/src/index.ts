@@ -1,18 +1,21 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 import healthRouter from "./routes/health";
 import memberRouter from "./routes/member";
 import tournamentRouter from "./routes/tournamentRoute";
 import clanRoute from "./routes/clanRoute";
 import sendCodeRouter from "./routes/sendCodeRouter";
 import verifyCodeRouter from "./routes/verifyCodeRouter";
+import authMeRouter from "./routes/authMeRouter";
+import logoutRouter from "./routes/logoutRouter";
+import albumsRouter from "./routes/albumsRouter";
+import cardsRouter from "./routes/cardsRoute";
 
 dotenv.config();
 
 const app = express();
-
-
 
 app.use(
     cors({
@@ -21,6 +24,7 @@ app.use(
     })
 );
 app.use(express.json());
+app.use(cookieParser());
 
 app.use("/api/health", healthRouter);
 app.use("/api/members", memberRouter);
@@ -28,6 +32,10 @@ app.use("/api/tournaments", tournamentRouter);
 app.use("/api/clans", clanRoute);
 app.use("/api/sendcode", sendCodeRouter);
 app.use("/api/verifycode", verifyCodeRouter);
+app.use("/api/auth/me", authMeRouter);
+app.use("/api/logout", logoutRouter);
+app.use("/api/albums", albumsRouter);
+app.use("/api/cards", cardsRouter);
 
 app.get('/api', (req,res) => {
    return res.json({ok: true, message: "Welcome Backend API"});
