@@ -234,7 +234,7 @@
 
 .album-card__title {
     display: block;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1.2;
     font-weight: 800;
     color: #282b33;
@@ -257,9 +257,9 @@
     font-weight: 700;
 }
 
-.album-card.missing .album-card__image {
+/*.album-card.missing .album-card__image {
     filter: grayscale(0.48) brightness(0.52);
-}
+}*/
 
 .album-card.missing .album-card__image-wrap {
     border-color: rgba(89, 101, 119, 0.85);

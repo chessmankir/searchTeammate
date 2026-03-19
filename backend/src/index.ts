@@ -12,6 +12,8 @@ import authMeRouter from "./routes/authMeRouter";
 import logoutRouter from "./routes/logoutRouter";
 import albumsRouter from "./routes/albumsRouter";
 import cardsRouter from "./routes/cardsRoute";
+import addCardRouter from "./routes/addCardRouter";
+import removeCardRouter from "./routes/addCardRouter";
 
 dotenv.config();
 
@@ -36,6 +38,8 @@ app.use("/api/auth/me", authMeRouter);
 app.use("/api/logout", logoutRouter);
 app.use("/api/albums", albumsRouter);
 app.use("/api/cards", cardsRouter);
+app.use("/api/add/card", addCardRouter);
+app.use("/api/remove/card", removeCardRouter);
 
 app.get('/api', (req,res) => {
    return res.json({ok: true, message: "Welcome Backend API"});

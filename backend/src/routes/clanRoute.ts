@@ -12,10 +12,11 @@ router.get('/', async (req, res) => {
     try {
         console.log('result');
         const result = await pool.query(sql);
-        console.log(result.rows);
+        console.log(result);
         return res.json({ok: true, data: result.rows});
     }
     catch(err) {
+        console.log(err);
         return res.json({ok: false});
     }
 });

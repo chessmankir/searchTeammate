@@ -11,41 +11,18 @@ function getProgressPercent(collected: number, total: number) {
 export  function CurrentCardPage() {
    // const navigate = useNavigate();
     const { albumid } = useParams();
-    console.log(albumid);
-    const cards = useCards(albumid).cards;
+    const {cards, addCardHandler, removeCardHandler} = useCards(albumid);
+    const navigate = useNavigate();
 
     return (
         <div className="album-page">
             <div className="album-page__layout">
                 <section className="album-page__content">
-                    {/*<div className="album-hero">
-                        <div className="album-hero__info">
-                            <h1 className="album-hero__title">{selectedAlbum.title}</h1>
-
-                            <div className="album-hero__progress-row">
-                <span className="album-hero__progress-text">
-                  {selectedAlbum.collected}/{selectedAlbum.total}
-                </span>
-
-                                <div className="album-hero__progress-track">
-                                    <div
-                                        className="album-hero__progress-fill"
-                                        style={{
-                                            width: `${getProgressPercent(
-                                                selectedAlbum.collected,
-                                                selectedAlbum.total
-                                            )}%`,
-                                        }}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </div>*/}
                     <div className="album-page__topbar">
                         <div className="album-page__left-meta">
                             <button
-                                type="button"
                                 className="album-page__back"
+                                onClick={() => {navigate("/cards");}}
                             >
                                 ← Назад к альбомам
                             </button>
@@ -56,11 +33,10 @@ export  function CurrentCardPage() {
                                {/* <span>{selectedAlbum.title}</span>*/}
                             </div>
                         </div>
-
                     </div>
                     <div className="album-cards-grid">
                         {cards.map((card) => (
-                           <Card card={card} key={card.id} />
+                           <Card card={card} key={card.id} addCard={addCardHandler} removeCard={removeCardHandler}/>
                         ))}
                     </div>
                 </section>

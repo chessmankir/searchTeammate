@@ -264,9 +264,6 @@
     letter-spacing: 0.2px;
 }
 
-.collect-card.missing .collect-card__image {
-    filter: grayscale(0.45) brightness(0.5);
-}
 
 .collect-card.missing .collect-card__image-wrap {
     border-color: rgba(86, 98, 116, 0.78);
@@ -662,4 +659,174 @@ new*/
         width: 100%;
         min-width: 0;
     }
+}
+
+.album-card.missing img{
+    opacity: 0.7;
+    filter: grayscale(0.48) brightness(0.52);
+}
+
+.album-card.missing img:hover {
+    opacity: 1;
+    filter: none;
+}
+
+
+.album-card {
+    position: relative;
+    border: none;
+    background: transparent;
+    text-align: left;
+    transition: transform 0.2s ease;
+}
+
+.album-card:hover {
+    transform: translateY(-3px);
+}
+
+.album-card__image-wrap {
+    position: relative;
+    border-radius: 16px 16px 0 0;
+    overflow: hidden;
+}
+
+.album-card__image {
+    width: 100%;
+    display: block;
+    transition: 0.25s ease;
+}
+
+.album-card.missing .album-card__image {
+    filter: grayscale(0.7) brightness(0.5);
+    opacity: 0.8;
+}
+
+.album-card.owned .album-card__image {
+    filter: none;
+    opacity: 1;
+}
+
+.album-card__footer {
+    padding: 12px 14px;
+    background: #f3f4f6;
+    border-radius: 0 0 12px 12px;
+}
+
+.album-card__title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #222;
+}
+
+.album-card__total {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.72);
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.album-card__badges {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.badge {
+    min-width: 42px;
+    padding: 3px 8px;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.badge-common {
+    background: #6b7280;
+}
+
+.badge-rare {
+    background: #2563eb;
+}
+
+.badge-legendary {
+    background: linear-gradient(135deg, #facc15, #f59e0b);
+    color: #1f1600;
+}
+
+.album-card__editor {
+    cursor: default;
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.quality-control {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 0;
+}
+
+.quality-control + .quality-control {
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.quality-control__label {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.quality-control--common .quality-control__label {
+    color: #5f6673;
+}
+
+.quality-control--rare .quality-control__label {
+    color: #2563eb;
+}
+
+.quality-control--legendary .quality-control__label {
+    color: #d09a12;
+}
+
+.quality-control__actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.quality-control__value {
+    min-width: 22px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 800;
+    color: #222;
+}
+
+.quality-btn {
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 8px;
+    background: #1f2937;
+    color: #fff;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.quality-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
 }

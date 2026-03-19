@@ -22,10 +22,6 @@ export  function useLoginHook(){
 
     const sendCodeSubmit = async (e: SubmitEvent) => {
         e.preventDefault();
-        console.log('sendCode');
-        console.log(e);
-        console.log(step);
-        console.log(pubgId);
       //  console.log(process.env.BACKEND_URL);
         const backendServer = "http://localhost:4000/api/sendcode";
         try{
@@ -35,11 +31,7 @@ export  function useLoginHook(){
                 credentials: "include",
                 body: JSON.stringify({pubgId})
             });
-            console.log('response');
-            console.log(response);
             const data = await response.json();
-            console.log('data');
-            console.log(data);
             if(data.ok){
                 setStep("verify");
                 setMessage('Введить полученный код от бота @checkmatePubgBot');
@@ -66,7 +58,6 @@ export  function useLoginHook(){
             });
             const data = await response.json();
             if(data.ok){
-                console.log("совпало");
                 setUser(data.user);
                 navigate("/players");
                 setPubgId("");
