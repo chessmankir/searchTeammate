@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {useFiltersStore} from "../../store/filtersStore.tsx";
+import {useFiltersStore} from "../../../store/filtersStore.tsx";
 
 export function FilterAge(){
     const ageFrom = useFiltersStore((s) => s.ageFrom);

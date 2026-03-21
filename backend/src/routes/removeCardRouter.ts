@@ -22,18 +22,16 @@ router.post('/', async (req: Request, res: Response) => {
         if (card?.count > 1){
            queryUpdate = `UPDATE user_card 
            SET count = count - 1
-           WHERE user_id = $1 AND quality_id = $2 AND card_id = $3
+           WHERE id_user = $1 AND quality_id = $2 AND card_id = $3
            RETURNING *`;
 
         }
         else{
            queryUpdate = `DELETE FROM user_card 
-           WHERE user_id = $1 AND quality_id = $2 AND card_id = $3
+           WHERE id_user = $1 AND quality_id = $2 AND card_id = $3
            RETURNING *`;
         }
-        console.log(queryUpdate);
-        const responseUpdate = await pool.query(queryUpdate, [user.id, card_id, qualityId]);
-        console.log(responseUpdate.rows);
+        const responseUpdate = await pool.query(queryUpdate, [user.id, qualityId, card_id]);
         if(responseUpdate.rows.length > 0){
             return res.json({ok: true});
         }
@@ -45,7 +43,7 @@ router.post('/', async (req: Request, res: Response) => {
     }
 });
 
-function getUserCard(userId, cardId, qualityId) {
+async function  getUserCard(userId, cardId, qualityId) {
     const findQuery = `
             SELECT *
             FROM user_card

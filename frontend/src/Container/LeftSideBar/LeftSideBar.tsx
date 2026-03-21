@@ -1,5 +1,5 @@
 import {Logo} from "./Logo";
-import {Filters} from "./Filters.tsx";
+import {Filters} from "./MemberFilter/Filters.tsx";
 
 export  function LeftSideBar(){
     return (

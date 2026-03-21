@@ -32,7 +32,7 @@ export function useCards(albumid){
             })
         });
         console.log('test');
-        console.log(response);
+        console.log(cards);
         if(response.ok){
             console.log("response ok");
             setCards((prev) =>
@@ -84,6 +84,23 @@ export function useCards(albumid){
             const data = await response.json();
             if(data.ok){
                 console.log("response ok");
+
+               setCards((prev) =>
+                    prev.map((card) => {
+                        if (card.id !== card_id) return card;
+
+                        return {
+                            ...card,
+                            qualities: card.qualities
+                                .map((q) =>
+                                    q.quality_id === qualityId
+                                        ? { ...q, count: q.count - 1 }
+                                        : q
+                                )
+                                .filter((q) => q.count > 0)
+                        };
+                    })
+                );
             }
         }
         catch (e) {
@@ -125,9 +142,11 @@ export function useCards(albumid){
                 const response = await fetch(backendURL);
                 const data = await response.json();
                 if(data?.ok){
+                    setCards(data.data);
+                }
+                else{
                     setCards([]);
                 }
-                setCards(data.data);
             }
             catch (e){
                 setCards([]);

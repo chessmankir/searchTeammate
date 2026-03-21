@@ -13,7 +13,7 @@ import logoutRouter from "./routes/logoutRouter";
 import albumsRouter from "./routes/albumsRouter";
 import cardsRouter from "./routes/cardsRoute";
 import addCardRouter from "./routes/addCardRouter";
-import removeCardRouter from "./routes/addCardRouter";
+import removeCardRouter from "./routes/removeCardRouter";
 
 dotenv.config();
 

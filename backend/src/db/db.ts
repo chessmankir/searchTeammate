@@ -28,5 +28,6 @@ export const pool = new Pool({
 })();
 
 pool.on("error", (err) => {
+
     console.error("pg pool is error", err);
 })
