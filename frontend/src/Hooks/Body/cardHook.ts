@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import {authStore} from "../../store/authStore.ts";
+import {cardFiltersStore} from "../../store/cardFiltersStore.ts";
 
 interface qualityCard{
     quality_id: number,
@@ -16,6 +17,8 @@ interface Card  {
 export function useCards(albumid){
     const user = authStore((state)=>state.user);
     const [cards, setCards] = useState<Card[]>([]);
+    const selectedAlbum = cardFiltersStore((state) => state.selectedAlbum);
+    const typeCards = cardFiltersStore((state) => state.typeCards);
 
     const addCardHandler = async (card_id, qualityId = 1) => {
         console.log(card_id);
@@ -31,8 +34,6 @@ export function useCards(albumid){
                 qualityId: qualityId
             })
         });
-        console.log('test');
-        console.log(cards);
         if(response.ok){
             console.log("response ok");
             setCards((prev) =>
@@ -106,30 +107,6 @@ export function useCards(albumid){
         catch (e) {
             console.log(e);
         }
-    }
-
-    function education(){
-        console.log("remove");
-        const card1 = {
-            name: "Alex",
-            id: 5,
-            friends: [
-                {id: 1, name: "Anatoly", count: 3},
-                {id: 2, name: "Serg", count: 1}
-            ]
-        };
-
-        const card2 = {...card1, name: "Oleg"};
-        const card3 = {...card1, name: "Frank",
-            friends: card1.friends.map((q) =>{ console.log(q);
-                return q.id === 1
-                    ?  { ...q, count: q.count + 1 }
-                    :   q}
-            )
-        };
-        const friends = {...card1.friends};
-        console.log(card2);
-        console.log(card3);
     }
 
     useEffect( ()=> {

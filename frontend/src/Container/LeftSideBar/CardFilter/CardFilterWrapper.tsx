@@ -1,23 +1,21 @@
 import {Logo} from "../Logo.tsx";
 import {CardFilters} from "../CardFilter/CardFilters";
+import {albumsStore} from "../../../store/albumsStore.ts";
 
 export function CardFilterWrapper(){
-    const  selectedAlbum = ""
+    const  selectedAlbum = "all"
     const  cardFilter = "all";
     function setSelectedAlbum() {}
     function setCardFilter() {}
     function onReset() {}
+    const albums = albumsStore((state) => state.albums);
+    console.log(albums);
 
     return (
         <div id="left-side-bar">
             <Logo/>
             <CardFilters
-                albums={[
-                    { id: 1, name: "Годовщина", count: 48 },
-                    { id: 2, name: "Магическая битва", count: 24 },
-                    { id: 3, name: "PMGC", count: 12 },
-                    { id: 4, name: "Вселенная", count: 31 },
-                ]}
+                albums= {albums}
                 selectedAlbum={selectedAlbum}
                 setSelectedAlbum={setSelectedAlbum}
                 cardFilter={cardFilter}

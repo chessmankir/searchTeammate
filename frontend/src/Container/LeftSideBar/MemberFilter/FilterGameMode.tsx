@@ -1,4 +1,4 @@
-import { useFiltersStore } from "../../../store/filtersStore.tsx";
+import { useFiltersStore } from "../../../store/filtersStore.ts";
 
 export function FilterGameMode() {
 

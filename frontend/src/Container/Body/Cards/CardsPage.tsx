@@ -3,7 +3,7 @@ import "../../../StyleSheets/Card.css";
 import {useNavigate} from "react-router-dom";
 import {PrfofileTabs} from "../PrfofileTabs.tsx";
 import {Albums} from "./Albums.tsx";
-import {useAlbums} from  "../../../Hooks/Body/albumHook.ts";
+import {albumsStore} from "../../../store/albumsStore.ts";
 
 type TabKey = "cards" | "clan" | "tournaments";
 
@@ -13,7 +13,7 @@ function calcPercent(collected: number, total: number) {
 
 export  function CardsPage() {
     const [activeTab, setActiveTab] = useState<TabKey>("cards");
-    const albums = useAlbums().albums;
+    const albums = albumsStore((state) => state.albums);
 
     return (
         <div className="profile-page">

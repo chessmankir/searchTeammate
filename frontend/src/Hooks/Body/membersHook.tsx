@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useFiltersStore } from "../../store/filtersStore";
+import { useFiltersStore } from "../../store/filtersStore.ts";
 
 export function useMembers() {
     const mode = useFiltersStore((s) => s.mode);
