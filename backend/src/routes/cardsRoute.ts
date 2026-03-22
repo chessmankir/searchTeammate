@@ -1,61 +1,117 @@
 import {Router, Request, Response} from 'express';
 import {pool} from '../db/db';
-import {Card} from "../../types/Card";
+import {getSession} from "../auth/session";
+import { mapCardRows } from "../utils/mapCardRows";
 
 const router = Router();
-router.get('/:albumid', async (req: Request, res: Response) => {
-    const {albumid} = req.params;
-    const userid = req.query.userid;
-    const query = `
-            SELECT c.*, uc.id_user,
-                    uc.quality_id,
-                    uc.count
-            FROM cards c
-            JOIN albums a ON a.id = c.album_id
-            LEFT JOIN user_card uc ON uc.card_id = c.id 
-                AND uc.id_user = $2
-            WHERE a.slug = $1
-            ORDER BY c.id ASC
-            LIMIT 30
+
+router.get("/", async (req: Request, res: Response) => {
+    console.log("no albumId");
+
+    const sid = req.cookies?.sid;
+    const user = await getSession(sid);
+
+    if (!user?.id) {
+        return res.json({ ok: false });
+    }
+
+    const userid = user.id;
+    const filter = String(req.query.filter || "all");
+    console.log("filter");
+    console.log(req.query.filter);
+    const allowedFilters = ["all", "missing", "duplicates", "trades"];
+    if (!allowedFilters.includes(filter)) {
+        return res.status(400).json({
+            ok: false,
+            error: "invalid filter"
+        });
+    }
+
+    let query = `
+        SELECT c.*, uc.id_user,
+               uc.quality_id,
+               uc.count
+        FROM cards c
+        LEFT JOIN user_card uc 
+            ON uc.card_id = c.id 
+           AND uc.id_user = $1
+    `;
+
+    if (filter === "missing") {
+        query += `
+            WHERE c.id NOT IN (
+                SELECT uc2.card_id
+                FROM user_card uc2
+                WHERE uc2.id_user = $1
+            )
         `;
-    try{
-        const responseAnswer = await pool.query(query,[albumid,userid]);
-        const cards = new Map<Card>();
-        if(!responseAnswer?.rows){
-            return res.json({
-                ok: false,
-            })
-        }
-        for (const row of responseAnswer.rows) {
-            let card = cards.get(row.id);
+    }
 
-            if (!card) {
-                card = {
-                    id: Number(row.id),
-                    name: row.name,
-                    imageSrc: row.imageSrc,
-                    album_id: row.album_id,
-                    qualities: []
-                };
-                cards.set(row.id, card);
-            }
+    if (filter === "duplicates") {
+        query += `
+            WHERE c.id IN (
+                SELECT uc2.card_id
+                FROM user_card uc2
+                WHERE uc2.id_user = $1
+                GROUP BY uc2.card_id
+                HAVING SUM(uc2.count) > 1
+            )
+        `;
+    }
 
-            if (row.quality_id !== null) {
-                card.qualities.push({
-                    quality_id: row.quality_id,
-                    count: row.count
-                });
-            }
-        }
+    query += `
+        ORDER BY c.id ASC
+        LIMIT 50
+    `;
+
+    try {
+        const responseAnswer = await pool.query(query, [userid]);
+
         return res.json({
             ok: true,
-            data: Array.from(cards.values())
+            data: mapCardRows(responseAnswer.rows)
         });
-
-
+    } catch (e) {
+        console.log(e);
+        return res.json({
+            ok: false
+        });
     }
-    catch(err){
-        console.log(err);
+});
+
+router.get('/:albumId', async (req: Request, res: Response) => {
+    console.log('albumId');
+    const { albumId } = req.params;
+    const sid = req.cookies?.sid;
+    const user = await getSession(sid);
+    console.log(albumId);
+    if (!user?.id) return res.json({ ok: false });
+
+    const userid = user.id;
+
+    const query = `
+        SELECT c.*, uc.id_user,
+               uc.quality_id,
+               uc.count
+        FROM cards c
+        JOIN albums a ON a.id = c.album_id
+        LEFT JOIN user_card uc ON uc.card_id = c.id 
+            AND uc.id_user = $2
+        WHERE a.slug = $1
+        ORDER BY c.id ASC
+        LIMIT 30
+    `;
+
+    try {
+        console.log("before response");
+        const responseAnswer = await pool.query(query, [albumId, userid]);
+        console.log("after response");
+        return res.json({
+            ok: true,
+            data: mapCardRows(responseAnswer.rows)
+        });
+    } catch (e) {
+        console.log(e);
         return res.json({
             ok: false
         });

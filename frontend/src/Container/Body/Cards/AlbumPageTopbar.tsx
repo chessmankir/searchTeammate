@@ -7,7 +7,7 @@ export function AlbumPageTopbar() {
             <div className="album-page__left-meta">
                 <button
                     className="album-page__back"
-                    onClick={() => navigate("/cards")}
+                    onClick={() => navigate("/albums")}
                 >
                     ← Назад к альбомам
                 </button>

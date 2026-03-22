@@ -10,8 +10,10 @@ export function ButtonAlbumBLock({albums, selectedAlbum, setSelectedAlbum}){
             </div>
 
             <div className="album-list">
-                <ButtonAlbum album={{name: "Все альбомы", slug: ""}} key={0} setSelectedAlbum={setSelectedAlbum}
-                             selectedAlbum={selectedAlbum}/>
+                <ButtonAlbum  album={{name: "Все альбомы", slug: ""}} key={0} setSelectedAlbum={setSelectedAlbum}
+                             selectedAlbum={selectedAlbum}
+
+                />
                 {albums.map((album) => (
                     <ButtonAlbum album={album} key={album.id} setSelectedAlbum={setSelectedAlbum}
                                  selectedAlbum={selectedAlbum}/>

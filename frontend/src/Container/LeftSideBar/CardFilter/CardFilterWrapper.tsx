@@ -3,13 +3,11 @@ import {CardFilters} from "../CardFilter/CardFilters";
 import {albumsStore} from "../../../store/albumsStore.ts";
 
 export function CardFilterWrapper(){
-    const  selectedAlbum = "all"
-    const  cardFilter = "all";
-    function setSelectedAlbum() {}
+    const  selectedAlbum = albumsStore((state) => state.selectedAlbum);
+    const setSelectedAlbum = albumsStore((state) => state.setSelectedAlbum);
     function setCardFilter() {}
     function onReset() {}
     const albums = albumsStore((state) => state.albums);
-    console.log(albums);
 
     return (
         <div id="left-side-bar">
@@ -18,7 +16,6 @@ export function CardFilterWrapper(){
                 albums= {albums}
                 selectedAlbum={selectedAlbum}
                 setSelectedAlbum={setSelectedAlbum}
-                cardFilter={cardFilter}
                 setCardFilter={setCardFilter}
                 onReset={onReset}
             />

@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {authStore} from "../../store/authStore.ts";
-import {cardFiltersStore} from "../../store/cardFiltersStore.ts";
+import type {AlbumFlterType} from "../../types/AlbumFlterType.ts";
 
 interface qualityCard{
     quality_id: number,
@@ -14,16 +14,16 @@ interface Card  {
     qualities: qualityCard[]
 }
 
-export function useCards(albumid){
+interface UseCardParams {
+    albumId?: string,
+    filter?: AlbumFlterType
+}
+
+export function useCards({albumId, filter} :UseCardParams = {}){
     const user = authStore((state)=>state.user);
     const [cards, setCards] = useState<Card[]>([]);
-    const selectedAlbum = cardFiltersStore((state) => state.selectedAlbum);
-    const typeCards = cardFiltersStore((state) => state.typeCards);
 
     const addCardHandler = async (card_id, qualityId = 1) => {
-        console.log(card_id);
-        console.log(qualityId);
-        console.log("click");
         const backendServer = "http://localhost:4000/api/add/card";
         const response = await fetch(backendServer,{
             method: "POST",
@@ -35,7 +35,6 @@ export function useCards(albumid){
             })
         });
         if(response.ok){
-            console.log("response ok");
             setCards((prev) =>
                 prev.map((card) => {
                     if (card.id !== card_id) return card;
@@ -72,7 +71,6 @@ export function useCards(albumid){
     const removeCardHandler =  async (card_id, qualityId) => {
         const backendServer = "http://localhost:4000/api/remove/card";
         try{
-            console.log("remove");
             const response = await fetch(backendServer,{
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -84,7 +82,6 @@ export function useCards(albumid){
             });
             const data = await response.json();
             if(data.ok){
-                console.log("response ok");
 
                setCards((prev) =>
                     prev.map((card) => {
@@ -110,13 +107,20 @@ export function useCards(albumid){
     }
 
     useEffect( ()=> {
-        if(!albumid || !user?.id) return;
+        if(!user?.id) return;
 
         (async () => {
             try{
-                console.log(user);
-                const backendURL = `http://localhost:4000/api/cards/${albumid}?userid=${user?.id}`;
-                const response = await fetch(backendURL);
+                let backendURL = `http://localhost:4000/api/cards`;
+                if(albumId){
+                    backendURL += `/${albumId}`;
+                }
+                const urlParams = new URLSearchParams();
+                if(filter){
+                    urlParams.set("filter", filter);
+                    backendURL += `?${urlParams.toString()}`;
+                }
+                const response = await fetch(backendURL,{credentials: "include"});
                 const data = await response.json();
                 if(data?.ok){
                     setCards(data.data);
@@ -130,7 +134,7 @@ export function useCards(albumid){
                 console.error(e);
             }
         })()
-    },[albumid, user?.id]);
+    },[albumId, user?.id]);
 
     return {cards, addCardHandler, removeCardHandler};
 }

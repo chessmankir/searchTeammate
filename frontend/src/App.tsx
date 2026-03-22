@@ -14,6 +14,7 @@ import {authStore} from "./store/authStore.ts";
 import {useEffect} from "react";
 import {CardsPage} from "./Container/Body/Cards/CardsPage.tsx";
 import {CurrentCardPage} from "./Container/Body/Cards/CurrentCardPage.tsx";
+import {AllCardsPage} from "./Container/Body/Cards/AllCardsPage.tsx";
 
 
 function App() {
@@ -34,9 +35,12 @@ function App() {
         <Route path="/clans" element={<ClanLayout />}>
             <Route index element={<ClanPage />}></Route>
         </Route>
+        <Route path="/albums" element={<CardsLayout />}>
+            <Route index element={<CardsPage/>}></Route>
+        </Route>
         <Route path="/cards" element={<CardsLayout />}>
-            <Route index element={<CardsPage />}></Route>
-            <Route path=":albumid" element={<CurrentCardPage/>}></Route>
+            <Route index element={<AllCardsPage />}></Route>
+            <Route path=":albumId" element={<CurrentCardPage/>}></Route>
         </Route>
         <Route path="/login" element={<LoginPage />}>
         </Route>

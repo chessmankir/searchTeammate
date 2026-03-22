@@ -17,15 +17,14 @@ type CardFilterType = "all" | "duplicates" | "missing" | "trades";
 
 type Props = {
     albums: Album[];
-    selectedAlbum: number | null;
+    selectedAlbum: CardFilterType;
     setSelectedAlbum: (id: number | null) => void;
-    cardFilter: CardFilterType;
     setCardFilter: (value: CardFilterType) => void;
     onReset: () => void;
 };
 
 export function CardFilters({
-    albums, selectedAlbum, setSelectedAlbum, cardFilter, setCardFilter, onReset,}: Props) {
+    albums, selectedAlbum, setSelectedAlbum , setCardFilter, onReset,}: Props) {
 
     return (
         <aside className="cards-sidebar">
@@ -34,7 +33,7 @@ export function CardFilters({
 
             <ButtonAlbumBLock albums={albums} selectedAlbum={selectedAlbum} setSelectedAlbum={setSelectedAlbum} />
 
-           <TypeCardFilterBlock cardFilter={cardFilter} setCardFilter={setCardFilter} />
+            <TypeCardFilterBlock  setCardFilter={setCardFilter} />
 
             <CardFIlterFooter onReset={onReset}/>
         </aside>

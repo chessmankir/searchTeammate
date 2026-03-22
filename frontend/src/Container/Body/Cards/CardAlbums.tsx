@@ -1,7 +1,7 @@
 import "../../../StyleSheets/Card.css.css";
 import {useCards} from "../../../Hooks/Body/cardHook.ts"
 
-export function CardAlbums(selectedAlbum) {
+export function CardAlbums({selectedAlbum}) {
    const cards = useCards().cards;
    if (!selectedAlbum) {
         return (

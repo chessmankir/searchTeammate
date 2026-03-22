@@ -2,6 +2,7 @@ import {useNavigate} from "react-router-dom";
 
 export function ButtonAlbum({album, selectedAlbum, setSelectedAlbum}){
     const navigate = useNavigate();
+    console.log(album.slug);
     return (
         <button
             key={album.id ?? "all"}
@@ -9,7 +10,7 @@ export function ButtonAlbum({album, selectedAlbum, setSelectedAlbum}){
             onClick={(e) =>{
                 e.preventDefault();
                 setSelectedAlbum(album.id);
-                navigate("/cards/" + album.slug);
+                (album.slug == "" || album.slug == null ) ? navigate("/albums") : navigate("/cards/" + album.slug);
             }}
             type="button"
         >
