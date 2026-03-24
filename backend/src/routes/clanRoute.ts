@@ -3,6 +3,7 @@ import {pool} from "../db/db";
 
 const router = Router();
 router.get('/', async (req, res) => {
+
     const sql = `SELECT c.*, count(cm.id) as members_count FROM clans c 
             LEFT JOIN clan_members cm on c.id = cm.clan_id AND cm.active = TRUE
             GROUP BY c.id

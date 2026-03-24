@@ -10,5 +10,6 @@ export interface Member {
     clan: number;
     actor_id: number | null;
     kd: string | null;
+    created_at: string
    // created_at: Date;
 }

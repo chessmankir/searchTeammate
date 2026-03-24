@@ -6,16 +6,15 @@ import {TournamentsPage} from "./Container/Body/TournamentsPage.tsx";
 import {ClanLayout} from "./Container/Body/ClanLayout.tsx";
 import {ClanPage} from "./Container/Body/ClanPage.tsx"
 import {CardsLayout } from "./Container/Body/Cards/CardsLayout.tsx";
-
-import './StyleSheets/header.css'
-import './StyleSheets/leftSideBar.css'
 import {LoginPage} from "./Container/Body/Login/LoginPage.tsx";
 import {authStore} from "./store/authStore.ts";
 import {useEffect} from "react";
 import {CardsPage} from "./Container/Body/Cards/CardsPage.tsx";
 import {CurrentCardPage} from "./Container/Body/Cards/CurrentCardPage.tsx";
 import {AllCardsPage} from "./Container/Body/Cards/AllCardsPage.tsx";
-
+import {MyClansPage} from "./Container/Body/MyClans/MyClansPage.tsx";
+import {MyClansLayout} from "./Container/Body/MyClans/MyClansLayout.tsx";
+import "./StyleSheets/baseMarkup.css";
 
 function App() {
     const checkAuth = authStore((state) => state.checkAuth);
@@ -43,6 +42,9 @@ function App() {
             <Route path=":albumId" element={<CurrentCardPage/>}></Route>
         </Route>
         <Route path="/login" element={<LoginPage />}>
+        </Route>
+        <Route path="/myclan" element={<MyClansLayout />}>
+            <Route index element={<MyClansPage />} />
         </Route>
     </Routes>
   );

@@ -29,7 +29,7 @@ export async function createSession(user_id){
 }
 
 export async function getSession(token: string){
-    const query = `SELECT cm.id, cm.pubg_id, cm.nickname, cm.actor_id
+    const query = `SELECT cm.id, cm.pubg_id, cm.nickname, cm.actor_id, cm.clan_id
         FROM sessions s
         JOIN clan_members cm ON s.user_id = cm.id
         WHERE s.id = $1`;
@@ -42,6 +42,7 @@ export async function getSession(token: string){
                 pubg_id: user.pubg_id,
                 nickname: user.nickname,
                 actor_id: user.actor_id,
+                clan_id: user.clan_id,
             }
         }
         return  null;

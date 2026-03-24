@@ -1,6 +1,4 @@
-import "../../StyleSheets/logo.css";
-
-export  function Logo(){
+export function LogoCheckmate(){
     return (
         <div className="myclan-sidebar__logo">
             <div className="myclan-sidebar__logo-icon">C</div>

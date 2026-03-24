@@ -26,6 +26,9 @@ export function ProfileHeader(){
                           <button className="headerProfile__item">
                               <NavLink to="/albums">Карты</NavLink>
                           </button>
+                          <button className="headerProfile__item">
+                              <NavLink to="/myclan">Мой клан</NavLink>
+                          </button>
                           <button className="headerProfile__item">Настройки</button>
                           <button className="headerProfile__item headerProfile__item--danger">Выйти</button>
                       </div>
