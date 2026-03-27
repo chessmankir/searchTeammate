@@ -1,10 +1,10 @@
 import {Navigate, Route, Routes} from "react-router-dom";
-import {MembersLayout} from "./Container/Body/MembersLayout.tsx";
-import {MembersPage} from "./Container/Body/MembersPage.tsx";
-import {TournamentsLayout} from "./Container/Body/TournamentsLayout.tsx";
-import {TournamentsPage} from "./Container/Body/TournamentsPage.tsx";
-import {ClanLayout} from "./Container/Body/ClanLayout.tsx";
-import {ClanPage} from "./Container/Body/ClanPage.tsx"
+import {MembersLayout} from "./Container/Body/Member/MembersLayout.tsx";
+import {MembersPage} from "./Container/Body/Member/MembersPage.tsx";
+import {TournamentsLayout} from "./Container/Body/Tournament/TournamentsLayout.tsx";
+import {TournamentsPage} from "./Container/Body/Tournament/TournamentsPage.tsx";
+import {ClanLayout} from "./Container/Body/Clan/ClanLayout.tsx";
+import {ClanPage} from "./Container/Body/Clan/ClanPage.tsx"
 import {CardsLayout } from "./Container/Body/Cards/CardsLayout.tsx";
 import {LoginPage} from "./Container/Body/Login/LoginPage.tsx";
 import {authStore} from "./store/authStore.ts";
@@ -15,6 +15,10 @@ import {AllCardsPage} from "./Container/Body/Cards/AllCardsPage.tsx";
 import {MyClansPage} from "./Container/Body/MyClans/MyClansPage.tsx";
 import {MyClansLayout} from "./Container/Body/MyClans/MyClansLayout.tsx";
 import "./StyleSheets/baseMarkup.css";
+import ProfilePage from "./Container/Body/Profile/ProfilePage.tsx";
+import {ProfileLayout} from "./Container/Body/Profile/ProfileLayout.tsx";
+import {MessagesLayout} from "./Container/Body/Messages/MessagesLayout.tsx";
+import MessagesPage from "./Container/Body/Messages/MessagesPage.tsx";
 
 function App() {
     const checkAuth = authStore((state) => state.checkAuth);
@@ -45,6 +49,14 @@ function App() {
         </Route>
         <Route path="/myclan" element={<MyClansLayout />}>
             <Route index element={<MyClansPage />} />
+        </Route>
+        <Route path="/profile" element={<ProfileLayout />}>
+            <Route index element={<ProfilePage />} />
+            <Route path=":pubg_id" element={<ProfilePage />} />
+        </Route>
+
+        <Route path="/messages" element={<MessagesLayout />}>
+            <Route index element={<MessagesPage />} />
         </Route>
     </Routes>
   );

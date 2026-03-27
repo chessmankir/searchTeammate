@@ -1,7 +1,7 @@
 import {Outlet} from "react-router-dom";
-import {Header} from "../Header/Header.tsx";
-import {LeftSideBarClans} from "../LeftSideBar/LeftSIdeBarClans";
-import {MyClanWrapperSidebar} from "../LeftSideBar/MyClan/MyClanWrapperSidebar.tsx";
+import {Header} from "../../Header/Header.tsx";
+import {LeftSideBarClans} from "../../LeftSideBar/LeftSIdeBarClans.tsx";
+import {MyClanWrapperSidebar} from "../../LeftSideBar/MyClan/MyClanWrapperSidebar.tsx";
 
 export function ClanLayout(){
     return (

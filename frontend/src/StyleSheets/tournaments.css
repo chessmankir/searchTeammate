@@ -1,124 +1,285 @@
-.beetwen{
-    height: 20px;
+.beetwen {
+    display: none;
 }
 
-.body-container .tournament-name{
+.tournament-container {
+    min-width: 0;
+}
+
+.body-container .tournament-name {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid #DEE2E6;
-    padding: 18px 46px;
-    font-size: 20px;
-    background: #fff;
+    min-height: 72px;
+    margin-bottom: 20px;
+    padding: 0 24px;
+
+    border: 1px solid #1e293b;
+    border-radius: 20px;
+    background: #111827;
+    color: #f8fafc;
+
+    font-size: 28px;
+    font-weight: 700;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
 }
 
-.body-container .tournaments-list{
-    display: flex;
+.body-container .tournaments-list {
+    display: block;
+    overflow-x: auto;
 
-    background: #fff;
-    margin-top: 20px;
-}
-
-.body-container .tournaments-list table{
-    width: 100%  ;
-}
-.body-container .tournaments-list td{
-
+    border: 1px solid #1e293b;
+    border-radius: 20px;
+    background: #111827;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
 }
 
-.tournaments-list th.id{
-    width: 200px;
-    text-align: center;
-}
-
-.tournaments-list td.id{
-    text-align: center;
-}
-.tournaments-list th{
-    color: #343a40;
-    text-align: left;
-    padding: 20px 10px;
-    background: #fff;
-    font-weight: normal;
-}
-.tournaments-list td{
-    color: #343a40;
-    padding: 20px 10px;
-}
-
-.tournaments-list tr{
-    border-bottom: 2px solid #DEE2E6;
-}
-
-.tournaments-list tr:nth-of-type(odd) {
-    background-color: rgba(0, 0, 0, .05);
-}
-
-.tournaments-list table{
+.body-container .tournaments-list table {
     width: 100%;
+    min-width: 1120px;
     border-collapse: collapse;
     border-spacing: 0;
+    background: transparent;
 }
 
-.tournaments-list table tr.id{
-    padding: 5px;
+/* ---------- HEADER ---------- */
+
+.tournaments-list th {
+    padding: 18px 20px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 700;
+    color: #94a3b8;
+    background: #0b1220;
+    border-bottom: 1px solid #1e293b;
+    white-space: nowrap;
+}
+
+/* ---------- BODY ---------- */
+
+.tournaments-list td {
+    padding: 18px 20px;
+    font-size: 14px;
+    color: #e2e8f0;
+    border-bottom: 1px solid #1e293b;
+    vertical-align: middle;
+}
+
+.tournaments-list tbody tr {
+    transition: background 0.2s ease;
+}
+
+.tournaments-list tbody tr:hover {
+    background: rgba(148, 163, 184, 0.06);
+}
+
+.tournaments-list tbody tr:nth-of-type(odd) {
+    background-color: transparent;
+}
+
+.tournaments-list tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ---------- COLUMNS ---------- */
+
+.tournaments-list th.image,
+.tournaments-list td.image {
+    width: 92px;
     text-align: center;
 }
 
-.tournaments-list table .icon{
-    display: flex;
-    float: left;
+.tournaments-list th.id,
+.tournaments-list td.id {
+    min-width: 240px;
+    color: #f8fafc;
+    font-weight: 600;
 }
 
-.tournaments-list table .icon img{
-    width: 40px;
+.tournaments-list th.data,
+.tournaments-list td.data {
+    width: 130px;
+    white-space: nowrap;
 }
 
-.tournaments-list table .nameWrapper{
-    margin-left: 50px;
+.tournaments-list th.time,
+.tournaments-list td.time {
+    width: 100px;
+    white-space: nowrap;
+    font-weight: 700;
+    color: #f8fafc;
 }
 
-.tournaments-list .tg img{
-    width: 20px;
-    height: 20px;
-    background: #368ee9;
+.tournaments-list th.format,
+.tournaments-list td.format {
+    width: 100px;
+    text-align: center;
 }
 
-.tournaments-list .tg .iconTg {
-    background: #368ee9;
-    width: 70px;
-    padding: 10px 10px 5px 10px;
-    border-radius: 7px;
-    cursor: pointer;
+.tournaments-list th.maps,
+.tournaments-list td.maps {
+    min-width: 250px;
 }
 
-.tournaments-list .nameWrapper .name{
-    font-size: 16px;
-    color: #343a40;
-    margin-bottom: 6px;
+.tournaments-list th.places,
+.tournaments-list td.places {
+    width: 110px;
+    text-align: center;
+    font-weight: 700;
+    color: #f8fafc;
 }
 
-.tournaments-list .nameWrapper .nick{
+.tournaments-list th.position,
+.tournaments-list td.position {
+    width: 120px;
+    text-align: center;
+}
+
+/* ---------- LOGO ---------- */
+
+.tournaments-list .logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+    overflow: hidden;
+
+    background: #0f172a;
+    border: 1px solid #334155;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+}
+
+.tournaments-list .logo img,
+.body-container .tournaments-list td.image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* ---------- FORMAT BADGE ---------- */
+
+.tournaments-list td.format {
+    font-weight: 700;
+}
+
+.tournaments-list td.format::before {
+    content: "";
+}
+
+.tournaments-list td.format {
+    color: #60a5fa;
+}
+
+/* если формат текстом/числом, просто делаем его похожим на бейдж */
+.tournaments-list td.format span,
+.tournaments-list td.format .format-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 30px;
+    min-width: 36px;
+    padding: 0 12px;
+    border-radius: 999px;
+    background: rgba(59, 130, 246, 0.12);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.22);
     font-size: 12px;
-    color: #343a40;
+    font-weight: 700;
 }
 
-.tournaments-list th.city{
-    width: 190px;
+/* на случай если формат просто текст без span */
+.tournaments-list td.format {
+    position: relative;
 }
 
-.tournaments-list .pdf{
-    margin-left: 33px;
+.tournaments-list td.format:not(:has(span)):not(:has(.format-badge)) {
+    color: #e2e8f0;
 }
 
-.tournaments-list .pdf img{
-    width: 34px;
+.tournaments-list td.format:not(:has(span)):not(:has(.format-badge))::after {
+    content: attr(data-format);
 }
 
-.body-container .tournaments-list td.maps{
-    width: 200px;
+/* ---------- MAPS ---------- */
+
+.tournaments-list td.maps {
+    color: #cbd5e1;
+    line-height: 1.5;
 }
 
-.body-container .tournaments-list td.image img{
-    width: 75px;
+/* ---------- OPEN BUTTON / PDF ---------- */
+
+.tournaments-list .pdf {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 46px;
+    height: 40px;
+    margin: 0 auto;
+
+    border-radius: 12px;
+    border: 1px solid #334155;
+    background: #0f172a;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.tournaments-list .pdf:hover {
+    border-color: #475569;
+    background: #111c31;
+    transform: translateY(-1px);
+}
+
+.tournaments-list .pdf img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    background: transparent;
+    filter: brightness(0) invert(1);
+}
+
+/* если хочешь вместо gif потом будет иконка */
+.tournaments-list .pdf::before {
+    content: "";
+}
+
+/* ---------- old leftover safety ---------- */
+
+.tournaments-list table .icon,
+.tournaments-list table .icon img,
+.tournaments-list table .nameWrapper,
+.tournaments-list .nameWrapper .name,
+.tournaments-list .nameWrapper .nick,
+.tournaments-list th.city,
+.tournaments-list .tg,
+.tournaments-list .tg .iconTg,
+.tournaments-list .tg img {
+    all: unset;
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 1024px) {
+    .body-container .tournament-name {
+        min-height: 64px;
+        padding: 0 18px;
+        font-size: 24px;
+        border-radius: 18px;
+    }
+
+    .body-container .tournaments-list {
+        border-radius: 18px;
+    }
+}
+
+@media (max-width: 768px) {
+    .body-container .tournament-name {
+        font-size: 22px;
+        margin-bottom: 16px;
+    }
 }

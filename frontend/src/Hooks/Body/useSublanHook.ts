@@ -16,9 +16,7 @@ export function useSubclans() {
                 const response = await fetch(`http://localhost:4000/api/myclan`, {
                     credentials: "include"
                 });
-
                 const data = await response.json();
-                console.log(data);
                 if (data.ok) {
                     setClans(data.clans ?? []);
                 }

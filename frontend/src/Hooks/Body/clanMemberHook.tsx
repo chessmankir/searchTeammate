@@ -21,13 +21,11 @@ export function useClanMember() {
                 else{
                     query.set("number", number);
                 }
-                console.log(`http://localhost:4000/api/clanmember?${query.toString()}`);
             const response = await fetch(`http://localhost:4000/api/clanmember?${query.toString()}`, {
                     credentials: "include"
                 });
 
                 const data = await response.json();
-                console.log("clan members:", data);
 
                 if (data.ok) {
                     const members = data.members ?? [];

@@ -16,6 +16,7 @@ import addCardRouter from "./routes/addCardRouter";
 import removeCardRouter from "./routes/removeCardRouter";
 import clanMemberRoute from "./routes/clanMemberRoute";
 import myClanRoute from "./routes/myClanRoute";
+import infoRoute from "./routes/infoRoute";
 
 dotenv.config();
 
@@ -44,6 +45,7 @@ app.use("/api/add/card", addCardRouter);
 app.use("/api/remove/card", removeCardRouter);
 app.use("/api/clanmember", clanMemberRoute);
 app.use("/api/myclan", myClanRoute);
+app.use("/api/info", infoRoute);
 
 app.get('/api', (req,res) => {
    return res.json({ok: true, message: "Welcome Backend API"});

@@ -1,6 +1,6 @@
-import "../../StyleSheets/body.css";
-import "../../StyleSheets/pagination.css";
-import {Members} from "./Members";
+import "../../../StyleSheets/body.css";
+import "../../../StyleSheets/pagination.css";
+import {Members} from "./Members.tsx";
 import {Pagination} from "./Pagination.tsx";
 
 export  function MembersPage(){

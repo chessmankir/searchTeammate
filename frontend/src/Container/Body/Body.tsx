@@ -1,7 +1,7 @@
 import "../../StyleSheets/body.css";
 import "../../StyleSheets/pagination.css";
-import {Members} from "./Members";
-import {Pagination} from "./Pagination.tsx";
+import {Members} from "./Member/Members.tsx";
+import {Pagination} from "./Member/Pagination.tsx";
 
 export  function Body(){
     return (

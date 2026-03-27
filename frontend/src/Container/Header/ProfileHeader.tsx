@@ -22,7 +22,9 @@ export function ProfileHeader(){
                   </button>
                   {stateDropDown && (
                       <div className="headerProfile__menu">
-                          <button className="headerProfile__item">Профиль</button>
+                          <button className="headerProfile__item">
+                              <NavLink to="/profile">Профиль</NavLink>
+                          </button>
                           <button className="headerProfile__item">
                               <NavLink to="/albums">Карты</NavLink>
                           </button>

@@ -9,7 +9,7 @@ router.get('/', async (req: Request, res: Response) => {
     const sid = req.cookies?.sid;
     const user = await getSession(sid);
     const clan_id = user?.clan_id;
-    const sql = `SELECT s.id, s.number, s.title, COUNT(cm.id) as real_count FROM subclans s
+    const sql = `SELECT s.id, s.number, s.title, s.member_limit, COUNT(cm.id) as real_count FROM subclans s
                         LEFT JOIN clan_members cm 
                         ON cm.clan_id = s.clan_id AND s.number = cm.clan AND cm.active = TRUE
                         WHERE s.clan_id = $1

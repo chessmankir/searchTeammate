@@ -1,5 +1,4 @@
 export function MyClanSearch({totalMembers, searchData, setSearchData}){
-    console.log(totalMembers);
     return (
         <div className="myclan-toolbar">
             <div className="myclan-toolbar__left">

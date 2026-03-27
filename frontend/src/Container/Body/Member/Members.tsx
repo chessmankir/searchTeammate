@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { fetchClanMembers, ClanMember } from "../../api/members.tsx";
-import "../../StyleSheets/members.css";
-import {useMembers} from "../../Hooks/Body/membersHook.tsx";
+import { fetchClanMembers, ClanMember } from "../../../api/members.tsx";
+import "../../../StyleSheets/members.css";
+import {useMembers} from "../../../Hooks/Body/membersHook.tsx";
 import {Pagination} from "./Pagination.tsx";
 
 export function Members() {
@@ -37,7 +37,7 @@ export function Members() {
                         {members.map((m, i) => (
                             <tr key={m.id ?? i}>
                                 <td className="id">{i + 1}</td>
-                                <td className="nameContainer" className="iconMan">
+                                <td className="nameContainer" >
                                     <div className="icon">
                                         <img src="src/assets/iconMan.png" alt=""/>
                                     </div>

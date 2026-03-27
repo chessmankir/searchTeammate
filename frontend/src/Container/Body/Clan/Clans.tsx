@@ -1,6 +1,6 @@
-import "../../StyleSheets/clan.css";
-import {Pagination} from "./Pagination.tsx";
-import {useClans} from "../../Hooks/Body/clanHook.tsx";
+import "../../../StyleSheets/clan.css";
+import {Pagination} from "../Member/Pagination.tsx";
+import {useClans} from "../../../Hooks/Body/clanHook.tsx";
 
 export function Clans() {
     const loading = useClans().error;

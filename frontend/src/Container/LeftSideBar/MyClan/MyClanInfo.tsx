@@ -1,4 +1,7 @@
+import {useMyClanInfoHook} from "../../../Hooks/LeftSideBar/useMyClanInfoHook.ts";
+
 export function MyClanInfo() {
+    const {allTotal, freePlaces} = useMyClanInfoHook();
     return (
         <div className="myclan-sidebar__section">
             <div className="myclan-sidebar__section-title">Сводка</div>
@@ -6,22 +9,11 @@ export function MyClanInfo() {
             <div className="myclan-side-stats">
                 <div className="myclan-side-stat">
                     <span className="myclan-side-stat__label">Всего</span>
-                    <strong className="myclan-side-stat__value">42</strong>
+                    <strong className="myclan-side-stat__value">{allTotal}</strong>
                 </div>
-
                 <div className="myclan-side-stat">
-                    <span className="myclan-side-stat__label">Онлайн</span>
-                    <strong className="myclan-side-stat__value">12</strong>
-                </div>
-
-                <div className="myclan-side-stat">
-                    <span className="myclan-side-stat__label">Новички</span>
-                    <strong className="myclan-side-stat__value">4</strong>
-                </div>
-
-                <div className="myclan-side-stat">
-                    <span className="myclan-side-stat__label">В бане</span>
-                    <strong className="myclan-side-stat__value">2</strong>
+                    <span className="myclan-side-stat__label">Места</span>
+                    <strong className="myclan-side-stat__value">{freePlaces}</strong>
                 </div>
             </div>
         </div>

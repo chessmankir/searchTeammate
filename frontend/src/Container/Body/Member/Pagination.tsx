@@ -1,4 +1,4 @@
-import {useFiltersStore} from "../../store/filtersStore.ts";
+import {useFiltersStore} from "../../../store/filtersStore.ts";
 
 export function Pagination(){
 

@@ -1,161 +1,293 @@
-.beetwen{
-    height: 20px;
+.beetwen {
+    display: none;
 }
 
-.body-container .clan-name{
+.clans-container {
+    min-width: 0;
+}
+
+.body-container .clan-name {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid #DEE2E6;
-    padding: 18px 46px;
-    font-size: 20px;
-    background: #fff;
+    min-height: 72px;
+    margin-bottom: 20px;
+    padding: 0 24px;
+
+    border: 1px solid #1e293b;
+    border-radius: 20px;
+    background: #111827;
+    color: #f8fafc;
+
+    font-size: 28px;
+    font-weight: 700;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
 }
 
-.body-container .clan-list{
-    display: flex;
+.body-container .clan-list {
+    display: block;
+    overflow-x: auto;
 
-    background: #fff;
-    margin-top: 20px;
-}
-
-.body-container .clan-list table{
-    width: 100%  ;
-}
-.body-container .clan-list td{
-
+    border: 1px solid #1e293b;
+    border-radius: 20px;
+    background: #111827;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
 }
 
-.clan-list th.id{
-    width: 20px;
-    text-align: center;
-}
-
-.clan-list td.id{
-    text-align: center;
-}
-.clan-list th{
-    color: #343a40;
-    text-align: left;
-    padding: 20px 10px;
-    background: #fff;
-    font-weight: normal;
-}
-.clan-list td{
-    color: #343a40;
-    padding: 20px 10px;
-}
-
-.clan-list tr{
-    border-bottom: 2px solid #DEE2E6;
-}
-
-.clan-list tr:nth-of-type(odd) {
-    background-color: rgba(0, 0, 0, .05);
-}
-
-.clan-list table{
+.body-container .clan-list table {
     width: 100%;
+    min-width: 980px;
     border-collapse: collapse;
     border-spacing: 0;
+    background: transparent;
 }
 
-.clan-list table tr.id{
-    padding: 5px;
-    text-align: center;
-}
+/* ---------- HEADER ---------- */
 
-.clan-list table .icon{
-    display: flex;
-    float: left;
-}
-
-.clan-list table .icon img{
-    width: 40px;
-}
-
-.clan-list table .nameWrapper{
-    margin-left: 50px;
-}
-
-.clan-list .tg img{
-    width: 20px;
-    height: 20px;
-    background: #368ee9;
-}
-
-.clan-list .tg .iconTg {
-    background: #368ee9;
-    width: 70px;
-    padding: 10px 10px 5px 10px;
-    border-radius: 7px;
-    cursor: pointer;
-}
-
-.clan-list .nameWrapper .name{
-    font-size: 16px;
-    color: #343a40;
-    margin-bottom: 6px;
-}
-
-.clan-list .nameWrapper .nick{
-    font-size: 12px;
-    color: #343a40;
-}
-
-.clan-list th.city{
-    width: 190px;
-}
-
-.clan-list .regim{
-
-}
-
-.modeChips{
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
-.clan-list th.regimth {
-    width: 150px;
-}
-
-.clan-list .regims{
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
-.clan-list .regim{
-    padding: 4px 10px;
-    border-radius: 999px;
-    font-size: 12px;
-    line-height: 1;
-    border: 1px solid rgba(0,0,0,.12);
-    background: rgba(0,0,0,.04);
+.clan-list th {
+    padding: 18px 20px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 700;
+    color: #94a3b8;
+    background: #0b1220;
+    border-bottom: 1px solid #1e293b;
     white-space: nowrap;
 }
 
-.clan-list .regim.classic {
-    background-color: #007bff;
-    border-bottom: 1px solid rgba(0, 0, 0, .125);
-    color: #fff;
+/* ---------- BODY ---------- */
+
+.clan-list td {
+    padding: 18px 20px;
+    font-size: 14px;
+    color: #e2e8f0;
+    border-bottom: 1px solid #1e293b;
+    vertical-align: middle;
 }
 
-.clan-list .recruit-open{
-    display: inline-block;
-    padding: 6px 12px;
-    border-radius: 20px;
-    background: #2b6cb0;
-    color: white;
-    font-size: 12px;
+.clan-list tbody tr {
+    transition: background 0.2s ease;
+}
+
+.clan-list tbody tr:hover {
+    background: rgba(148, 163, 184, 0.06);
+}
+
+.clan-list tbody tr:nth-of-type(odd) {
+    background-color: transparent;
+}
+
+.clan-list tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ---------- COLUMNS ---------- */
+
+.clan-list th.id,
+.clan-list td.id {
+    width: 72px;
+    text-align: center;
+    color: #cbd5e1;
+}
+
+.clan-list th.name,
+.clan-list td.name {
+    min-width: 220px;
     font-weight: 600;
-    letter-spacing: 0.5px;
+    color: #f8fafc;
+}
+
+.clan-list th.tag,
+.clan-list td.tag {
+    width: 140px;
+    text-align: center;
+}
+
+.clan-list th.participants,
+.clan-list td.participants {
+    width: 130px;
+    text-align: center;
+    font-weight: 700;
+    color: #f8fafc;
+}
+
+.clan-list th.kd,
+.clan-list td.kd {
+    min-width: 180px;
+}
+
+.clan-list th.write,
+.clan-list td.write {
+    width: 110px;
+    text-align: center;
+}
+
+/* ---------- TAG STATUS ---------- */
+
+.clan-list .tag-optional,
+.clan-list .tag-required {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 42px;
+    height: 30px;
+    padding: 0 10px;
+    border-radius: 999px;
+
+    font-size: 14px;
+    font-weight: 700;
+    border: 1px solid transparent;
+}
+
+.clan-list .tag-required {
+    background: rgba(34, 197, 94, 0.12);
+    color: #4ade80;
+    border-color: rgba(34, 197, 94, 0.22);
+}
+
+.clan-list .tag-optional {
+    background: rgba(148, 163, 184, 0.12);
+    color: #cbd5e1;
+    border-color: rgba(148, 163, 184, 0.22);
+}
+
+/* ---------- KD BLOCK ---------- */
+
+.clan-list .kd-boy,
+.clan-list .kd-girl {
+    display: inline-flex;
+    align-items: center;
+    min-height: 30px;
+    padding: 0 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    border: 1px solid transparent;
+    margin-right: 8px;
+    margin-bottom: 6px;
+    white-space: nowrap;
+}
+
+.clan-list .kd-boy {
+    background: rgba(59, 130, 246, 0.12);
+    color: #60a5fa;
+    border-color: rgba(59, 130, 246, 0.22);
+}
+
+.clan-list .kd-girl {
+    background: rgba(236, 72, 153, 0.12);
+    color: #f9a8d4;
+    border-color: rgba(236, 72, 153, 0.22);
+}
+
+/* ---------- RECRUIT STATUS ---------- */
+
+.clan-list .position {
+    min-width: 150px;
+}
+
+.clan-list .recruit-open {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 32px;
+    padding: 0 12px;
+    border-radius: 999px;
+
+    background: rgba(34, 197, 94, 0.12);
+    color: #4ade80;
+    border: 1px solid rgba(34, 197, 94, 0.22);
+
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
     text-transform: uppercase;
 }
 
+/* если потом появится закрытый набор */
+.clan-list .recruit-closed {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
-.clan-list .tag{
-    text-align: center;
+    min-height: 32px;
+    padding: 0 12px;
+    border-radius: 999px;
+
+    background: rgba(239, 68, 68, 0.12);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.22);
+
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+/* ---------- CONTACT BUTTON ---------- */
+
+.clan-list .pdf {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 46px;
+    height: 40px;
+    margin: 0 auto;
+
+    border-radius: 12px;
+    border: 1px solid #334155;
+    background: #0f172a;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.clan-list .pdf:hover {
+    border-color: #475569;
+    background: #111c31;
+    transform: translateY(-1px);
+}
+
+.clan-list .pdf::before {
+    content: "✉";
+    font-size: 16px;
+    color: #cbd5e1;
+    line-height: 1;
+}
+
+/* ---------- old leftover safety ---------- */
+
+.clan-list .icon,
+.clan-list .icon img,
+.clan-list .nameWrapper,
+.clan-list .nameWrapper .name,
+.clan-list .nameWrapper .nick,
+.clan-list .regim,
+.clan-list .regims,
+.clan-list th.city {
+    all: unset;
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 1024px) {
+    .body-container .clan-name {
+        min-height: 64px;
+        padding: 0 18px;
+        font-size: 24px;
+        border-radius: 18px;
+    }
+
+    .body-container .clan-list {
+        border-radius: 18px;
+    }
+}
+
+@media (max-width: 768px) {
+    .body-container .clan-name {
+        font-size: 22px;
+        margin-bottom: 16px;
+    }
 }

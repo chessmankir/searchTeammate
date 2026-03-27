@@ -1,6 +1,8 @@
 import {Logo} from "../Logo.tsx";
 import {CardFilters} from "../CardFilter/CardFilters";
 import {albumsStore} from "../../../store/albumsStore.ts";
+import {profileLinks} from "../../../Data/navItems.ts";
+import {ProfileSidebar} from "../Profile/ProfileSidebar.tsx";
 
 export function CardFilterWrapper(){
     const  selectedAlbum = albumsStore((state) => state.selectedAlbum);
@@ -10,8 +12,9 @@ export function CardFilterWrapper(){
     const albums = albumsStore((state) => state.albums);
 
     return (
-        <div id="left-side-bar">
+        <div id="left-side-bar1">
             <Logo/>
+            <ProfileSidebar navItems={profileLinks} />
             <CardFilters
                 albums= {albums}
                 selectedAlbum={selectedAlbum}

@@ -1,6 +1,6 @@
-import "../../StyleSheets/tournaments.css";
-import {Pagination} from "./Pagination.tsx";
-import {useTournamentHook} from "../../Hooks/Body/tournamentHook.tsx";
+import "../../../StyleSheets/tournaments.css";
+import {Pagination} from "../Member/Pagination.tsx";
+import {useTournamentHook} from "../../../Hooks/Body/tournamentHook.tsx";
 
 export function Tournaments() {
     const {tournaments} = useTournamentHook();
@@ -44,7 +44,7 @@ export function Tournaments() {
                                 <td className="id">{t.name}</td>
                                 <td className="data">{t.date}</td>
                                 <td className="time">{t.time}</td>
-                                <td className="format">{t.team_size}</td>
+                                <td className="format"><span className="format-badge"> {t.team_size}</span></td>
                                 <td className="maps">{t.maps}</td>
                                 <td className="places">{100 - t.count}</td>
                                 <td className="position">

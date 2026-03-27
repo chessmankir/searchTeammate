@@ -6,7 +6,6 @@ import {MyClanTabs} from "./MyClanTabs.tsx";
 import {MyClanSearch} from "./MyClanSearch.tsx";
 import {useSubclans} from "../../../Hooks/Body/useSublanHook.ts";
 import {myClanStore} from "../../../store/myClanStore.ts";
-import {useParams, useSearchParams} from "react-router-dom";
 
 export function MyClansPage() {
     useSubclans();
@@ -15,7 +14,6 @@ export function MyClansPage() {
     const currentClan = myClanStore( (state) => state.currentClan);
     const setCurrentClan = myClanStore( (state) => state.setCurrentClan);
     const totalMembers = myClanStore((state) => state.totalMembers);
-    console.log(totalMembers);
     return (
         <div className="myclan-page">
             <MyClanHeader />
