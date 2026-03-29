@@ -1,50 +1,24 @@
 import {useState} from "react";
 import "../../../StyleSheets/messages.css";
-import {MessageHeader} from "../Member/MessageHeader.tsx";
+import {MessageHeader} from "./MessageHeader.tsx";
 import {MessageSidebar} from "../Member/MessageSidebar/MessageSidebar.tsx";
-import {MessageChat} from "../Member/MessageChat.tsx";
-
-type Message = {
-    id: number;
-    sender: "me" | "other";
-    text: string;
-    time: string;
-};
-
-type Conversation = {
-    id: number;
-    nickname: string;
-    lastMessage: string;
-    unread: number;
-};
-
-const mockConversations: Conversation[] = [
-    {id: 1, nickname: "DarkKnight", lastMessage: "Го вечером катку", unread: 2},
-    {id: 2, nickname: "Игрок123", lastMessage: "Ок, до встречи", unread: 0},
-    {id: 3, nickname: "Drakon_777", lastMessage: "Ты где?", unread: 5},
-];
-
-const mockMessages: Record<number, Message[]> = {
-    1: [
-        {id: 1, sender: "me", text: "Привет! Как дела?", time: "15:30"},
-        {id: 2, sender: "other", text: "Норм, ты как?", time: "15:31"},
-        {id: 3, sender: "me", text: "Го вечером катку", time: "15:32"},
-    ]
-};
+import {MessageChat} from "./MessageChat.tsx";
+import {useMessagesHook} from "../../../Hooks/Body/Messages/useMessagesHook.ts";
+import {userSocketJoin} from "../../../Hooks/Body/Messages/userSocketJoin.ts";
+import {authStore} from "../../../store/authStore.ts";
 
 export default function MessagesPage() {
-    const [activeId, setActiveId] = useState<number>(1);
-    const [input, setInput] = useState("");
-
-    const activeMessages = mockMessages[activeId] || [];
-
+    const user = authStore((state) => state.user);
+    userSocketJoin(user?.id);
+    const {activeConversation, message, setMessage, sendMessage, activeMessages, conversations}  = useMessagesHook();
+    console.log(conversations);
     return (
         <div className="messages-page">
             <MessageHeader />
             <div className="messages-container">
-                <MessageSidebar />
-                <MessageChat mockConversations={mockConversations} activeMessages={activeMessages}
-                 activeId={activeId} input={input} setInput={setInput} />
+                <MessageSidebar conversations={conversations} />
+                <MessageChat activeConversation={activeConversation} activeMessages={activeMessages}
+                  message={message} setMessage={setMessage} sendMessage={sendMessage} />
             </div>
         </div>
     );

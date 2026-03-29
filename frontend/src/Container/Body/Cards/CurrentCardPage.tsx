@@ -11,7 +11,6 @@ function getProgressPercent(collected: number, total: number) {
 
 export  function CurrentCardPage() {
     const { albumId } = useParams();
-    console.log("albumid", albumId);
     const {cards, addCardHandler, removeCardHandler} = useCards({albumId});
 
     return (

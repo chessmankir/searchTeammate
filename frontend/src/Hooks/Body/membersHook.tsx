@@ -33,7 +33,6 @@ export function useMembers() {
                 const res = await fetch(`http://localhost:4000/api/members?${query}`, {
                     signal: ac.signal,
                 });
-                console.log(`http://localhost:4000/api/members?${query}`);
 
                 const data = await res.json();
 

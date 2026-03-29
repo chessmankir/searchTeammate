@@ -2,7 +2,6 @@ import {useNavigate} from "react-router-dom";
 
 export function ButtonAlbum({album, selectedAlbum, setSelectedAlbum}){
     const navigate = useNavigate();
-    console.log(album.slug);
     return (
         <button
             key={album.id ?? "all"}

@@ -17,22 +17,16 @@ router.post('/', async ( req: Request , res: Response) => {
             });
         }
         const codeByPubgId = getLoginCode(pubgId);
-        console.log("codeByPubgId");
-        console.log(codeByPubgId);
         if(codeByPubgId?.code === code){
             //совпало
-            console.log("совпало");
             const query = `Select * from clan_members where pubg_id = $1`;
             const result = await pool.query(query,[pubgId]);
-            console.log(result?.rows);
             if(result.rows.length === 0){
                 return res.json({ok:false});
             }
 
             const user = result.rows[0];
-            console.log(user.id);
             const sessionToken = await createSession(user.id);
-            console.log(sessionToken);
             const k = await res.cookie('sid', sessionToken, {
                 httpOnly: true,
                 sameSite: "lax",

@@ -11,9 +11,7 @@ router.get('/', async (req, res) => {
             ORDER BY id DESC
             LIMIT 30`;
     try {
-        console.log('result');
         const result = await pool.query(sql);
-        console.log(result);
         return res.json({ok: true, data: result.rows});
     }
     catch(err) {

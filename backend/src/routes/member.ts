@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import { pool } from "../db/db";
 import type { Member } from "../../types/ClanMembers";
+import {getSession} from "../auth/session";
 
 const router = new Router();
 
@@ -9,6 +10,8 @@ router.get("/", async (req: Request, res: Response) => {
         // --- parse query ---
         const clan_id = req.query.clan_id ? Number(req.query.clan_id) : undefined;
         const number = req.query.number ? Number(req.query.number) : undefined;
+
+        const pubg_id = req.query.pubg_id ? Number(req.query.pubg_id) : undefined;
 
         const limitRaw = req.query.limit ? Number(req.query.limit) : 30;
         const pageRaw = req.query.page ? Number(req.query.page) : 1;
@@ -35,7 +38,19 @@ router.get("/", async (req: Request, res: Response) => {
         const params: any[] = [];
         let joinSql = "";
 
-        // ВАЖНО: лучше всегда писать cm.поле, чтобы не было конфликтов имён
+        if(pubg_id !== undefined){
+            if(pubg_id == 1){
+                const sid = req.cookies?.sid;
+                const user = await getSession(sid);
+                params.push(user.pubg_id);
+            }
+            else{
+                params.push(pubg_id);
+
+            }
+            where.push(`cm.pubg_id = $${params.length}`);
+        }
+
         if (clan_id !== undefined && Number.isFinite(clan_id)) {
             params.push(clan_id);
             where.push(`cm.clan_id = $${params.length}`);
@@ -75,7 +90,6 @@ router.get("/", async (req: Request, res: Response) => {
         }
 
         const whereSql = where.length ? `WHERE ${where.join(" AND ")}` : "";
-
         // --- total ---
         const sqlTotal = `
       SELECT COUNT(DISTINCT cm.id) AS total

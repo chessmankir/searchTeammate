@@ -12,7 +12,6 @@ type CardRow = {
 
 export function mapCardRows(rows: CardRow[]): Card[] {
     const cards = new Map<number, Card>();
-    console.log("mapCardRows");
     for (const row of rows) {
         let card = cards.get(row.id);
 

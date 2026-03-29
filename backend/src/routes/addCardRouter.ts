@@ -35,9 +35,7 @@ router.post("/", async (req: Request, res: Response) => {
         `;
 
         const findResult = await pool.query(findQuery, [user.id, qualityId, card_id]);
-        console.log(findResult.rows.length);
         if (findResult.rows.length > 0) {
-            console.log('update');
             const updateQuery = `
                 UPDATE user_card
                 SET count = count + 1

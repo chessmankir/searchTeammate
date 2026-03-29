@@ -1,8 +1,8 @@
-import {MessageChatItem} from "../MessageChatItem.tsx";
-import {MessageSearch} from "../MessageSearch.tsx";
-import {MessageChatList} from "../MessageChatList.tsx";
+import {MessageChatItem} from "../../Messages/MessageChatItem.tsx";
+import {MessageSearch} from "../../Messages/MessageSearch.tsx";
+import {MessageChatList} from "../../Messages/MessageChatList.tsx";
 
-export function MessageSidebar(){
+export function MessageSidebar({conversations}){
     const memberMessages = [
         {
             title: "DarkKnigt",
@@ -20,10 +20,11 @@ export function MessageSidebar(){
             unreadCount: 4,
         }
     ]
+    console.log(conversations);
     return (
         <div className="messages-sidebar">
             <MessageSearch />
-            <MessageChatList memberMessages={memberMessages} />
+            <MessageChatList conversations={conversations} />
         </div>
     )
 }

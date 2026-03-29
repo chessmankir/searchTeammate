@@ -54,7 +54,6 @@ function App() {
             <Route index element={<ProfilePage />} />
             <Route path=":pubg_id" element={<ProfilePage />} />
         </Route>
-
         <Route path="/messages" element={<MessagesLayout />}>
             <Route index element={<MessagesPage />} />
         </Route>

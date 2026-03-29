@@ -80,11 +80,9 @@ router.get("/", async (req: Request, res: Response) => {
 });
 
 router.get('/:albumId', async (req: Request, res: Response) => {
-    console.log('albumId');
     const { albumId } = req.params;
     const sid = req.cookies?.sid;
     const user = await getSession(sid);
-    console.log(albumId);
     if (!user?.id) return res.json({ ok: false });
 
     const userid = user.id;

@@ -27,7 +27,6 @@ async function getFreePlaces() {
         credentials: "include"
     });
     const data = await response.json();
-    console.log(data);
     if (data.ok){
         const freePlaces = data.clans.reduce((sum, clan) => {
             return sum + (Number(clan.member_limit)) - (Number(clan.real_count))

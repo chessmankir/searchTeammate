@@ -1,116 +1,24 @@
-import { useState } from "react";
 import "../../../StyleSheets/profile.css";
-import {useParams} from "react-router-dom";
-
-type GameMode = "classic" | "metro" | "tdm";
-
-type ProfileType = {
-    id: number;
-    nickname: string;
-    pubg_id: string;
-    name: string;
-    age: number | null;
-    city: string;
-    about: string;
-    modes: GameMode[];
-    timeModes: string[];
-};
-
-const initialProfile: ProfileType = {
-    id: 1,
-    nickname: "ChessmanKir",
-    pubg_id: "523442956",
-    name: "Кирилл",
-    age: 25,
-    city: "Helsinki",
-    about: "Ищу тиммейтов для рангов и турниров",
-    modes: ["classic", "tdm"],
-    timeModes: ["вечер"],
-};
-
-const allModes: { value: GameMode; label: string }[] = [
-    { value: "classic", label: "Classic" },
-    { value: "metro", label: "Metro" },
-    { value: "tdm", label: "TDM" },
-];
-
-const allTimeModes = ["утро", "день", "вечер", "ночь"];
+import {ProfileInfo} from "./ProfileInfo.tsx";
+import {ProfileMember} from "./ProfileMember.tsx";
+import {useProfileHooks} from "../../../Hooks/Body/Profile/useProfileHooks.ts";
+import {useStartConversation} from "../../../Hooks/Body/Profile/useStartConversation.ts";
 
 export default function ProfilePage() {
-    const {pubg_id} = useParams();
-    console.log(pubg_id);
-    const [profile, setProfile] = useState<ProfileType>(initialProfile);
-    const [draft, setDraft] = useState<ProfileType>(initialProfile);
-    const [isEdit, setIsEdit] = useState(false);
-
-    const hasChanges =
-        JSON.stringify(profile) !== JSON.stringify(draft);
-
-    const updateField = <K extends keyof ProfileType>(
-        key: K,
-        value: ProfileType[K]
-    ) => {
-        setDraft((prev) => ({
-            ...prev,
-            [key]: value,
-        }));
-    };
-
-    const toggleMode = (mode: GameMode) => {
-        setDraft((prev) => {
-            const exists = prev.modes.includes(mode);
-
-            return {
-                ...prev,
-                modes: exists
-                    ? prev.modes.filter((m) => m !== mode)
-                    : [...prev.modes, mode],
-            };
-        });
-    };
-
-    const toggleTimeMode = (value: string) => {
-        setDraft((prev) => {
-            const exists = prev.timeModes.includes(value);
-
-            return {
-                ...prev,
-                timeModes: exists
-                    ? prev.timeModes.filter((t) => t !== value)
-                    : [...prev.timeModes, value],
-            };
-        });
-    };
-
-    const startEdit = () => {
-        setDraft(profile);
-        setIsEdit(true);
-    };
-
-    const cancelEdit = () => {
-        setDraft(profile);
-        setIsEdit(false);
-    };
-
-    const saveProfile = () => {
-        setProfile(draft);
-        setIsEdit(false);
-
-        console.log("Сохранили:", draft);
-    };
-
+    const {member} = useProfileHooks();
+    const {startConversation} = useStartConversation();
     return (
         <section className="profile-page">
             <div className="profile-content">
-                {/* HEADER */}
-                <div className="profile-header-card">
+                test
+               {/* <div className="profile-header-card">
                     <div className="profile-header-card__left">
                         <div className="profile-avatar">
-                            {draft.nickname[0].toUpperCase()}
+                            {member.nickname[0].toUpperCase()}
                         </div>
 
                         <div>
-                            <h1 className="profile-title">{draft.nickname}</h1>
+                            <h1 className="profile-title">{member.nickname}</h1>
                             <p className="profile-subtitle">
                                 PUBG ID: {draft.pubg_id}
                             </p>
@@ -145,10 +53,8 @@ export default function ProfilePage() {
                         )}
                     </div>
                 </div>
-
-                {/* GRID */}
                 <div className="profile-grid">
-                    {/* ОСНОВНАЯ ИНФА */}
+                     ОСНОВНАЯ ИНФА
                     <div className="profile-card">
                         <h2 className="profile-card__title">
                             Основная информация
@@ -218,7 +124,7 @@ export default function ProfilePage() {
                         </div>
                     </div>
 
-                    {/* О СЕБЕ */}
+                     О СЕБЕ
                     <div className="profile-card">
                         <h2 className="profile-card__title">О себе</h2>
 
@@ -232,7 +138,7 @@ export default function ProfilePage() {
                         />
                     </div>
 
-                    {/* РЕЖИМЫ */}
+                     РЕЖИМЫ
                     <div className="profile-card">
                         <h2 className="profile-card__title">
                             Игровые режимы
@@ -260,7 +166,7 @@ export default function ProfilePage() {
                         </div>
                     </div>
 
-                    {/* ВРЕМЯ */}
+                     ВРЕМЯ
                     <div className="profile-card">
                         <h2 className="profile-card__title">
                             Когда играешь
@@ -288,8 +194,15 @@ export default function ProfilePage() {
                             })}
                         </div>
                     </div>
+                </div>*/}
+                <div className="profile-grid">
+                   <ProfileMember startConversation={startConversation} member={member} />
+                   <ProfileInfo  member={member} />
+                   {/*<ProfileGameTags member={member} allGameModes={allGameModes} isEdit={isEdit} toggleMode={toggleMode} />
+                   <ProfileTimeTags allTimeModes={allTimeModes} member={member} isEdit={isEdit} toggleTimeMode={toggleTimeMode} />*/}
                 </div>
             </div>
         </section>
     );
 }
+

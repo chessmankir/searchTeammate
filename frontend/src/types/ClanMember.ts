@@ -3,4 +3,5 @@ export interface ClanMember{
     clan_id: number,
     pubg_id: number,
     name: string,
+    gameMode?: []
 }

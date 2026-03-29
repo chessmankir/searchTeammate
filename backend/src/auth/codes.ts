@@ -15,6 +15,5 @@ export function createLoginCode(pubgId: string){
 }
 
 export function getLoginCode(pubgId: string){
-    console.log(loginCodes);
     return loginCodes.get(pubgId);
 }

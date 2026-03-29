@@ -1,3 +1,5 @@
+import {Link} from "react-router-dom";
+
 export function MyClanTableMember({members}) {
     return (
         <div className="myclan-table-wrap">
@@ -56,7 +58,7 @@ export function MyClanTableMember({members}) {
                         <td>
                             <div className="myclan-row-actions">
                                 <button className="myclan-btn myclan-btn--small myclan-btn--ghost">
-                                    Профиль
+                                    <Link to={`/profile/${member.pubg_id}`}  >Профиль </Link>
                                 </button>
                                 <button className="myclan-btn myclan-btn--small myclan-btn--danger">
                                     Бан

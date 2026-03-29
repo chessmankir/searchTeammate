@@ -5,7 +5,6 @@ import {getSession} from "../auth/session";
 const router = Router();
 router.get('/', async (req: Request, res: Response) => {
   //  const {clan_id} = req.body;
-    console.log('myClans');
     const sid = req.cookies?.sid;
     const user = await getSession(sid);
     const clan_id = user?.clan_id;

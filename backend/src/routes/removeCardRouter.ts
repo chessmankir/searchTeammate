@@ -8,16 +8,11 @@ const router = Router();
 router.post('/', async (req: Request, res: Response) => {
     const {card_id, qualityId} = req.body;
     const sid = req.cookies?.sid;
-    console.log("remove");
-    console.log(sid);
     try {
         const user = await getSession(sid);
         if(!user?.id) return res.json({ok: false});
 
         const card = await getUserCard(user.id, card_id, qualityId);
-        console.log(card);
-        console.log("card");
-        console.log(card.count);
         let queryUpdate = "";
         if (card?.count > 1){
            queryUpdate = `UPDATE user_card 

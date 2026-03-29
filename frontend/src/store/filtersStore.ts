@@ -64,8 +64,6 @@ export const useFiltersStore = create<FiltersState>((set,get) => ({
 
     setPage: (page) => {
         set((state) => {
-            console.log("old page:", state.page);
-            console.log("new page:", page);
             return {page};
         })
     }

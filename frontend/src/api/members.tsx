@@ -24,12 +24,10 @@ export async function fetchClanMembers(
     const response = await fetch(`http://localhost:4000/api/members?${qs.toString()}`, {
         credentials: "include",
     });
-    console.log(response);
     if (!response.ok) {
         throw new Error(`HTTP ${response.status}`);
     }
     const json = await response.json();
-    console.log(json);
     return json.data ?? [];
 }
 
