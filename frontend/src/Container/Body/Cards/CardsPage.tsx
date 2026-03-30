@@ -18,7 +18,7 @@ export  function CardsPage() {
     return (
         <div className="profile-page">
 
-            <PrfofileTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+            {/*<PrfofileTabs activeTab={activeTab} setActiveTab={setActiveTab} />*/}
 
             {activeTab === "cards" && (
                <Albums albums={albums} />

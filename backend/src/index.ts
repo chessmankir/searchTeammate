@@ -22,6 +22,7 @@ import conversationRoute from "./routes/Messages/conversationRoute";
 import conversationsRoute from "./routes/Messages/conversationsRoute";
 import sendMessageRoute from "./routes/Messages/sendMessageRoute";
 import getConversationsRoute from "./routes/getConversationsRoute";
+import * as http from "node:http";
 
 
 dotenv.config();
@@ -37,6 +38,7 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
+const server = http.createServer(app);
 export const io = new Server(server, {
     cors: {
         origin: "http://localhost:5173",
@@ -92,6 +94,6 @@ app.get('/api', (req,res) => {
 });
 
 const PORT = Number(process.env.PORT) || 4000;
-app.listen(PORT, () =>{
+server.listen(PORT, () =>{
    console.log(`Backend running on http://localhost:${PORT}`);
 });

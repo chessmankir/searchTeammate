@@ -1,7 +1,7 @@
 import {useEffect} from "react";
 import {socket} from "../../../api/socket.ts";
 
-export function userSocketJoin(userId){
+export function useSocketJoin(userId){
     useEffect(() => {
         if (!userId) return;
         socket.emit("join", userId);

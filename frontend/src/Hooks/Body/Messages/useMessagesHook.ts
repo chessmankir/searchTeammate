@@ -1,5 +1,5 @@
 import {useParams, useSearchParams} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {Conversation} from "../../../types/Conversation.ts";
 import type {Message} from "../../../types/Message.ts";
 import {socket} from "../../../api/socket.ts";
@@ -10,8 +10,10 @@ export function useMessagesHook(){
     const [activeConversation ,setActiveConversation] = useState<Conversation>();
     const [message, setMessage] = useState('');
     const [activeMessages, setActiveMessages] = useState<Message[]>([]);
-    const [conversations, setConversations] = useState<Conversation>();
+    const [conversations, setConversations] = useState<Conversation[]>();
+    const messageRef = useRef<HTMLDivElement | null>(null);
 
+    //активный чат
     useEffect(()=>{
         if (!conversationId) return;
         (async() => {
@@ -26,6 +28,7 @@ export function useMessagesHook(){
         })();
     },[conversationId]);
 
+    //список сообщений
     useEffect(() => {
         (async() => {
             const backend = `http://localhost:4000/api/conversations/${conversationId}/messages`;
@@ -38,13 +41,13 @@ export function useMessagesHook(){
                     ({...message, time: (new Date(message.created_at)).toLocaleTimeString([],{
                         hour: '2-digit',
                         minute: '2-digit',
-                        })}));
+                        })}))
                 setActiveMessages(updatedMessages);
             }
         })();
-    }, []);
+    }, [conversationId]);
 
-
+    //список чатов
     useEffect(() => {
         (async () => {
             const backend = `http://localhost:4000/api/get/conversations`;
@@ -56,12 +59,11 @@ export function useMessagesHook(){
                 setConversations(data.conversations);
             }
         })();
-    },[]);
+    },[conversationId]);
 
     useEffect(() => {
-        const handleNewMessage = (newMessage) => {
-            if (Number(conversationId) !== newMessage.conversation_id) return;
-
+        const handleNewMessage = (newMessage: Message) => {
+            if (Number(conversationId) != newMessage.conversation_id) return; // проверить типы
             setActiveMessages((prev) => {
                 const exists = prev.some((msg) => msg.id === newMessage.id);
                 if (exists) return prev;
@@ -76,6 +78,16 @@ export function useMessagesHook(){
         };
     }, [conversationId]);
 
+    useEffect(() => {
+        const el = messageRef.current;
+        if(!el) return;
+        const isNearBottom =  el.scrollHeight - el.scrollTop - el.clientHeight < 100;
+
+        if(isNearBottom){
+            el.scrollTop = el.scrollHeight;
+        }
+    }, [activeMessages]);
+
     const sendMessage = async () => {
         const backend = `http://localhost:4000/api/conversations/${conversationId}/messages`;
         try{
@@ -89,6 +101,7 @@ export function useMessagesHook(){
             });
             const data = await response.json();
             if(data.ok){
+                console.log('сообщение успешно');
                 setMessage("");
                 return true;
             }
@@ -100,6 +113,6 @@ export function useMessagesHook(){
         }
     }
 
-    return {activeConversation, message, setMessage, sendMessage, activeMessages, conversations };
+    return {activeConversation, message, setMessage, sendMessage, activeMessages, conversations, conversationId, messageRef};
 }
 

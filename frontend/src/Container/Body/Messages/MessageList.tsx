@@ -1,6 +1,7 @@
-export  function MessageList({user_id, activeMessages}){
+
+export  function MessageList({user_id, activeMessages, messageRef}){
     return (
-        <div className="messages-list">
+        <div className="messages-list" ref={messageRef}>
             {activeMessages.map(msg => (
                 <div
                     key={msg.id}

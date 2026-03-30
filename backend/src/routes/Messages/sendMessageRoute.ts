@@ -5,6 +5,7 @@ import {io} from "../../index";
 
 const router = Router();
 router.post('/:conversation/messages', async (req: Request, res: Response) => {
+    console.log("send messages");
     const {message} = req.body;
     const conversation = req.params.conversation;
     if (!message) {
@@ -30,56 +31,40 @@ router.post('/:conversation/messages', async (req: Request, res: Response) => {
 
     const query = `INSERT INTO messages (conversation_id, sender_id, body, created_at)
                             VALUES ($1, $2, $3, NOW()) RETURNING id, conversation_id, sender_id, body, created_at`
-    const response = await pool.query(query, [conversation, user.id, message]);
-    if (response.rows.length == 0) {
-        const targetId = await getOtherParticipantId(conversation, user?.id);
-        const newMessage  = response.rows[0];
-        const messageClient = {
-            ...newMessage,
-            time: new Date(newMessage.created_at).toLocaleTimeString("ru-RU", {
-                hour: "2-digit",
-                minute: "2-digit",
-            }),
-        }
+    try{
+        const response = await pool.query(query, [conversation, user.id, message]);
+        console.log(response.rows);
+        if (response.rows.length > 0) {
+            const targetId = await getOtherParticipantId(conversation, user?.id);
+            const newMessage  = response.rows[0];
+            const messageClient = {
+                ...newMessage,
+                time: new Date(newMessage.created_at).toLocaleTimeString("ru-RU", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                }),
+            }
+            console.log(`user:${user.id}`);
+            io.to(`user:${user.id}`).emit("message:new", messageClient);
+            if(targetId){
+                io.to(`user:${targetId}`).emit("message:new", messageClient);
+            }
 
-        io.to(`user:${user.id}`).emit("message:new", messageClient);
-        if(targetId){
-            io.to(`user:${targetId}`).emit("message:new", messageClient);
+            return res.json({
+                ok: true,
+                message: messageClient
+            })
         }
 
         return res.json({
             ok: false,
-            message: messageClient
-        })
+        });
     }
-
-    return res.json({
-        ok: true,
-
-    })
-});
-
-async function getOtherParticipantId(conversationId, userId) {
-    try {
-        const otherParticipantQuery = `
-            SELECT user_id
-            FROM conversation_participants
-            WHERE conversation_id = $1
-              AND user_id != $2
-            LIMIT 1
-        `;
-
-        const otherParticipantResponse = await pool.query(otherParticipantQuery, [
-            conversationId,
-            userId
-        ]);
-        const targetUserId = otherParticipantResponse.rows[0]?.user_id;
-        return  targetUserId;
-    } catch (e) {
+    catch (e) {
         console.log(e);
-        return false;
     }
-}
+
+});
 
 router.get('/:conversation/messages', async (req: Request, res: Response) => {
     const conversation = req.params.conversation;
@@ -105,4 +90,27 @@ router.get('/:conversation/messages', async (req: Request, res: Response) => {
         messages: response.rows
     })
 })
+
+async function getOtherParticipantId(conversationId, userId) {
+    try {
+        const otherParticipantQuery = `
+            SELECT user_id
+            FROM conversation_participants
+            WHERE conversation_id = $1
+              AND user_id != $2
+            LIMIT 1
+        `;
+
+        const otherParticipantResponse = await pool.query(otherParticipantQuery, [
+            conversationId,
+            userId
+        ]);
+        const targetUserId = otherParticipantResponse.rows[0]?.user_id;
+        return  targetUserId;
+    } catch (e) {
+        console.log(e);
+        return false;
+    }
+}
+
 export default router;

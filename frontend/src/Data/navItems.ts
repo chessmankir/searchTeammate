@@ -6,7 +6,7 @@ export type NavItemType = {
 export const profileLinks: NavItemType[] =
     [
         {to: "/profile", label: "Профиль"},
-        {to: "/cards", label: "Карты"},
+        {to: "/albums", label: "Карты"},
         {to: "/myclan", label: "Мой клан"},
         {to: "/messages", label: "Сообщения"},
         {to: "/settings", label: "Настройки"},
