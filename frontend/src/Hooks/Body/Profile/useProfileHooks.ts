@@ -16,7 +16,7 @@ export function useProfileHooks() {
                 params.set("pubg_id", "1");
             }
 
-            const backend = "http://localhost:4000/api/members?" + params.toString();
+            const backend = "/api/members?" + params.toString();
 
             try {
                 const response = await fetch(backend, {

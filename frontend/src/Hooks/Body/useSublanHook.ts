@@ -13,7 +13,7 @@ export function useSubclans() {
 
         (async () => {
             try {
-                const response = await fetch(`http://localhost:4000/api/myclan`, {
+                const response = await fetch(`/api/myclan`, {
                     credentials: "include"
                 });
                 const data = await response.json();

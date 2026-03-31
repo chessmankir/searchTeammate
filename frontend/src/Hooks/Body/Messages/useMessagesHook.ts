@@ -18,7 +18,7 @@ export function useMessagesHook() {
         if (!conversationId) return;
 
         (async () => {
-            const backend = `http://localhost:4000/api/conversations/${conversationId}`;
+            const backend = `/api/conversations/${conversationId}`;
             const response = await fetch(backend, {
                 credentials: "include",
             });

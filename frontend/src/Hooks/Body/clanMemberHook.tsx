@@ -25,7 +25,7 @@ export function useClanMember() {
                 }
 
                 const response = await fetch(
-                    `http://localhost:4000/api/clanmember?${query.toString()}`,
+                    `/api/clanmember?${query.toString()}`,
                     {
                         credentials: "include"
                     }

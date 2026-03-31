@@ -16,7 +16,7 @@ export function useClans(){
     useEffect(() => {
         (async () => {
             try {
-                const clans = await fetch("http://localhost:4000/api/clans");
+                const clans = await fetch("/api/clans");
                 const data = await clans.json();
                 if(data.ok){
                     setClans(data.data);

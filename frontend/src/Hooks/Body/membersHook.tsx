@@ -38,7 +38,7 @@ export function useMembers() {
             try {
                 setLoading(true);
 
-                const res = await fetch(`http://localhost:4000/api/members?${query}`, {
+                const res = await fetch(`/api/members?${query}`, {
                     signal: ac.signal,
                 });
 

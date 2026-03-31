@@ -8,7 +8,7 @@ export function useLoadAlbums() {
     useEffect(() => {
         (async () => {
             try {
-                const backendURL = "http://localhost:4000/api/albums";
+                const backendURL = "/api/albums";
                 const response = await fetch(backendURL);
                 const data = await response.json();
 

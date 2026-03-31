@@ -16,7 +16,7 @@ export function useLoginHook() {
     const sendCodeSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const backendServer = "http://localhost:4000/api/sendcode";
+        const backendServer = "/api/sendcode";
 
         try {
             const response = await fetch(backendServer, {
@@ -46,7 +46,7 @@ export function useLoginHook() {
     const verifyCodeSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const backendServer = "http://localhost:4000/api/verifycode";
+        const backendServer = "/api/verifycode";
 
         try {
             const response = await fetch(backendServer, {
