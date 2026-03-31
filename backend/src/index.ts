@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
-import {Server} from "socket.io";
+import { Server } from "socket.io";
 import healthRouter from "./routes/health";
 import memberRouter from "./routes/member";
 import tournamentRouter from "./routes/tournamentRoute";
@@ -24,27 +24,28 @@ import sendMessageRoute from "./routes/Messages/sendMessageRoute";
 import getConversationsRoute from "./routes/getConversationsRoute";
 import * as http from "node:http";
 
-
 dotenv.config();
 
 const app = express();
 
 app.use(
     cors({
-        origin: ["http://localhost:3000", "http://localhost:5173"],
-        credentials:true
-    }),
+        origin: true,
+        credentials: true,
+    })
 );
+
 app.use(express.json());
 app.use(cookieParser());
 
 const server = http.createServer(app);
+
 export const io = new Server(server, {
     cors: {
-        origin: ["http://localhost:3000", "http://localhost:5173"],
-        credentials: true
-    }
-})
+        origin: true,
+        credentials: true,
+    },
+});
 
 const onlineUsers = new Map<number, string>();
 
@@ -58,15 +59,15 @@ io.on("connection", (socket) => {
         console.log(`user ${userId} joined room user:${userId}`);
     });
 
-    socket.on("disconnect", ()=>{
-        for(const [userId, socketId] of onlineUsers.entries()){
-            if(socketId === socket.id){
+    socket.on("disconnect", () => {
+        for (const [userId, socketId] of onlineUsers.entries()) {
+            if (socketId === socket.id) {
                 onlineUsers.delete(userId);
                 break;
             }
         }
         console.log("socket disconnected", socket.id);
-    })
+    });
 });
 
 app.use("/api/health", healthRouter);
@@ -84,16 +85,16 @@ app.use("/api/remove/card", removeCardRouter);
 app.use("/api/clanmember", clanMemberRoute);
 app.use("/api/myclan", myClanRoute);
 app.use("/api/info", infoRoute);
-app.use("/api/conversation", conversationRoute); // создание беседы
-app.use("/api/conversations", conversationsRoute); // чтение беседы
-app.use("/api/conversations", sendMessageRoute); //отравка сообщений и чтение сообщений
-app.use("/api/get/conversations", getConversationsRoute); // список бесед
+app.use("/api/conversation", conversationRoute);
+app.use("/api/conversations", conversationsRoute);
+app.use("/api/conversations", sendMessageRoute);
+app.use("/api/get/conversations", getConversationsRoute);
 
-app.get('/api', (req,res) => {
-   return res.json({ok: true, message: "Welcome Backend API"});
+app.get("/api", (req, res) => {
+    return res.json({ ok: true, message: "Welcome Backend API" });
 });
 
 const PORT = Number(process.env.PORT) || 4000;
-server.listen(PORT, () =>{
-   console.log(`Backend running on http://localhost:${PORT}`);
+server.listen(PORT, () => {
+    console.log(`Backend running on http://localhost:${PORT}`);
 });
