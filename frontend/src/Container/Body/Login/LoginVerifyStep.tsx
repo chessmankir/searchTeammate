@@ -1,7 +1,9 @@
+import type {FormEvent} from "react";
+
 type LoginVerifyProps = {
     code: string;
     setCode: (code: string) => void;
-    verifyCodeSubmit: (e: SubmitEvent) => void;
+    verifyCodeSubmit: (e: FormEvent<HTMLFormElement>) => Promise<void>;
 }
 
 export function LoginVerifyStep({code, setCode, verifyCodeSubmit}: LoginVerifyProps) {

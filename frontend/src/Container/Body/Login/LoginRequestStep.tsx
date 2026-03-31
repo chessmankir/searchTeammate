@@ -1,9 +1,11 @@
-import type { SubmitEvent } from "react";
+import type {Dispatch, FormEvent, SetStateAction} from "react";
+import type {LoginStep} from "../../../types/LoginStep.ts";
 
 type LoginRequestStepProps = {
     pubgId: string;
     setPubgId: (pubgId: string) => void;
-    sendCodeSumbit: (e: SubmitEvent) => void;
+    sendCodeSubmit: (e: FormEvent<HTMLFormElement>) => void;
+    setStep: Dispatch<SetStateAction<LoginStep>>;
 }
 
 export function LoginRequestStep({pubgId, setPubgId, sendCodeSubmit}: LoginRequestStepProps) {

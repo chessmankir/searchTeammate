@@ -1,13 +1,24 @@
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import type { AlbumType } from "../../../types/AlbumType.ts";
 
-export  function Album({card}){
+type AlbumProps = {
+    card: AlbumType;
+};
+
+export function Album({ card }: AlbumProps) {
     const navigate = useNavigate();
+
     return (
         <button
-            key={card.id}
-            className={`collect-card `}
+            className="collect-card"
             type="button"
-            onClick={() => navigate("/cards/" + card.slug)}
+            onClick={() => {
+                if (card.slug) {
+                    navigate("/cards/" + card.slug);
+                } else {
+                    navigate("/albums");
+                }
+            }}
         >
             <div className="collect-card__image-wrap">
                 <img
@@ -20,6 +31,5 @@ export  function Album({card}){
                 <span className="collect-card__title">{card.name}</span>
             </div>
         </button>
-    )
-
+    );
 }

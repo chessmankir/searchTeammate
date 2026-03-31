@@ -3,5 +3,6 @@ export interface Message {
     conversation_id: number,
     sender_id: number,
     created_at: string,
-    time?: string
+    time?: string,
+    body: string,
 }

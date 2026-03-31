@@ -1,5 +1,4 @@
 import "../../../StyleSheets/tournaments.css";
-import {Pagination} from "../Member/Pagination.tsx";
 import {useTournamentHook} from "../../../Hooks/Body/tournamentHook.tsx";
 
 export function Tournaments() {

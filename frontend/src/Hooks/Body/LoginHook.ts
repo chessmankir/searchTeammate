@@ -1,10 +1,9 @@
-import {useState} from "react";
-import type {LoginStep} from "../../types/LoginStep.ts";
-import {useNavigate} from "react-router-dom";
-//import dotenv from "dotenv";
-import {authStore} from "../../store/authStore.ts";
+import { useState } from "react";
+import type { LoginStep } from "../../types/LoginStep.ts";
+import { useNavigate } from "react-router-dom";
+import { authStore } from "../../store/authStore.ts";
 
-export  function useLoginHook(){
+export function useLoginHook() {
     const [pubgId, setPubgId] = useState("");
     const [step, setStep] = useState<LoginStep>("request");
     const [code, setCode] = useState("");
@@ -14,60 +13,82 @@ export  function useLoginHook(){
     const setUser = authStore((state) => state.setUser);
     const navigate = useNavigate();
 
-    const sendCodeSubmit = async (e: SubmitEvent) => {
+    const sendCodeSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-      //  console.log(process.env.BACKEND_URL);
+
         const backendServer = "http://localhost:4000/api/sendcode";
-        try{
-            const response = await fetch(backendServer,{
+
+        try {
+            const response = await fetch(backendServer, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
-                body: JSON.stringify({pubgId})
+                body: JSON.stringify({ pubgId }),
             });
+
             const data = await response.json();
-            if(data.ok){
+
+            if (data.ok) {
                 setStep("verify");
-                setMessage('Введить полученный код от бота @checkmatePubgBot');
-
+                setError("");
+                setMessage("Введите полученный код от бота @checkmatePubgBot");
+            } else {
+                setMessage("");
+                setError("Данный пользователь не найден");
             }
-            else{
-                setError('Данный пользователь не найден');
-            }
-        }
-        catch (e){
+        } catch (e) {
             console.error(e);
+            setMessage("");
+            setError("Ошибка отправки кода");
         }
-    }
+    };
 
-    const verifyCodeSubmit = async (e: SubmitEvent) => {
+    const verifyCodeSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
         const backendServer = "http://localhost:4000/api/verifycode";
-        try{
-            const response = await fetch(backendServer,{
+
+        try {
+            const response = await fetch(backendServer, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
-                body: JSON.stringify({code, pubgId})
+                body: JSON.stringify({ code, pubgId }),
             });
+
             const data = await response.json();
-            if(data.ok){
+
+            if (data.ok) {
                 setUser(data.user);
                 navigate("/players");
                 setPubgId("");
+                setCode("");
                 setStep("request");
                 setError("");
                 setMessage("");
+            } else {
+                setError("Не совпадают данные");
+                setMessage("");
             }
-            else{
-                console.log("Не совпадают данные");
-            }
+        } catch (e) {
+            console.log(e);
+            setError("Ошибка проверки кода");
+            setMessage("");
         }
-        catch (e){
-            console.log(e)
-        }
-    }
+    };
 
-    return {pubgId, setPubgId, step,  setStep, code, setCode, verifyCodeSubmit, sendCodeSubmit, error, setError,
-            message, setMessage}
+    return {
+        pubgId,
+        setPubgId,
+        step,
+        setStep,
+        code,
+        setCode,
+        verifyCodeSubmit,
+        sendCodeSubmit,
+        error,
+        setError,
+        message,
+        setMessage,
+    };
 }

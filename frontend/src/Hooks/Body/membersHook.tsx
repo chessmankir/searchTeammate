@@ -1,6 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
 import { useFiltersStore } from "../../store/filtersStore.ts";
 
+type Member = {
+    id: number;
+    name: string;
+    nickname: string;
+    pubg_id?: number | string;
+    age?: number;
+    city?: string;
+};
+
 export function useMembers() {
     const mode = useFiltersStore((s) => s.mode);
     const ageTo = useFiltersStore((s) => s.ageTo);
@@ -8,9 +17,9 @@ export function useMembers() {
     const timeMode = useFiltersStore((s) => s.timeMode);
     const page = useFiltersStore((s) => s.page);
 
-    const [members, setMembers] = useState([]);
+    const [members, setMembers] = useState<Member[]>([]);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
+    const [error, setError] = useState<string | false>(false);
 
     const query = useMemo(() => {
         const sp = new URLSearchParams();
@@ -19,7 +28,6 @@ export function useMembers() {
         if (ageTo != null) sp.set("ageTo", String(ageTo));
         if (timeMode.size > 0) sp.set("timemode", Array.from(timeMode).join(","));
         if (page > 1) sp.set("page", String(page));
-        // если добавишь limit — тоже сюда
         return sp.toString();
     }, [mode, ageFrom, ageTo, timeMode, page]);
 
@@ -37,7 +45,7 @@ export function useMembers() {
                 const data = await res.json();
 
                 if (!data.ok) {
-                    setError(true);
+                    setError("Не удалось загрузить игроков");
                     setMembers([]);
                 } else {
                     setError(false);
@@ -46,7 +54,7 @@ export function useMembers() {
             } catch (e: any) {
                 if (e?.name !== "AbortError") {
                     console.error(e);
-                    setError(true);
+                    setError("Не удалось загрузить игроков");
                 }
             } finally {
                 setLoading(false);

@@ -6,6 +6,7 @@ interface Clan{
     tag: string;
     members_count: number;
     kd: string;
+    tagActive?: boolean
 }
 
 export function useClans(){

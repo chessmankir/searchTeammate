@@ -1,14 +1,26 @@
-import {useNavigate, useSearchParams} from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import type { CardFilterType } from "../../../types/CardFilterType.ts";
 
-export function TypeCardFilter({ type, text, setCardFilter}) {
+type Props = {
+    type: CardFilterType;
+    text: string;
+    setCardFilter: (value: CardFilterType) => void;
+};
+
+export function TypeCardFilter({ type, text, setCardFilter }: Props) {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
-    const filter = searchParams.get("filter") || "all";
+
+    const filter = (searchParams.get("filter") as CardFilterType) || "all";
+
     return (
         <button
             className={`filter-chip ${filter === type ? "active" : ""}`}
-            onClick={(e) => { e.preventDefault();
-                setCardFilter("all"); navigate(`/cards?filter=${type}`);  }}
+            onClick={(e) => {
+                e.preventDefault();
+                setCardFilter(type); // ✅ исправлено
+                navigate(`/cards?filter=${type}`);
+            }}
             type="button"
         >
             {text}

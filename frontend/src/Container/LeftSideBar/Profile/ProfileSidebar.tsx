@@ -1,6 +1,15 @@
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-export function ProfileSidebar({navItems}){
+type NavItem = {
+    to: string;
+    label: string;
+};
+
+type ProfileSidebarProps = {
+    navItems: NavItem[];
+};
+
+export function ProfileSidebar({ navItems }: ProfileSidebarProps) {
     return (
         <div className="profile-sidebar">
             <div className="profile-sidebar__top">
@@ -13,7 +22,7 @@ export function ProfileSidebar({navItems}){
                     <NavLink
                         key={item.to}
                         to={item.to}
-                        className={({isActive}) =>
+                        className={({ isActive }) =>
                             isActive
                                 ? "profile-sidebar__link profile-sidebar__link--active"
                                 : "profile-sidebar__link"
@@ -24,5 +33,5 @@ export function ProfileSidebar({navItems}){
                 ))}
             </nav>
         </div>
-    )
+    );
 }

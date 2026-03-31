@@ -18,7 +18,7 @@ export function Albums({albums}: AlbumsProps) {
 
                 <div className="cards-grid">
                     {albums.map((card) => (
-                        <Album card={card} key={card.id} />
+                        <Album card={card} key={card.id ?? card.slug ?? card.name} />
                     ))}
                 </div>
             </section>

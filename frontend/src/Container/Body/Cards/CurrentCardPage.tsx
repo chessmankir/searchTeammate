@@ -1,13 +1,13 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "../../../StyleSheets/current_card.css";
 import {CardWrapper} from "./CardWrapper.tsx";
 import {useCards} from "../../../Hooks/Body/cardHook.ts"
 import {AlbumPageTopbar} from "./AlbumPageTopbar.tsx";
 
-function getProgressPercent(collected: number, total: number) {
+/*function getProgressPercent(collected: number, total: number) {
     if (!total) return 0;
     return Math.round((collected / total) * 100);
-}
+}*/
 
 export  function CurrentCardPage() {
     const { albumId } = useParams();

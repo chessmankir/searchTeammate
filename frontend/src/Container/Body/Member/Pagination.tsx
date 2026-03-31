@@ -2,18 +2,6 @@ import {useFiltersStore} from "../../../store/filtersStore.ts";
 
 export function Pagination(){
 
-    const  from = 1;
-    const  to = 5;
-    const  total = 10;
-    const onPageSizeChange = (e) => {}
-    const onPageChange = () => {}
-    const  pageSize = 1;
-    const  pageSizes = [];
-    const canPrev = 1;
-    const  safePage = 1;
-    const pages = [];
-    const canNext = 1;
-
     const page = useFiltersStore((s) => s.page);
     const setPage = useFiltersStore((s) => s.setPage);
 

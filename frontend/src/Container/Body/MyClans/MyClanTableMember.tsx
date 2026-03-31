@@ -1,6 +1,11 @@
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import type { ClanMember } from "../../../types/ClanMember.ts";
 
-export function MyClanTableMember({members}) {
+type Props = {
+    members: ClanMember[];
+};
+
+export function MyClanTableMember({ members }: Props) {
     return (
         <div className="myclan-table-wrap">
             <table className="myclan-table">
@@ -21,10 +26,6 @@ export function MyClanTableMember({members}) {
                     <tr key={member.id}>
                         <td>
                             <div className="myclan-member">
-                                {/*<div className="myclan-member__avatar">
-                                        {member.name.charAt(0)}
-                                    </div>*/}
-
                                 <div className="myclan-member__info">
                                     <div className="myclan-member__name">{member.name}</div>
                                     <div className="myclan-member__nickname">{member.nickname}</div>
@@ -46,9 +47,10 @@ export function MyClanTableMember({members}) {
                                                 : "myclan-badge--gray"
                                     }`}
                                 >
-                                    Участник
+                                    {member.role ?? "Участник"}
                                 </span>
                         </td>
+
                         <td>
                             <div className="myclan-clan-time">
                                 <div>{member.timeInClan}</div>
@@ -57,10 +59,17 @@ export function MyClanTableMember({members}) {
 
                         <td>
                             <div className="myclan-row-actions">
-                                <button className="myclan-btn myclan-btn--small myclan-btn--ghost">
-                                    <Link to={`/profile/${member.pubg_id}`}  >Профиль </Link>
-                                </button>
-                                <button className="myclan-btn myclan-btn--small myclan-btn--danger">
+                                <Link
+                                    to={`/profile/${member.pubg_id}`}
+                                    className="myclan-btn myclan-btn--small myclan-btn--ghost"
+                                >
+                                    Профиль
+                                </Link>
+
+                                <button
+                                    type="button"
+                                    className="myclan-btn myclan-btn--small myclan-btn--danger"
+                                >
                                     Бан
                                 </button>
                             </div>
@@ -70,5 +79,5 @@ export function MyClanTableMember({members}) {
                 </tbody>
             </table>
         </div>
-    )
+    );
 }

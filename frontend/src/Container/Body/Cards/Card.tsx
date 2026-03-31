@@ -1,4 +1,24 @@
-export function Card({card, totalCount, commonCount, rareCount, legendaryCount}){
+type CardType = {
+    id: number;
+    name: string;
+    imageSrc: string;
+};
+
+type CardProps = {
+    card: CardType;
+    totalCount: number;
+    commonCount: number;
+    rareCount: number;
+    legendaryCount: number;
+};
+
+export function Card({
+                         card,
+                         totalCount,
+                         commonCount,
+                         rareCount,
+                         legendaryCount
+                     }: CardProps) {
     return (
         <div className="album-card__image-wrap">
             <img

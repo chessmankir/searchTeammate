@@ -1,7 +1,17 @@
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import type { MyClan } from "../../../types/MyClan.ts";
 
-export function MyClanSidebarClan({clans, currentClan, setCurrentClan}){
+type MyClanSidebarClanProps = {
+    clans: MyClan[];
+    currentClan: number;
+};
+
+export function MyClanSidebarClan({
+                                      clans,
+                                      currentClan,
+                                  }: MyClanSidebarClanProps) {
     const navigate = useNavigate();
+
     return (
         <div className="myclan-sidebar__section">
             <div className="myclan-sidebar__section-title">Кланы</div>
@@ -10,8 +20,10 @@ export function MyClanSidebarClan({clans, currentClan, setCurrentClan}){
                 {clans.map((clan) => (
                     <button
                         key={clan.id}
-                        className={`myclan-clan-item ${(clan.number == currentClan) ? "myclan-clan-item--active" : ""}`}
-                        onClick={ ()=> navigate(`/myclan?number=${clan.number}`)}
+                        className={`myclan-clan-item ${
+                            clan.number === currentClan ? "myclan-clan-item--active" : ""
+                        }`}
+                        onClick={() => navigate(`/myclan?number=${clan.number}`)}
                     >
                         <span>{clan.title}</span>
                         <span className="myclan-clan-item__count">{clan.real_count}</span>
@@ -19,5 +31,5 @@ export function MyClanSidebarClan({clans, currentClan, setCurrentClan}){
                 ))}
             </div>
         </div>
-    )
+    );
 }

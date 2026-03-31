@@ -1,6 +1,11 @@
-import {TypeCardFilter} from "./TypeCardFilter.tsx";
+import { TypeCardFilter } from "./TypeCardFilter.tsx";
+import type { CardFilterType } from "../../../types/CardFilterType.ts";
 
-export function TypeCardFilterBlock({cardFilter, setCardFilter}){
+type TypeCardFilterBlockProps = {
+    setCardFilter: (value: CardFilterType) => void;
+};
+
+export function TypeCardFilterBlock({ setCardFilter }: TypeCardFilterBlockProps) {
     return (
         <div className="cards-filter-block">
             <div className="cards-filter-block__title">
@@ -8,14 +13,11 @@ export function TypeCardFilterBlock({cardFilter, setCardFilter}){
             </div>
 
             <div className="filter-chips">
-
-                <TypeCardFilter cardFilter={cardFilter} type={"all"} text={"Все"} setCardFilter={setCardFilter}/>
-                <TypeCardFilter cardFilter={cardFilter} type={"duplicates"} text={"Дубликаты"}
-                                setCardFilter={setCardFilter}/>
-                <TypeCardFilter cardFilter={cardFilter} type={"missing"} text={"Отсутствуют"}
-                                setCardFilter={setCardFilter}/>
-                <TypeCardFilter cardFilter={cardFilter} type={"trades"} text={"Обмены"} setCardFilter={setCardFilter}/>
+                <TypeCardFilter type="all" text="Все" setCardFilter={setCardFilter} />
+                <TypeCardFilter type="duplicates" text="Дубликаты" setCardFilter={setCardFilter} />
+                <TypeCardFilter type="missing" text="Отсутствуют" setCardFilter={setCardFilter} />
+                <TypeCardFilter type="trades" text="Обмены" setCardFilter={setCardFilter} />
             </div>
         </div>
-    )
+    );
 }

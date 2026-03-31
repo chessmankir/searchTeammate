@@ -1,6 +1,5 @@
 import {Outlet} from "react-router-dom";
 import {Header} from "../../Header/Header.tsx";
-import {LeftSideBar} from "../../LeftSideBar/LeftSideBar.tsx";
 import MessagesSidebarWrapper from "../../LeftSideBar/Messages/MessagesSidebarWrapper.tsx";
 
 export function MessagesLayout() {

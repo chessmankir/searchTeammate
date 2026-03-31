@@ -1,4 +1,13 @@
-export function PrfofileTabs ({activeTab, setActiveTab}){
+import type { Dispatch, SetStateAction } from "react";
+
+type TabKey = "cards" | "clan" | "tournaments";
+
+type Props = {
+    activeTab: TabKey;
+    setActiveTab: Dispatch<SetStateAction<TabKey>>;
+};
+
+export function PrfofileTabs({ activeTab, setActiveTab }: Props) {
     return (
         <div className="profile-tabs-wrap">
             <div className="profile-tabs">

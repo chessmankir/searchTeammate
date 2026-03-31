@@ -12,12 +12,11 @@ export function MyClansPage() {
     const {clanMembers, searchData, setSearchData} = useClanMember();
     const clans = myClanStore((state) => state.clans);
     const currentClan = myClanStore( (state) => state.currentClan);
-    const setCurrentClan = myClanStore( (state) => state.setCurrentClan);
     const totalMembers = myClanStore((state) => state.totalMembers);
     return (
         <div className="myclan-page">
             <MyClanHeader />
-            <MyClanTabs clans={clans} currentClan={currentClan} setCurrentClan={setCurrentClan } />
+            <MyClanTabs clans={clans} currentClan={currentClan} />
             <MyClanSearch totalMembers={totalMembers} searchData={searchData} setSearchData={setSearchData} />
             <MyClanTableMember members={clanMembers} />
             {/*<div className="myclan-stats">

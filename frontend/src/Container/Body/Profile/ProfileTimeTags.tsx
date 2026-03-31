@@ -1,4 +1,22 @@
-export function ProfileTimeTags({allTimeModes, member, isEdit, toggleTimeMode}){
+type TimeMode = "утро" | "день" | "вечер";
+
+type MemberType = {
+    timeModes: TimeMode[];
+};
+
+type ProfileTimeTagsProps = {
+    allTimeModes: TimeMode[];
+    member?: MemberType;
+    isEdit: boolean;
+    toggleTimeMode: (mode: TimeMode) => void;
+};
+
+export function ProfileTimeTags({
+                                    allTimeModes,
+                                    member,
+                                    isEdit,
+                                    toggleTimeMode,
+                                }: ProfileTimeTagsProps) {
     return (
         <div className="profile-card">
             <h2 className="profile-card__title">
@@ -7,8 +25,7 @@ export function ProfileTimeTags({allTimeModes, member, isEdit, toggleTimeMode}){
 
             <div className="profile-tags">
                 {allTimeModes.map((item) => {
-                    const active =
-                        member?.timeModes.includes(item);
+                    const active = member?.timeModes?.includes(item) ?? false;
 
                     return (
                         <button
@@ -27,5 +44,5 @@ export function ProfileTimeTags({allTimeModes, member, isEdit, toggleTimeMode}){
                 })}
             </div>
         </div>
-    )
+    );
 }

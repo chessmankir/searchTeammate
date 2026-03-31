@@ -1,14 +1,19 @@
-import {useNavigate} from "react-router-dom";
+import type { ClanMember } from "../../../types/ClanMember.ts";
 
-export function ProfileMemberSendMessage({startConversation, member}){
-    console.log('ProfileMemberSendMessage');
+type Props = {
+    startConversation: (memberId: number) => void;
+    member?: ClanMember;
+};
+
+export function ProfileMemberSendMessage({ startConversation, member }: Props) {
     return (
-        <button className="profile-btn profile-btn--secondary profile-player-card__write"
-                onClick={(e) => {
-                    e.preventDefault();
-                    startConversation(member.id);
-                }
-        }
+        <button
+            className="profile-btn profile-btn--secondary profile-player-card__write"
+            onClick={(e) => {
+                e.preventDefault();
+                if (!member?.id) return;
+                startConversation(member.id);
+            }}
         >
             Написать
         </button>

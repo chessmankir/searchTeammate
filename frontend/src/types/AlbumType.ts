@@ -1,7 +1,7 @@
-export interface AlbumType{
-    id: number,
-    name: string,
-    slug: string,
-    imageSrc: string,
-    total: string
+export interface AlbumType {
+    id: number | null;
+    name: string;
+    slug: string | null;
+    imageSrc: string;
+    total_cards?: number;
 }

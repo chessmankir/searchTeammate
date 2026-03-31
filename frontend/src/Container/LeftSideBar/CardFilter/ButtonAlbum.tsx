@@ -1,20 +1,39 @@
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import type { AlbumType } from "../../../types/AlbumType.ts";
 
-export function ButtonAlbum({album, selectedAlbum, setSelectedAlbum}){
+type ButtonAlbumProps = {
+    album: AlbumType;
+    selectedAlbum: number | null;
+    setSelectedAlbum: (id: number | null) => void;
+};
+
+export function ButtonAlbum({
+                                album,
+                                selectedAlbum,
+                                setSelectedAlbum,
+                            }: ButtonAlbumProps) {
     const navigate = useNavigate();
+
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+
+        setSelectedAlbum(album.id ?? null);
+
+        if (!album.slug) {
+            navigate("/albums");
+        } else {
+            navigate("/cards/" + album.slug);
+        }
+    };
+
     return (
         <button
-            key={album.id ?? "all"}
-            className={`album-item ${selectedAlbum === album.id ? "active" : ""}`}
-            onClick={(e) =>{
-                e.preventDefault();
-                setSelectedAlbum(album.id);
-                (album.slug == "" || album.slug == null ) ? navigate("/albums") : navigate("/cards/" + album.slug);
-            }}
+            className={`album-item ${selectedAlbum === (album.id ?? null) ? "active" : ""}`}
+            onClick={handleClick}
             type="button"
         >
             <div className="album-item__left">
-                <span className="album-dot"/>
+                <span className="album-dot" />
                 <span>{album.name}</span>
             </div>
 
@@ -22,5 +41,5 @@ export function ButtonAlbum({album, selectedAlbum, setSelectedAlbum}){
                 <span className="album-count">{album.total_cards}</span>
             )}
         </button>
-    )
+    );
 }

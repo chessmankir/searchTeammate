@@ -9,11 +9,11 @@ export function LoginCard(){
     const [error, setError] = useState("");
 
     async function handleSendCode(e: React.FormEvent<HTMLFormElement>) {
-
+            e.preventDefault();
     }
 
     async function handleVerifyCode(e: React.FormEvent<HTMLFormElement>) {
-
+        e.preventDefault();
     }
 
     function handleBack() {

@@ -1,6 +1,7 @@
 export interface MyClan{
     id: number,
-    name?: string
+    title?: string,
+    name?: string,
     number: number,
     real_count: number
 }

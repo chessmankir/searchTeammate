@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import { fetchClanMembers, ClanMember } from "../../../api/members.tsx";
 import "../../../StyleSheets/members.css";
 import {useMembers} from "../../../Hooks/Body/membersHook.tsx";
 import {Pagination} from "./Pagination.tsx";

@@ -10,12 +10,11 @@ import {ProfileSidebar} from "../Profile/ProfileSidebar.tsx";
 export function MyClanWrapperSidebar() {
     const clans = myClanStore((state) => state.clans);
     const currentClan = myClanStore((state) => state.currentClan);
-    const setCurrentClan = myClanStore((state) => state.setCurrentClan);
     return (
         <div className="myclan-sidebar">
                <LogoCheckmate />
                <ProfileSidebar navItems={profileLinks} />
-               <MyClanSidebarClan clans={clans} currentClan={currentClan} setCurrentClan={setCurrentClan}/>
+               <MyClanSidebarClan clans={clans} currentClan={currentClan} />
                <MyClanInfo />
                <MyClanFooter />
             </div>
