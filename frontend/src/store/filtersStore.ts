@@ -10,64 +10,71 @@ type FiltersState = {
 
     ageFrom: number | null;
     ageTo: number | null;
-    setAgeFrom: (age:number) => void;
-    setAgeTo: (age:number) => void;
+    setAgeFrom: (age: number | null) => void;
+    setAgeTo: (age: number | null) => void;
 
     timeMode: Set<TimeMode>;
     toggleTimeMode: (mode: TimeMode) => void;
     resetTimeMode: () => void;
 
     page: number;
-    setPage: (page) => void;
+    setPage: (page: number) => void;
 };
 
-export const useFiltersStore = create<FiltersState>((set,get) => ({
+export const useFiltersStore = create<FiltersState>((set, get) => ({
     mode: "classic",
     ageFrom: 18,
     ageTo: 40,
     page: 1,
-    timeMode: new Set(),
+    timeMode: new Set<TimeMode>(),
+
     setAgeFrom: (age) =>
-        set((state) => ({
+        set(() => ({
             ageFrom: age
         })),
-    setAgeTo: (age) =>
-        set((state) => ({
-        ageTo: age
 
-    })),
+    setAgeTo: (age) =>
+        set(() => ({
+            ageTo: age
+        })),
+
     toggleTimeMode: (mode) =>
-        set((state) =>{
-            console.log('state');
+        set((state) => {
             const next = new Set(state.timeMode);
-            if(next.has(mode)){
-               next.delete(mode);
-            }
-            else{
+
+            if (next.has(mode)) {
+                next.delete(mode);
+            } else {
                 next.add(mode);
             }
-            return {timeMode: next, page: 1};
 
-    }),
-    toggleMode:(mode) => {
+            return { timeMode: next, page: 1 };
+        }),
+
+    resetTimeMode: () =>
+        set(() => ({
+            timeMode: new Set<TimeMode>(),
+            page: 1
+        })),
+
+    toggleMode: (mode) => {
         const current = get().mode;
 
         set({
             mode: current !== mode ? mode : current,
             page: 1
-        })
+        });
     },
-    /*setPage: (page) => {
-        console.log("page:", page);
-        set({page: page});
-    }*/
+
+    resetModes: () =>
+        set(() => ({
+            mode: "classic",
+            page: 1
+        })),
 
     setPage: (page) => {
-        set((state) => {
-            return {page};
-        })
+        set(() => {
+            return { page };
+        });
     }
-
-    /*resetModes: () => set({ modes: new Set() }),*/
 }));
-

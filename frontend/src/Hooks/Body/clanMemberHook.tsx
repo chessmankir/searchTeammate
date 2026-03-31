@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import type { ClanMember } from "../../types/ClanMember.ts";
-import {useSearchParams} from "react-router-dom";
-import {myClanStore} from "../../store/myClanStore.ts";
+import { useSearchParams } from "react-router-dom";
+import { myClanStore } from "../../store/myClanStore.ts";
 
 export function useClanMember() {
     const [clanMembers, setClanMembers] = useState<ClanMember[]>([]);
@@ -10,20 +10,26 @@ export function useClanMember() {
     const setTotalMembers = myClanStore((state) => state.setTotalMembers);
     const number = Number(searchParams.get("number")) || 1;
     const [searchData, setSearchData] = useState<string>("");
+
     useEffect(() => {
         setCurrentClan(number);
+
         (async () => {
             try {
                 const query = new URLSearchParams();
-                if(searchData != ""){
-                    query.set("search", searchData)
+
+                if (searchData !== "") {
+                    query.set("search", searchData);
+                } else {
+                    query.set("number", String(number));
                 }
-                else{
-                    query.set("number", number);
-                }
-            const response = await fetch(`http://localhost:4000/api/clanmember?${query.toString()}`, {
-                    credentials: "include"
-                });
+
+                const response = await fetch(
+                    `http://localhost:4000/api/clanmember?${query.toString()}`,
+                    {
+                        credentials: "include"
+                    }
+                );
 
                 const data = await response.json();
 

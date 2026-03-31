@@ -7,7 +7,7 @@ router.get('/', async (req: Request, res: Response) => {
     const sid = req.cookies?.sid;
     const user = await getSession(sid);
     if(!user){
-        res.json({ok: false});
+        return res.json({ok: false});
     }
     try{
         const query = "SELECT count(*) FROM clan_members WHERE clan_id = $1 AND active=TRUE";

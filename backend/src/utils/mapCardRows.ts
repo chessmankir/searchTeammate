@@ -1,4 +1,4 @@
-import {Card} from "../../types/Card";
+import type { Card } from "../types/Card";
 
 type CardRow = {
     id: number;
@@ -12,6 +12,7 @@ type CardRow = {
 
 export function mapCardRows(rows: CardRow[]): Card[] {
     const cards = new Map<number, Card>();
+
     for (const row of rows) {
         let card = cards.get(row.id);
 

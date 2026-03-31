@@ -21,4 +21,5 @@ export  function Album({card}){
             </div>
         </button>
     )
+
 }

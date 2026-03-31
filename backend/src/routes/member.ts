@@ -1,9 +1,9 @@
 import { Router, Request, Response } from "express";
 import { pool } from "../db/db";
-import type { Member } from "../../types/ClanMembers";
+import type { Member } from "../types/ClanMembers";
 import {getSession} from "../auth/session";
 
-const router = new Router();
+const router =  Router();
 
 router.get("/", async (req: Request, res: Response) => {
     try {
@@ -38,11 +38,12 @@ router.get("/", async (req: Request, res: Response) => {
         const params: any[] = [];
         let joinSql = "";
 
+
         if(pubg_id !== undefined){
             if(pubg_id == 1){
                 const sid = req.cookies?.sid;
                 const user = await getSession(sid);
-                params.push(user.pubg_id);
+                params.push(user?.pubg_id);
             }
             else{
                 params.push(pubg_id);

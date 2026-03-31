@@ -7,7 +7,7 @@ const router = Router();
 router.post('/:conversation/messages', async (req: Request, res: Response) => {
     console.log("send messages");
     const {message} = req.body;
-    const conversation = req.params.conversation;
+    const conversation = Number(req.params.conversation);
     if (!message) {
         return res.json({
             ok: false,
@@ -22,11 +22,8 @@ router.post('/:conversation/messages', async (req: Request, res: Response) => {
     }
     const sid = req.cookies?.sid;
     const user = await getSession(sid);
-    if (!user.id) {
-        return res.json({
-            ok: false,
-            message: 'не авторизован',
-        });
+    if (!user) {
+        return res.status(401).json({ ok: false, error: "Unauthorized" });
     }
 
     const query = `INSERT INTO messages (conversation_id, sender_id, body, created_at)
@@ -76,7 +73,7 @@ router.get('/:conversation/messages', async (req: Request, res: Response) => {
     }
     const sid = req.cookies?.sid;
     const user = await getSession(sid);
-    if (!user.id) {
+    if (!user) {
         return res.json({
             ok: false,
             message: 'не авторизован',
@@ -91,7 +88,7 @@ router.get('/:conversation/messages', async (req: Request, res: Response) => {
     })
 })
 
-async function getOtherParticipantId(conversationId, userId) {
+async function getOtherParticipantId(conversationId: number, userId: number) {
     try {
         const otherParticipantQuery = `
             SELECT user_id

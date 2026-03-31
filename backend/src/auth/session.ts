@@ -12,7 +12,7 @@ const SESSION_DAYS = 30;
 
 const sessions = new Map<string, SessionUser>();
 
-export async function createSession(user_id){
+export async function createSession(user_id: number){
     const token = crypto.randomUUID();
     try{
         const query =`INSERT INTO sessions (id, user_id, expires_at)

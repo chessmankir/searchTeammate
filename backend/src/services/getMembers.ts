@@ -1,32 +1,32 @@
-import {pool}  from "../db/db";
-import {Member} from "../../types/ClanMembers";
+import {pool} from "../db/db";
+import {Member} from "../types/ClanMembers";
 
 interface GetMembersParams {
     clan_id?: number | null;
     number?: number | null;
     limit?: number | null;
     id?: number | null;
-    modes: string[] | null;
+    modes?: string[] | null;
 }
 
 export async function getMembers({
-    clan_id = null,
-    number = null,
-    limit = 20,
-    id = null,
-    modes = ["classic"]
-    }: GetMembersParams = {}): Promise<Member>{
+                                     clan_id = null,
+                                     number = null,
+                                     limit = 20,
+                                     id = null,
+                                     modes = ["classic"]
+                                 }: GetMembersParams = {}){
     const where: string[] = [];
-    const params: (number | null)[] = [];
+    const params: (number | string[] | null)[] = [];
 
-    if(clan_id != null) {
+    if (clan_id != null) {
         params.push(clan_id);
         where.push(`clan_id=$${params.length}`);
     }
 
-    if(number !=  null){
+    if (number != null) {
         params.push(number);
-        where.push(`gm.name = ANY($${params.length})`);a
+        where.push(`gm.name = ANY($${params.length})`);
     }
 
     if (modes && modes.length > 0) {

@@ -1,33 +1,41 @@
-import {ButtonCard} from "./ButtonCard.tsx";
+import { ButtonCard } from "./ButtonCard.tsx";
 
-export function ButtonActions({removeCard, addCard, card, totalCount, quality }): JSX.Element {
+type ButtonActionsProps = {
+    removeCard: (cardId: number, quality: number) => void;
+    addCard: (cardId: number, quality: number) => void;
+    card: {
+        id: number;
+    };
+    totalCount: number;
+    quality: number;
+};
+
+export function ButtonActions({
+                                  removeCard,
+                                  addCard,
+                                  card,
+                                  totalCount,
+                                  quality
+                              }: ButtonActionsProps) {
     return (
-
         <div className="quality-control__actions">
-       <ButtonCard text={"-"} actionClick={removeCard} cardId={card.id} quality={quality} totalCount={totalCount} />
-           {/* <button
-                type="button"
-                className="quality-btn"
-                onClick={(e) => {
-                    e.stopPropagation();
-                    removeCard(card.id, quality)
-                }}
-                disabled={totalCount <= 0}
-            >
-                −
-            </button>*/}
+            <ButtonCard
+                text={"-"}
+                actionClick={removeCard}
+                cardId={card.id}
+                quality={quality}
+                totalCount={totalCount}
+            />
+
             <span className="quality-control__value">{totalCount}</span>
-         {/*   <button
-                type="button"
-                className="quality-btn"
-                onClick={(e) => {
-                    e.stopPropagation();
-                    addCard(card.id, quality)
-                }}
-            >
-                +
-            </button>*/}
-            <ButtonCard text={"+"} actionClick={addCard} cardId={card.id} quality={quality} totalCount={totalCount} />
+
+            <ButtonCard
+                text={"+"}
+                actionClick={addCard}
+                cardId={card.id}
+                quality={quality}
+                totalCount={totalCount}
+            />
         </div>
-    )
+    );
 }

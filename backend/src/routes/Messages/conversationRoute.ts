@@ -4,12 +4,16 @@ import {pool} from "../../db/db";
 
 const router = Router();
 router.get('/', async (req: Request, res: Response) => {
-    const member_id = req.query.profile_id;
+    const member_id = Number(req.query.profile_id);
     if (!member_id) {
         res.json({ok: false, message: "нет собседеника"});
     }
     const sid = req.cookies?.sid;
     const user = await getSession(sid);
+    if (!user) {
+        return res.status(401).json({ ok: false, error: "Unauthorized" });
+    }
+
     if (!user.id) {
         res.json({ok: false, message: "не авторизован"});
     }
@@ -43,7 +47,7 @@ router.get('/', async (req: Request, res: Response) => {
     }
 });
 
-async function checkConversation(userId, targetUserId) {
+async function checkConversation(userId: number, targetUserId: number) {
     try {
         const query = `SELECT c.id FROM conversations c
                 JOIN conversation_participants p1 on p1.conversation_id = c.id
@@ -74,7 +78,7 @@ async function createConversation() {
     return false;
 }
 
-async function createConversationParticipant(conversationId, userId, targetUserId) {
+async function createConversationParticipant(conversationId: number, userId: number, targetUserId: number) {
     try {
         const query = `INSERT INTO conversation_participants (conversation_id, user_id)
             VALUES ($1, $2), ($1, $3) `;

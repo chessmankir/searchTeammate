@@ -11,10 +11,10 @@ interface AlbumFilters  {
     setSelectedCardFilter: (filter: AlbumFlterType) => void
 }
 
-export const albumsStore = create<AlbumFilters>((set, get) => ({
+export const albumsStore = create<AlbumFilters>((set) => ({
     albums: [],
     setAlbums: ((albums) =>
-        set((prev) => ({albums: albums})
+        set(() => ({albums: albums})
    )),
     selectedAlbum: "all",
     setSelectedAlbum: ((selectedAlbum) => set({selectedAlbum: selectedAlbum})),

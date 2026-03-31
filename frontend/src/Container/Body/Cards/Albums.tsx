@@ -1,6 +1,11 @@
 import {Album} from "./Album.tsx";
+import type {AlbumType} from "../../../types/AlbumType.ts";
 
-export function Albums({albums}){
+type AlbumsProps = {
+    albums: AlbumType[];
+};
+
+export function Albums({albums}: AlbumsProps) {
     return (
         <div className="cards-layout">
             <section className="album-main">

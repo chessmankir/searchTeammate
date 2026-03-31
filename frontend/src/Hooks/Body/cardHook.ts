@@ -1,45 +1,47 @@
-import {useEffect, useState} from "react";
-import {authStore} from "../../store/authStore.ts";
-import type {AlbumFlterType} from "../../types/AlbumFlterType.ts";
+import { useEffect, useState } from "react";
+import { authStore } from "../../store/authStore.ts";
+import type { AlbumFlterType } from "../../types/AlbumFlterType.ts";
 
-interface qualityCard{
-    quality_id: number,
-    count: number
+interface QualityCard {
+    quality_id: number;
+    count: number;
 }
 
-interface Card  {
-    id: number,
-    name: string,
-    imageSrc: string,
-    qualities: qualityCard[]
+interface Card {
+    id: number;
+    name: string;
+    imageSrc: string;
+    qualities: QualityCard[];
 }
 
 interface UseCardParams {
-    albumId?: string,
-    filter?: AlbumFlterType
+    albumId?: string;
+    filter?: AlbumFlterType;
 }
 
-export function useCards({albumId, filter} :UseCardParams = {}){
-    const user = authStore((state)=>state.user);
+export function useCards({ albumId, filter }: UseCardParams = {}) {
+    const user = authStore((state) => state.user);
     const [cards, setCards] = useState<Card[]>([]);
 
-    const addCardHandler = async (card_id, qualityId = 1) => {
+    const addCardHandler = async (card_id: number, qualityId: number = 1) => {
         const backendServer = "http://localhost:4000/api/add/card";
-        const response = await fetch(backendServer,{
+
+        const response = await fetch(backendServer, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "include",
             body: JSON.stringify({
-                card_id: card_id,
-                qualityId: qualityId
+                card_id,
+                qualityId
             })
         });
-        if(response.ok){
+
+        if (response.ok) {
             setCards((prev) =>
                 prev.map((card) => {
                     if (card.id !== card_id) return card;
 
-                    const existing = card.qualities?.find(
+                    const existing = card.qualities.find(
                         (q) => q.quality_id === qualityId
                     );
 
@@ -57,33 +59,33 @@ export function useCards({albumId, filter} :UseCardParams = {}){
                     return {
                         ...card,
                         qualities: [
-                            ...(card.qualities || []),
+                            ...card.qualities,
                             { quality_id: qualityId, count: 1 },
                         ],
                     };
                 })
             );
-
         }
+    };
 
-    }
-
-    const removeCardHandler =  async (card_id, qualityId) => {
+    const removeCardHandler = async (card_id: number, qualityId: number) => {
         const backendServer = "http://localhost:4000/api/remove/card";
-        try{
-            const response = await fetch(backendServer,{
+
+        try {
+            const response = await fetch(backendServer, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
                 body: JSON.stringify({
-                    card_id: card_id,
-                    qualityId: qualityId
+                    card_id,
+                    qualityId
                 })
             });
-            const data = await response.json();
-            if(data.ok){
 
-               setCards((prev) =>
+            const data = await response.json();
+
+            if (data.ok) {
+                setCards((prev) =>
                     prev.map((card) => {
                         if (card.id !== card_id) return card;
 
@@ -100,41 +102,46 @@ export function useCards({albumId, filter} :UseCardParams = {}){
                     })
                 );
             }
-        }
-        catch (e) {
+        } catch (e) {
             console.log(e);
         }
-    }
+    };
 
-    useEffect( ()=> {
-        if(!user?.id) return;
+    useEffect(() => {
+        if (!user?.id) return;
 
         (async () => {
-            try{
+            try {
                 let backendURL = `http://localhost:4000/api/cards`;
-                if(albumId){
+
+                if (albumId) {
                     backendURL += `/${albumId}`;
                 }
+
                 const urlParams = new URLSearchParams();
-                if(filter){
+
+                if (filter) {
                     urlParams.set("filter", filter);
                     backendURL += `?${urlParams.toString()}`;
                 }
-                const response = await fetch(backendURL,{credentials: "include"});
+
+                const response = await fetch(backendURL, {
+                    credentials: "include"
+                });
+
                 const data = await response.json();
-                if(data?.ok){
+
+                if (data?.ok) {
                     setCards(data.data);
-                }
-                else{
+                } else {
                     setCards([]);
                 }
-            }
-            catch (e){
+            } catch (e) {
                 setCards([]);
                 console.error(e);
             }
-        })()
-    },[albumId, user?.id]);
+        })();
+    }, [albumId, filter, user?.id]);
 
-    return {cards, addCardHandler, removeCardHandler};
+    return { cards, addCardHandler, removeCardHandler };
 }

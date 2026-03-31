@@ -4,12 +4,6 @@ import {useNavigate} from "react-router-dom";
 //import dotenv from "dotenv";
 import {authStore} from "../../store/authStore.ts";
 
-//dotenv.config();
-
-function clearLoginData() {
-
-}
-
 export  function useLoginHook(){
     const [pubgId, setPubgId] = useState("");
     const [step, setStep] = useState<LoginStep>("request");

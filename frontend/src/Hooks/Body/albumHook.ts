@@ -1,28 +1,28 @@
-import {useEffect} from "react";
-import {albumsStore} from "../../store/albumsStore.ts";
+import { useEffect } from "react";
+import { albumsStore } from "../../store/albumsStore.ts";
 
-export function useLoadAlbums(){
+export function useLoadAlbums() {
     const albums = albumsStore((state) => state.albums);
     const setAlbums = albumsStore((state) => state.setAlbums);
 
-    useEffect( ()=> {
+    useEffect(() => {
         (async () => {
-            try{
+            try {
                 const backendURL = "http://localhost:4000/api/albums";
                 const response = await fetch(backendURL);
                 const data = await response.json();
-                if(data?.ok){
+
+                if (data?.ok) {
+                    setAlbums(data.data);
+                } else {
                     setAlbums([]);
                 }
-                setAlbums(data.data);
-            }
-            catch (e){
+            } catch (e) {
                 setAlbums([]);
                 console.error(e);
             }
-        })()
-        },([])
-    );
+        })();
+    }, []);
 
-    return {albums};
+    return { albums };
 }

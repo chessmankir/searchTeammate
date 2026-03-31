@@ -1,25 +1,29 @@
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-export function useStartConversation(){
+export function useStartConversation() {
     const navigate = useNavigate();
-    const startConversation = (async (member_id: number)=> {
-        const backend = `http://localhost:4000/api/conversation?profile_id=${member_id}`;
-        try{
-            const response = await fetch(backend,{
+
+    const startConversation = async (member_id: number): Promise<boolean> => {
+        const backend = `http://localhost:4000/api/conversation?member_id=${member_id}`;
+
+        try {
+            const response = await fetch(backend, {
                 credentials: "include",
             });
+
             const data = await response.json();
-            if(data.ok){
-                console.log('navigate');
-                 navigate(`/messages?conversation=${data.conversationId}`);
+
+            if (data.ok) {
+                navigate(`/messages?conversation=${data.conversationId}`);
+                return true;
             }
-            else{
-                return false;
-            }
-        }
-        catch (e){
+
+            return false;
+        } catch (e) {
             console.log(e);
+            return false;
         }
-    });
-    return {startConversation};
+    };
+
+    return { startConversation };
 }

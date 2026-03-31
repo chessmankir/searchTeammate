@@ -1,6 +1,6 @@
 import {Router, Response, Request, json} from 'express';
 import {pool} from "../db/db";
-const tournamentRouter = new Router();
+const tournamentRouter =  Router();
 
 tournamentRouter.get('/',  async (request: Request, res: Response) => {
     const sql =

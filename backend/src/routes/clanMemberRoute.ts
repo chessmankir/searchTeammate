@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import { getSession } from "../auth/session";
 import { pool } from "../db/db";
-import type { Member } from "../../types/ClanMembers";
+import type { Member } from "../types/ClanMembers";
 
 const router = Router();
 

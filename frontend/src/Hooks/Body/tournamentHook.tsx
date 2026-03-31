@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 
 export type Tournament = {
     id: number;
@@ -8,7 +8,7 @@ export type Tournament = {
     team_size: number;
     maps: string;
     count: number;
-}
+};
 
 export function useTournamentHook() {
     const [tournaments, setTournaments] = useState<Tournament[]>([]);
@@ -18,14 +18,24 @@ export function useTournamentHook() {
 
         (async () => {
             try {
-                const response = await fetch("http://localhost:4000/api/tournaments", {
-                    signal: ac.signal,
-                });
+                const response = await fetch(
+                    "http://localhost:4000/api/tournaments",
+                    { signal: ac.signal }
+                );
+
+                if (!response.ok) {
+                    throw new Error("Failed to fetch tournaments");
+                }
+
                 const data = await response.json();
-                if (data.ok) setTournaments(data.data);
+
+                if (data.ok) {
+                    setTournaments(data.data as Tournament[]);
+                }
             } catch (e) {
-                // если отменили запрос — это нормально
-                if ((e as any)?.name !== "AbortError") console.log(e);
+                if (e instanceof Error && e.name !== "AbortError") {
+                    console.log(e);
+                }
             }
         })();
 

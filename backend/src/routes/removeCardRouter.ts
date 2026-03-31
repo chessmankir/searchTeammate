@@ -1,8 +1,6 @@
 import {getSession} from "../auth/session";
 import {pool} from "../db/db";
-import {response} from "express";
-
-const {Router, Request, Response} = require('express');
+import {Router, Response, Request} from 'express';
 
 const router = Router();
 router.post('/', async (req: Request, res: Response) => {
@@ -10,7 +8,9 @@ router.post('/', async (req: Request, res: Response) => {
     const sid = req.cookies?.sid;
     try {
         const user = await getSession(sid);
-        if(!user?.id) return res.json({ok: false});
+        if(!user){
+            return res.json({ok: false})
+        }
 
         const card = await getUserCard(user.id, card_id, qualityId);
         let queryUpdate = "";
@@ -38,7 +38,7 @@ router.post('/', async (req: Request, res: Response) => {
     }
 });
 
-async function  getUserCard(userId, cardId, qualityId) {
+async function getUserCard(userId: number, cardId: number, qualityId: number) {
     const findQuery = `
             SELECT *
             FROM user_card

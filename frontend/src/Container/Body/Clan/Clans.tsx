@@ -37,7 +37,7 @@ export function Clans() {
                                 <td className="id">{i}</td>
                                 <td className="name">{c.name}</td>
                                 <td className="tag">
-                                    {c.tagActive ? (<span class="tag-required">✅</span>)  : (
+                                    {c.tagActive ? (<span className="tag-required">✅</span>)  : (
                                         <span className="tag-optional">❌</span>)}
                                 </td>
                                 <td className="participants">{c.members_count}</td>
