@@ -5,7 +5,7 @@ import MessagesSidebarWrapper from "../../LeftSideBar/Messages/MessagesSidebarWr
 export function MessagesLayout() {
 
     return (
-        <div id="container-layout" className="container member-layout">
+        <div id="container-layout" className="container member-layout container-layout-messages">
             <aside className="app-sidebar">
                 <MessagesSidebarWrapper/>
             </aside>

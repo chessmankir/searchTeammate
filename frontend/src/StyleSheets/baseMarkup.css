@@ -8,8 +8,7 @@ body,
 #container-layout{
     display: grid;
     grid-template-columns: 300px minmax(0, 1fr);
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
     background: #0b1120;
 }
 
@@ -28,10 +27,9 @@ body,
 
 .app-main {
     min-width: 0;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
     background: #0b1120;
 }
 
@@ -58,9 +56,7 @@ body,
 
 .app-content {
     flex: 1;
-    min-height: 0;
     min-width: 0;
-    display: flex;
-    overflow: hidden;
+    /*display: flex;*/
     background: #0b1120;
 }

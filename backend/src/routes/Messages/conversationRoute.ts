@@ -4,7 +4,7 @@ import {pool} from "../../db/db";
 
 const router = Router();
 router.get('/', async (req: Request, res: Response) => {
-    const member_id = Number(req.query.profile_id);
+    const member_id = Number(req.query.member_id);
     if (!member_id) {
         res.json({ok: false, message: "нет собседеника"});
     }
@@ -17,6 +17,7 @@ router.get('/', async (req: Request, res: Response) => {
     if (!user.id) {
         res.json({ok: false, message: "не авторизован"});
     }
+
     if (user.id == member_id) {
         res.json({ok: false, message: "нельзя писать самому себе"});
     }
@@ -66,6 +67,7 @@ async function checkConversation(userId: number, targetUserId: number) {
 }
 
 async function createConversation() {
+
     try {
         const query = `INSERT INTO conversations DEFAULT  VALUES RETURNING id`;
         const response = await pool.query(query);
@@ -79,12 +81,18 @@ async function createConversation() {
 }
 
 async function createConversationParticipant(conversationId: number, userId: number, targetUserId: number) {
+    console.log('createConversationParticipant');
+    console.log("conversationId:", conversationId);
+    console.log("userId:", userId);
+    console.log("targetUserId:", targetUserId);
     try {
         const query = `INSERT INTO conversation_participants (conversation_id, user_id)
             VALUES ($1, $2), ($1, $3) `;
         const response = await pool.query(query, [conversationId, targetUserId, userId]);
+        console.log(response.rows);
     }
     catch (e){
+
         console.log(e);
     }
 }
