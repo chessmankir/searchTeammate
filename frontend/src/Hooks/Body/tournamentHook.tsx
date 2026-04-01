@@ -18,8 +18,9 @@ export function useTournamentHook() {
 
         (async () => {
             try {
+                const url = import.meta.env.VITE_API_URL;
                 const response = await fetch(
-                    "/api/tournaments",
+                    `${url}/api/tournaments`,
                     { signal: ac.signal }
                 );
 

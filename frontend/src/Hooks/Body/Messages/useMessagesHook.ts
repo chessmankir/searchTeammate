@@ -16,9 +16,9 @@ export function useMessagesHook() {
 
     useEffect(() => {
         if (!conversationId) return;
-
+        const url = import.meta.env.VITE_API_URL;
         (async () => {
-            const backend = `/api/conversations/${conversationId}`;
+            const backend = `${url}/api/conversations/${conversationId}`;
             const response = await fetch(backend, {
                 credentials: "include",
             });
@@ -32,9 +32,10 @@ export function useMessagesHook() {
 
     useEffect(() => {
         if (!conversationId) return;
-
+        const url = import.meta.env.VITE_API_URL;
         (async () => {
-            const backend = `/api/conversations/${conversationId}/messages`;
+
+            const backend = `${url}/api/conversations/${conversationId}/messages`;
             const response = await fetch(backend, {
                 credentials: "include",
             });
@@ -55,8 +56,9 @@ export function useMessagesHook() {
     }, [conversationId]);
 
     useEffect(() => {
+        const url = import.meta.env.VITE_API_URL;
         (async () => {
-            const backend = `/api/get/conversations`;
+            const backend = `${url}/api/get/conversations`;
             const response = await fetch(backend, {
                 credentials: "include",
             });
@@ -100,7 +102,8 @@ export function useMessagesHook() {
     }, [activeMessages]);
 
     const sendMessage = async () => {
-        const backend = `/api/conversations/${conversationId}/messages`;
+        const url = import.meta.env.VITE_API_URL;
+        const backend = `${url}/api/conversations/${conversationId}/messages`;
 
         try {
             const response = await fetch(backend, {

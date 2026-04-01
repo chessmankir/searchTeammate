@@ -16,7 +16,8 @@ export function useClans(){
     useEffect(() => {
         (async () => {
             try {
-                const clans = await fetch("/api/clans");
+                const url = import.meta.env.VITE_API_URL;
+                const clans = await fetch(`${url}/api/clans`);
                 const data = await clans.json();
                 if(data.ok){
                     setClans(data.data);

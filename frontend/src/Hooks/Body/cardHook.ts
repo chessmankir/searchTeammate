@@ -24,7 +24,8 @@ export function useCards({ albumId, filter }: UseCardParams = {}) {
     const [cards, setCards] = useState<Card[]>([]);
 
     const addCardHandler = async (card_id: number, qualityId: number = 1) => {
-        const backendServer = "/api/add/card";
+        const url = import.meta.env.VITE_API_URL;
+        const backendServer = `${url}/api/add/card`;
 
         const response = await fetch(backendServer, {
             method: "POST",
@@ -69,7 +70,8 @@ export function useCards({ albumId, filter }: UseCardParams = {}) {
     };
 
     const removeCardHandler = async (card_id: number, qualityId: number) => {
-        const backendServer = "/api/remove/card";
+        const url = import.meta.env.VITE_API_URL;
+        const backendServer = `${url}/api/remove/card`;
 
         try {
             const response = await fetch(backendServer, {
@@ -112,7 +114,8 @@ export function useCards({ albumId, filter }: UseCardParams = {}) {
 
         (async () => {
             try {
-                let backendURL = `/api/cards`;
+                const url = import.meta.env.VITE_API_URL;
+                let backendURL = `${url}/api/cards`;
 
                 if (albumId) {
                     backendURL += `/${albumId}`;

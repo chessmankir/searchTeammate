@@ -15,8 +15,8 @@ export function useProfileHooks() {
             } else {
                 params.set("pubg_id", "1");
             }
-
-            const backend = "/api/members?" + params.toString();
+            const url = import.meta.env.VITE_API_URL;
+            const backend = `${url}/api/members?` + params.toString();
 
             try {
                 const response = await fetch(backend, {

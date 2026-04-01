@@ -20,8 +20,8 @@ export async function fetchClanMembers(
     if (params?.modes && params.modes.length > 0) {
         qs.set("modes", params.modes.join(",")); // classic,metro
     }
-
-    const response = await fetch(`/api/members?${qs.toString()}`, {
+    const url = import.meta.env.VITE_API_URL;
+    const response = await fetch(`${url}/api/members?${qs.toString()}`, {
         credentials: "include",
     });
     if (!response.ok) {

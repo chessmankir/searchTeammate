@@ -8,7 +8,8 @@ export function useLoadAlbums() {
     useEffect(() => {
         (async () => {
             try {
-                const backendURL = "/api/albums";
+                const url = import.meta.env.VITE_API_URL;
+                const backendURL = `${url}/api/albums`;
                 const response = await fetch(backendURL);
                 const data = await response.json();
 

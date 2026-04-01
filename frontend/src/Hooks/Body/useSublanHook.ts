@@ -13,7 +13,8 @@ export function useSubclans() {
 
         (async () => {
             try {
-                const response = await fetch(`/api/myclan`, {
+                const url = import.meta.env.VITE_API_URL;
+                const response = await fetch(`${url}/api/myclan`, {
                     credentials: "include"
                 });
                 const data = await response.json();

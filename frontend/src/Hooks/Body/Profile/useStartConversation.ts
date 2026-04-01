@@ -4,7 +4,8 @@ export function useStartConversation() {
     const navigate = useNavigate();
 
     const startConversation = async (member_id: number): Promise<boolean> => {
-        const backend = `/api/conversation?member_id=${member_id}`;
+        const url = import.meta.env.VITE_API_URL;
+        const backend = `${url}/api/conversation?member_id=${member_id}`;
 
         try {
             const response = await fetch(backend, {

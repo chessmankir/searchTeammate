@@ -29,7 +29,8 @@ export const authStore = create<AuthState>((set) => ({
     }),
     checkAuth: async () => {
         try{
-            const response = await fetch("/api/auth/me",{
+            const url = import.meta.env.VITE_API_URL;
+            const response = await fetch(`${url}/api/auth/me`,{
                 method: "GET",
                 credentials: "include"
             });

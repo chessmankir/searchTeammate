@@ -45,8 +45,8 @@ export function useLoginHook() {
 
     const verifyCodeSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        const backendServer = "/api/verifycode";
+        const url = import.meta.env.VITE_API_URL;
+        const backendServer = `${url}/api/verifycode`;
 
         try {
             const response = await fetch(backendServer, {

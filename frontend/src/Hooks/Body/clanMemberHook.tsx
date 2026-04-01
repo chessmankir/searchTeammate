@@ -23,9 +23,9 @@ export function useClanMember() {
                 } else {
                     query.set("number", String(number));
                 }
-
+                const url = import.meta.env.VITE_API_URL;
                 const response = await fetch(
-                    `/api/clanmember?${query.toString()}`,
+                    `${url}/api/clanmember?${query.toString()}`,
                     {
                         credentials: "include"
                     }

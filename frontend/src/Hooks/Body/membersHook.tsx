@@ -37,8 +37,8 @@ export function useMembers() {
         (async () => {
             try {
                 setLoading(true);
-
-                const res = await fetch(`/api/members?${query}`, {
+                const backend = import.meta.env.VITE_API_URL;
+                const res = await fetch(`${backend}/api/members?${query}`, {
                     signal: ac.signal,
                 });
 
