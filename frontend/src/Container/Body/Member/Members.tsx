@@ -37,7 +37,7 @@ export function Members() {
                                 <td className="id">{i + 1}</td>
                                 <td className="nameContainer" >
                                     <div className="icon">
-                                        <img src="src/assets/iconMan.png" alt=""/>
+                                        <img src="/assets/iconMan.png" alt=""/>
                                     </div>
                                     <div className="nameWrapper">
                                         <div className="name">{m.name}</div>
@@ -61,7 +61,7 @@ export function Members() {
                                 </td>
                                 <td className="tg">
                                     <div className="iconTg">
-                                    <img src="src/assets/tg1.gif" alt=""/>
+                                    <img src="/assets/tg1.gif" alt=""/>
                                     </div>
                                 </td>
                             </tr>

@@ -37,7 +37,7 @@ export function Tournaments() {
                             <tr key={t.id}>
                                 <td className="image">
                                     <div className="logo">
-                                        <img src="./src/assets/logo.jpg"/>
+                                        <img src="/assets/logo.jpg"/>
                                     </div>
                                 </td>
                                 <td className="id">{t.name}</td>
@@ -48,7 +48,7 @@ export function Tournaments() {
                                 <td className="places">{100 - t.count}</td>
                                 <td className="position">
                                     <div className="pdf">
-                                        <img src="/src/assets/pdf.gif"/>
+                                        <img src="/assets/pdf.gif"/>
                                     </div>
                                 </td>
                             </tr>
