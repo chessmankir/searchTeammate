@@ -15,8 +15,8 @@ export function useLoginHook() {
 
     const sendCodeSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        const backendServer = "/api/sendcode";
+        const url = import.meta.env.VITE_API_URL;
+        const backendServer = `${url}/api/sendcode`;
 
         try {
             const response = await fetch(backendServer, {
