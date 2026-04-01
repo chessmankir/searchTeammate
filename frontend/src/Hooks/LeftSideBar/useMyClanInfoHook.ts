@@ -7,7 +7,7 @@ export function useMyClanInfoHook() {
     useEffect(() => {
         (async () => {
             try {
-                const backend = "http://localhost:4000/api/info";
+                const backend = "/api/info";
                 const response = await fetch(backend, {
                     credentials: "include"
                 });
@@ -36,7 +36,7 @@ type Clan = {
 
 async function getFreePlaces(): Promise<number> {
     try {
-        const backend = "http://localhost:4000/api/myclan";
+        const backend = "/api/myclan";
         const response = await fetch(backend, {
             credentials: "include"
         });

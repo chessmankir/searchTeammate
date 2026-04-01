@@ -21,7 +21,7 @@ export async function fetchClanMembers(
         qs.set("modes", params.modes.join(",")); // classic,metro
     }
 
-    const response = await fetch(`http://localhost:4000/api/members?${qs.toString()}`, {
+    const response = await fetch(`/api/members?${qs.toString()}`, {
         credentials: "include",
     });
     if (!response.ok) {

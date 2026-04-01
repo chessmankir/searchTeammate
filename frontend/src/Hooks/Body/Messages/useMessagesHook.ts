@@ -34,7 +34,7 @@ export function useMessagesHook() {
         if (!conversationId) return;
 
         (async () => {
-            const backend = `http://localhost:4000/api/conversations/${conversationId}/messages`;
+            const backend = `/api/conversations/${conversationId}/messages`;
             const response = await fetch(backend, {
                 credentials: "include",
             });
@@ -56,7 +56,7 @@ export function useMessagesHook() {
 
     useEffect(() => {
         (async () => {
-            const backend = `http://localhost:4000/api/get/conversations`;
+            const backend = `/api/get/conversations`;
             const response = await fetch(backend, {
                 credentials: "include",
             });
@@ -100,7 +100,7 @@ export function useMessagesHook() {
     }, [activeMessages]);
 
     const sendMessage = async () => {
-        const backend = `http://localhost:4000/api/conversations/${conversationId}/messages`;
+        const backend = `/api/conversations/${conversationId}/messages`;
 
         try {
             const response = await fetch(backend, {

@@ -29,7 +29,7 @@ export const authStore = create<AuthState>((set) => ({
     }),
     checkAuth: async () => {
         try{
-            const response = await fetch("http://localhost:4000/api/auth/me",{
+            const response = await fetch("/api/auth/me",{
                 method: "GET",
                 credentials: "include"
             });
