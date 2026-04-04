@@ -11,13 +11,15 @@ export const pool = new Pool({
     keepAlive: true,
 });
 
-/*export const pool = new Pool({
+/*
+export const pool = new Pool({
     host: "localhost",
     port: 5432,
     user: "postgres",
     password: "kir",
     database: "checkmate2",
-});*/
+});
+*/
 
 
 /*
