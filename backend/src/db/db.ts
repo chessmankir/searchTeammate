@@ -6,6 +6,7 @@ export const pool = new Pool({
     connectionString: process.env.SUPABASE_DATABASE_URL,
     ssl: {
         rejectUnauthorized: false,
+        
     },
     // помогает избежать неожиданных разрывов
     keepAlive: true,
