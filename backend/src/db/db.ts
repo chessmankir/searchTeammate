@@ -2,22 +2,22 @@ import { Pool} from "pg";
 import {errorMonitor} from "node:events";
 import dotenv from "dotenv";
 dotenv.config();
-/*export const pool = new Pool({
+export const pool = new Pool({
     connectionString: process.env.SUPABASE_DATABASE_URL,
     ssl: {
         rejectUnauthorized: false,
     },
     // помогает избежать неожиданных разрывов
     keepAlive: true,
-});*/
+});
 
-export const pool = new Pool({
+/*export const pool = new Pool({
     host: "localhost",
     port: 5432,
     user: "postgres",
     password: "kir",
     database: "checkmate2",
-});
+});*/
 
 
 /*
