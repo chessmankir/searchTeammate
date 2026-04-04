@@ -42,7 +42,9 @@ router.post('/:conversation/messages', async (req: Request, res: Response) => {
                 }),
             }
             console.log(`user:${user.id}`);
+            console.log('сейчас вызову сокет message:new');
             io.to(`user:${user.id}`).emit("message:new", messageClient);
+            console.log(targetId);
             if(targetId){
                 io.to(`user:${targetId}`).emit("message:new", messageClient);
             }

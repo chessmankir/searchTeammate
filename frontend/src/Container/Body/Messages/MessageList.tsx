@@ -14,7 +14,7 @@ export function MessageList({ user_id, activeMessages, messageRef }: Props) {
                 <div
                     key={msg.id}
                     className={`messages-bubble ${
-                        msg.sender_id === user_id ? "me" : "other"
+                        msg.sender_id == user_id ? "other" : "me"
                     }`}
                 >
                     {msg.body}

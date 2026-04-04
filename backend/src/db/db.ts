@@ -2,23 +2,33 @@ import { Pool} from "pg";
 import {errorMonitor} from "node:events";
 import dotenv from "dotenv";
 dotenv.config();
-
-export const pool = new Pool({
+/*export const pool = new Pool({
     connectionString: process.env.SUPABASE_DATABASE_URL,
     ssl: {
         rejectUnauthorized: false,
     },
     // помогает избежать неожиданных разрывов
     keepAlive: true,
-});
+});*/
 
-/*export const pool = new Pool({
+export const pool = new Pool({
     host: "localhost",
     port: 5432,
     user: "postgres",
     password: "kir",
+    database: "checkmate2",
+});
+
+
+/*
+export const pool = new Pool({
+    host: "orgasedooysog.beget.app",
+    port: 5432,
+    user: "cloud_user",
+    password: "w*sVwHf6Yn%*",
     database: "checkmate",
-});*/
+});
+*/
 
 (async () => {
     try {
@@ -32,6 +42,5 @@ export const pool = new Pool({
 })();
 
 pool.on("error", (err) => {
-
     console.error("pg pool is error", err);
 })

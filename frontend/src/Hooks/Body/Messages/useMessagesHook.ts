@@ -72,8 +72,9 @@ export function useMessagesHook() {
 
     useEffect(() => {
         const handleNewMessage = (newMessage: Message) => {
-            if (Number(conversationId) !== newMessage.conversation_id) return;
-
+            console.log('handleNewMessage: ', newMessage);
+            if (Number(conversationId) != newMessage.conversation_id) return;
+            console.log('проверка');
             setActiveMessages((prev) => {
                 const exists = prev.some((msg) => msg.id === newMessage.id);
                 if (exists) return prev;
@@ -116,7 +117,8 @@ export function useMessagesHook() {
             });
 
             const data = await response.json();
-
+            console.log('sendMessage:');
+            console.log(data);
             if (data.ok) {
                 console.log("сообщение успешно");
                 setMessage("");

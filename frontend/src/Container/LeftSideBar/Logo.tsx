@@ -1,8 +1,10 @@
 import "../../StyleSheets/logo.css";
+import {useNavigate} from "react-router-dom";
 
 export  function Logo(){
+    const navigate = useNavigate();
     return (
-        <div className="myclan-sidebar__logo">
+        <div onClick={() => {navigate("/");}} className="myclan-sidebar__logo">
             <div className="myclan-sidebar__logo-icon">C</div>
             <div>
                 <div className="myclan-sidebar__logo-title">Checkmate</div>
