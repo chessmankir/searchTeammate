@@ -6,4 +6,5 @@ export interface Conversation{
     pubg_id: number,
     name: string,
     last_message: string,
+    unread_count: number
 }

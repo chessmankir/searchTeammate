@@ -8,7 +8,6 @@ type Props = {
 
 export function MessageChatItem({ conversation, conversationId }: Props) {
     const navigate = useNavigate();
-
     return (
         <div
             onClick={() => {
@@ -22,7 +21,9 @@ export function MessageChatItem({ conversation, conversationId }: Props) {
         >
             <div className="messages-chat-row">
                 <div>{conversation.nickname}</div>
-                {/* <span className="messages-badge">{conversation.unreadCount}</span> */}
+                {Number(conversation.unread_count) > 0 && (
+                 <span className="messages-badge">{conversation.unread_count}</span>
+                 )}
             </div>
             <div className="messages-last">{conversation.last_message}</div>
         </div>

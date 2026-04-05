@@ -11,8 +11,38 @@ export function useMessagesHook() {
     const [activeConversation, setActiveConversation] = useState<Conversation>();
     const [message, setMessage] = useState("");
     const [activeMessages, setActiveMessages] = useState<Message[]>([]);
-    const [conversations, setConversations] = useState<Conversation[]>();
+    const [conversations, setConversations] = useState<Conversation[]>([]);
     const messageRef = useRef<HTMLDivElement | null>(null);
+
+    useEffect(() => {
+        if(!conversationId) return;
+
+        (async () => {
+            const url = import.meta.env.VITE_API_URL;
+            const backendServer = `${url}/api/conversations/${conversationId}/read`;
+            try {
+                const response = await fetch(backendServer, {
+                    method: "PUT",
+                    credentials: "include",
+                });
+                const data = await response.json();
+                if(data.ok) {
+                    const newConversations = conversations.map((conversation) => {
+                       if(conversation.id === Number(conversationId)) {
+                           return {...conversation, unread_count: 0};
+                       }
+                       else{
+                           return conversation;
+                       }
+                    });
+                    setConversations(newConversations);
+                }
+            }
+            catch (e){
+                console.error(e);
+            }
+        })();
+    }, [conversationId]);
 
     useEffect(() => {
         if (!conversationId) return;
@@ -71,16 +101,53 @@ export function useMessagesHook() {
     }, [conversationId]);
 
     useEffect(() => {
-        const handleNewMessage = (newMessage: Message) => {
-            console.log('handleNewMessage: ', newMessage);
-            if (Number(conversationId) != newMessage.conversation_id) return;
-            console.log('проверка');
-            setActiveMessages((prev) => {
-                const exists = prev.some((msg) => msg.id === newMessage.id);
-                if (exists) return prev;
+        const handleNewMessage = async (newMessage: Message) => {
+            console.log("handleNewMessage:", newMessage);
 
-                return [...prev, newMessage];
-            });
+            const isActiveChat =
+                Number(conversationId) === Number(newMessage.conversation_id);
+
+            if (isActiveChat) {
+                setActiveMessages((prev) => {
+                    const exists = prev.some((msg) => msg.id === newMessage.id);
+                    if (exists) return prev;
+
+                    return [...prev, newMessage];
+                });
+
+                // 🔥 сразу помечаем как прочитанное
+                try {
+                    const url = import.meta.env.VITE_API_URL;
+                    await fetch(
+                        `${url}/api/conversations/${newMessage.conversation_id}/read`,
+                        {
+                            method: "PUT",
+                            credentials: "include",
+                        }
+                    );
+                } catch (e) {
+                    console.log("read error:", e);
+                }
+            }
+
+            setConversations((prev) =>
+                prev.map((conversation) => {
+                    if (
+                        Number(conversation.conversation_id) !==
+                        Number(newMessage.conversation_id)
+                    ) {
+                        return conversation;
+                    }
+
+                    return {
+                        ...conversation,
+                        last_message: newMessage.body,
+                        unread_count: isActiveChat
+                            ? 0
+                            : Number(conversation.unread_count ?? 0) + 1,
+                    };
+                })
+            );
         };
 
         socket.on("message:new", handleNewMessage);
