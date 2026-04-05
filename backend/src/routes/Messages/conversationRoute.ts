@@ -3,6 +3,7 @@ import {getSession} from "../../auth/session";
 import {pool} from "../../db/db";
 
 const router = Router();
+//Получение диалога
 router.get('/', async (req: Request, res: Response) => {
     const member_id = Number(req.query.member_id);
     if (!member_id) {
@@ -81,10 +82,6 @@ async function createConversation() {
 }
 
 async function createConversationParticipant(conversationId: number, userId: number, targetUserId: number) {
-    console.log('createConversationParticipant');
-    console.log("conversationId:", conversationId);
-    console.log("userId:", userId);
-    console.log("targetUserId:", targetUserId);
     try {
         const query = `INSERT INTO conversation_participants (conversation_id, user_id)
             VALUES ($1, $2), ($1, $3) `;

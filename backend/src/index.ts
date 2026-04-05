@@ -21,7 +21,7 @@ import infoRoute from "./routes/infoRoute";
 import conversationRoute from "./routes/Messages/conversationRoute";
 import conversationsRoute from "./routes/Messages/conversationsRoute";
 import sendMessageRoute from "./routes/Messages/sendMessageRoute";
-import getConversationsRoute from "./routes/getConversationsRoute";
+import getConversationsRoute from "./routes/Messages/getConversationsRoute";
 import * as http from "node:http";
 
 dotenv.config();

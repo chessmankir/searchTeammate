@@ -3,8 +3,8 @@ import {getSession} from "../../auth/session";
 import {pool} from "../../db/db";
 
 const router = Router();
+//поиск диалога
 router.get('/:conversationId', async (req: Request, res: Response) => {
-    console.log("get");
     try {
         const sid = req.cookies?.sid;
         const user = await getSession(sid);
@@ -69,4 +69,37 @@ router.get('/:conversationId', async (req: Request, res: Response) => {
         });
     }
 })
+
+router.put("/:conversationId/read", async (req: Request, res: Response) => {
+    const conversationId = req.params.conversationId;
+    const sid = req.cookies?.sid;
+    const user = await getSession(sid);
+    console.log(user);
+    if (!user) {
+        return res.status(401).json({
+            ok: false,
+            message: "Пользователь не найден"
+        });
+    }
+    console.log("Conversation ID: ", conversationId);
+    const query = `
+        UPDATE messages SET read_at = NOW()
+        WHERE conversation_id = $1
+        and sender_id != $2
+        and read_at IS NULL
+    `;
+
+    try{
+        const data = await pool.query(query, [conversationId, user.id]);
+        console.log(data.rows);
+    }
+    catch (e) {
+        console.log(e);
+    }
+
+    return res.json({
+        ok: true,
+    })
+});
+
 export default  router;

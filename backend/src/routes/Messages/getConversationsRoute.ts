@@ -1,6 +1,6 @@
 import {Router, Request, Response} from "express";
-import {getSession} from "../auth/session";
-import {pool} from "../db/db";
+import {getSession} from "../../auth/session";
+import {pool} from "../../db/db";
 
 const router = Router();
 
@@ -18,7 +18,8 @@ router.get("/", async (req: Request, res: Response) => {
                 c.id AS conversation_id,
                 cm.id AS user_id,
                 cm.nickname,
-                last_message.body AS last_message
+                last_message.body AS last_message,
+                COALESCE(unread.unread_count, 0) AS unread_count
             FROM conversations c
             JOIN conversation_participants cp_self
                 ON c.id = cp_self.conversation_id
@@ -35,6 +36,13 @@ router.get("/", async (req: Request, res: Response) => {
                 ORDER BY m.id DESC
                 LIMIT 1
             ) last_message ON TRUE
+            LEFT JOIN LATERAL (
+                SELECT COUNT(*) AS unread_count
+                FROM messages m
+                WHERE m.conversation_id = c.id
+                    AND m.sender_id != $1 
+                    AND m.read_at IS NULL
+            ) unread ON TRUE
             ORDER BY c.id DESC
         `;
 

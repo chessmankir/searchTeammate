@@ -5,7 +5,6 @@ import {io} from "../../index";
 
 const router = Router();
 router.post('/:conversation/messages', async (req: Request, res: Response) => {
-    console.log("send messages");
     const {message} = req.body;
     const conversation = Number(req.params.conversation);
     if (!message) {
@@ -30,7 +29,6 @@ router.post('/:conversation/messages', async (req: Request, res: Response) => {
                             VALUES ($1, $2, $3, NOW()) RETURNING id, conversation_id, sender_id, body, created_at`
     try{
         const response = await pool.query(query, [conversation, user.id, message]);
-        console.log(response.rows);
         if (response.rows.length > 0) {
             const targetId = await getOtherParticipantId(conversation, user?.id);
             const newMessage  = response.rows[0];
