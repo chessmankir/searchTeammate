@@ -27,7 +27,9 @@ export function Members() {
                             <th className="age">Возраст</th>
                             <th className="city">Город</th>
                             <th className="regimth">Режим</th>
-                            <th className="tg">Связаться</th>
+                            <th className="status">Статус</th>
+                            <th className="profile">Профиль</th>
+                            {/*<th className="tg">Связаться</th>*/}
                         </tr>
                         </thead>
 
@@ -35,7 +37,7 @@ export function Members() {
                         {members.map((m, i) => (
                             <tr key={m.id ?? i}>
                                 <td className="id">{i + 1}</td>
-                                <td className="nameContainer" >
+                                <td className="nameContainer">
                                     <div className="icon">
                                         <img src="/assets/iconMan.png" alt=""/>
                                     </div>
@@ -53,17 +55,56 @@ export function Members() {
                                 </td>
                                 <td className="regim-wrapper">
                                     <div className="regims">
-                                        <div className="regim metro">Метро</div>
-                                        <div className="regim tdm">TDM</div>
-                                        <div className="regim classic">Классика</div>
+                                        {m.modes?.includes("classic") && (  <div className="regim classic">Классика</div> )}
+                                        {m.modes?.includes("metro") && (  <div className="regim metro">Метро</div> )}
+                                        {m.modes?.includes("tdm") && (  <div className="regim tdm">Тдм</div> )}
+                                        {m.modes?.includes("ultimate") && (  <div className="regim ultimate">Ultimate</div> )}
                                     </div>
+                                </td>
+                                <td className="status">
+                                    {m.status_game == "as" && (
+                                        <div className="status-content">
+                                            <img className="status-icon" src="/assets/as.png" alt=""/>
+                                            <span className="status-text">Продвижение до Аса</span>
+                                        </div>
+                                    )}
+                                    {m.status_game == "asm" && (
+                                        <div className="status-content">
+                                            <img className="status-icon" src="/assets/asm.png" alt=""/>
+                                            <span className="status-text">Продвижение до Ас-мастера</span>
+                                        </div>
+                                    )}
+                                    {m.status_game == "asd" && (
+                                        <div className="status-content">
+                                            <img className="status-icon" src="/assets/asd.png" alt=""/>
+                                            <span className="status-text">Продвижение до Ас-доминатора</span>
+                                        </div>
+                                    )}
+                                    {m.status_game == "zavic" && (
+                                        <div className="status-content">
+                                            <img className="status-icon" src="/assets/zavic.png" alt=""/>
+                                            <span className="status-text">Апаю завика</span>
+                                        </div>
+                                    )}
+                                    {m.status_game == "legend" && (
+                                        <div className="status-content">
+                                            <img className="status-icon" src="/assets/as.png" alt=""/>
+                                            <span className="status-text">Апаю легенду</span>
+                                        </div>
+                                    )}
 
                                 </td>
-                                <td className="tg">
-                                    <div className="iconTg">
-                                    <img src="/assets/tg1.gif" alt=""/>
+                                <td className="profile">
+                                    <div className="myclan-row-actions"><a
+                                        className="myclan-btn myclan-btn--small myclan-btn--ghost"
+                                        href="/profile/52310177022" data-discover="true">Профиль</a>
                                     </div>
                                 </td>
+                                {/*<td className="tg">
+                                    <div className="iconTg">
+                                        <img src="/assets/tg1.gif" alt=""/>
+                                    </div>
+                                </td>*/}
                             </tr>
                         ))}
 

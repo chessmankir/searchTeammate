@@ -1,16 +1,13 @@
 import { Router, Request, Response } from "express";
 import { pool } from "../db/db";
-import type { Member } from "../types/ClanMembers";
-import {getSession} from "../auth/session";
+import { getSession } from "../auth/session";
 
-const router =  Router();
+const router = Router();
 
 router.get("/", async (req: Request, res: Response) => {
     try {
-        // --- parse query ---
         const clan_id = req.query.clan_id ? Number(req.query.clan_id) : undefined;
         const number = req.query.number ? Number(req.query.number) : undefined;
-
         const pubg_id = req.query.pubg_id ? Number(req.query.pubg_id) : undefined;
 
         const limitRaw = req.query.limit ? Number(req.query.limit) : 30;
@@ -21,40 +18,52 @@ router.get("/", async (req: Request, res: Response) => {
 
         const modesRaw = typeof req.query.modes === "string" ? req.query.modes : "";
         const timeRaw = typeof req.query.timemode === "string" ? req.query.timemode : "";
+        const statusGame = typeof req.query.status === "string" ? req.query.status : "";
 
         const modes =
-            modesRaw.trim().length > 0 ? modesRaw.split(",").map(s => s.trim()).filter(Boolean) : [];
+            modesRaw.trim().length > 0
+                ? modesRaw.split(",").map((s) => s.trim()).filter(Boolean)
+                : [];
 
         const timeModes =
-            timeRaw.trim().length > 0 ? timeRaw.split(",").map(s => s.trim()).filter(Boolean) : [];
+            timeRaw.trim().length > 0
+                ? timeRaw.split(",").map((s) => s.trim()).filter(Boolean)
+                : [];
 
-        // --- safe paging ---
         const limit = Number.isFinite(limitRaw) ? Math.min(Math.max(limitRaw, 1), 100) : 30;
         const page = Number.isFinite(pageRaw) ? Math.max(1, pageRaw) : 1;
         const offset = (page - 1) * limit;
 
-        // --- build sql ---
         const where: string[] = [];
         const params: any[] = [];
-        let joinSql = "";
 
-
-        if(pubg_id !== undefined){
-            if(pubg_id == 1){
+        if (pubg_id !== undefined) {
+            if (pubg_id === 1) {
                 const sid = req.cookies?.sid;
                 const user = await getSession(sid);
-                params.push(user?.pubg_id);
-            }
-            else{
-                params.push(pubg_id);
 
+                if (!user?.pubg_id) {
+                    return res.status(401).json({ ok: false, error: "user not found" });
+                }
+
+                params.push(user.pubg_id);
+            } else {
+                params.push(pubg_id);
             }
+
             where.push(`cm.pubg_id = $${params.length}`);
         }
 
         if (clan_id !== undefined && Number.isFinite(clan_id)) {
             params.push(clan_id);
             where.push(`cm.clan_id = $${params.length}`);
+        }
+
+        console.log(statusGame);
+        if(statusGame !== undefined && statusGame !== "") {
+            console.log("statusGame");
+            params.push(statusGame);
+            where.push(`cm.status_game = $${params.length}`);
         }
 
         if (number !== undefined && Number.isFinite(number)) {
@@ -73,46 +82,71 @@ router.get("/", async (req: Request, res: Response) => {
         }
 
         if (modes.length > 0) {
-            joinSql += `
-        JOIN member_modes mm ON cm.id = mm.member_id
-        JOIN game_modes gm ON gm.id = mm.mode_id
-      `;
             params.push(modes);
-            where.push(`gm.name = ANY($${params.length}::text[])`);
+            where.push(`
+                EXISTS (
+                    SELECT 1
+                    FROM member_modes mm
+                    JOIN game_modes gm ON gm.id = mm.mode_id
+                    WHERE mm.member_id = cm.id
+                      AND gm.name = ANY($${params.length}::text[])
+                )
+            `);
         }
 
         if (timeModes.length > 0) {
-            joinSql += `
-        JOIN member_time_slots mts ON mts.member_id = cm.id
-        JOIN time_slots ts ON ts.id = mts.time_slot_id
-      `;
             params.push(timeModes);
-            where.push(`ts.name = ANY($${params.length}::text[])`);
+            where.push(`
+                EXISTS (
+                    SELECT 1
+                    FROM member_time_slots mts
+                    JOIN time_slots ts ON ts.id = mts.time_slot_id
+                    WHERE mts.member_id = cm.id
+                      AND ts.name = ANY($${params.length}::text[])
+                )
+            `);
         }
-
+        console.log(params);
         const whereSql = where.length ? `WHERE ${where.join(" AND ")}` : "";
-        // --- total ---
+
         const sqlTotal = `
-      SELECT COUNT(DISTINCT cm.id) AS total
-      FROM clan_members cm
-      ${joinSql}
-      ${whereSql}
-    `;
+            SELECT COUNT(*) AS total
+            FROM clan_members cm
+            ${whereSql}
+        `;
+        console.log(sqlTotal);
+
         const resultTotal = await pool.query(sqlTotal, params);
         const total = Number(resultTotal.rows[0]?.total ?? 0);
 
-        // --- data ---
         const paramsData = [...params, limit, offset];
+
         const sql = `
-      SELECT DISTINCT cm.*
-      FROM clan_members cm
-      ${joinSql}
-      ${whereSql}
-      ORDER BY cm.id DESC
-      LIMIT $${paramsData.length - 1}
-      OFFSET $${paramsData.length}
-    `;
-        const result = await pool.query<Member>(sql, paramsData);
+            SELECT
+                cm.*,
+
+                COALESCE((
+                    SELECT ARRAY_AGG(gm.name ORDER BY gm.name)
+                    FROM member_modes mm
+                    JOIN game_modes gm ON gm.id = mm.mode_id
+                    WHERE mm.member_id = cm.id
+                ), '{}') AS modes,
+
+                COALESCE((
+                    SELECT ARRAY_AGG(ts.name ORDER BY ts.name)
+                    FROM member_time_slots mts
+                    JOIN time_slots ts ON ts.id = mts.time_slot_id
+                    WHERE mts.member_id = cm.id
+                ), '{}') AS time_modes
+
+            FROM clan_members cm
+            ${whereSql}
+            ORDER BY cm.id DESC
+            LIMIT $${paramsData.length - 1}
+            OFFSET $${paramsData.length}
+        `;
+
+        const result = await pool.query(sql, paramsData);
 
         return res.json({
             ok: true,
@@ -122,7 +156,7 @@ router.get("/", async (req: Request, res: Response) => {
                 page,
                 limit,
                 pages: Math.max(1, Math.ceil(total / limit)),
-                count: result.rowCount ?? result.rows.length, // сколько пришло на этой странице
+                count: result.rowCount ?? result.rows.length,
             },
         });
     } catch (e: any) {
@@ -133,6 +167,7 @@ router.get("/", async (req: Request, res: Response) => {
             hint: e?.hint,
             stack: e?.stack,
         });
+
         return res.status(500).json({ ok: false, error: "db error" });
     }
 });

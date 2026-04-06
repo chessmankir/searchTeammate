@@ -344,3 +344,19 @@
     filter: brightness(0) invert(1);
 }
 
+.status-content {
+    display: flex;
+    align-items: center; /* выравнивание по вертикали */
+}
+
+.status-icon {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    flex-shrink: 0; /* чтобы не сжималась */
+}
+
+.status-text {
+    font-size: 13px;
+    color: #e2e8f0;
+}

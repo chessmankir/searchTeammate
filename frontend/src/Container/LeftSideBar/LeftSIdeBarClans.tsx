@@ -1,5 +1,5 @@
-import {Logo} from "./Logo";
-import {FiltersClan} from "./FilttersClans";
+import {Logo} from "./Logo.tsx";
+import {FiltersClan} from "./FilttersClans.tsx";
 
 export  function LeftSideBarClans(){
     return (

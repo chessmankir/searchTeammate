@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import {useEffect, useMemo, useRef, useState} from "react";
 import { useFiltersStore } from "../../store/filtersStore.ts";
 
 type Member = {
@@ -8,6 +8,8 @@ type Member = {
     pubg_id?: number | string;
     age?: number;
     city?: string;
+    modes?: string[];
+    status_game: string;
 };
 
 export function useMembers() {
@@ -16,6 +18,7 @@ export function useMembers() {
     const ageFrom = useFiltersStore((s) => s.ageFrom);
     const timeMode = useFiltersStore((s) => s.timeMode);
     const page = useFiltersStore((s) => s.page);
+    const status = useFiltersStore((s) => s.status);
 
     const [members, setMembers] = useState<Member[]>([]);
     const [loading, setLoading] = useState(false);
@@ -24,12 +27,16 @@ export function useMembers() {
     const query = useMemo(() => {
         const sp = new URLSearchParams();
         if (mode) sp.set("modes", String(mode));
+        if(status && status != "all"){
+            sp.set("status", String(status));
+        }
         if (ageFrom != null) sp.set("ageFrom", String(ageFrom));
         if (ageTo != null) sp.set("ageTo", String(ageTo));
-        if (timeMode.size > 0) sp.set("timemode", Array.from(timeMode).join(","));
+        if (timeMode?.size > 0) sp.set("timemode", Array.from(timeMode).join(","));
         if (page > 1) sp.set("page", String(page));
+        console.log(sp.toString());
         return sp.toString();
-    }, [mode, ageFrom, ageTo, timeMode, page]);
+    }, [mode, ageFrom, ageTo, timeMode, page, status]);
 
     useEffect(() => {
         const ac = new AbortController();
@@ -50,6 +57,7 @@ export function useMembers() {
                 } else {
                     setError(false);
                     setMembers(data.data);
+                    console.log(data);
                 }
             } catch (e: any) {
                 if (e?.name !== "AbortError") {

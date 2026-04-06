@@ -1,4 +1,4 @@
-import {Logo} from "./Logo";
+import {Logo} from "./Logo.tsx";
 import {FilterTournaments} from "./FilterTournaments.tsx";
 
 export  function LeftSideBarTournaments(){

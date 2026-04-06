@@ -35,6 +35,14 @@ export function FilterGameMode() {
                         TDM
                     </button>
 
+                    <button
+                        onClick={() => toggleMode("ultimate")}
+                        className={(mode == "ultimate") ? "segmented__btn is-active" : "segmented__btn"}
+                        type="button"
+                    >
+                        Ultimate Royale
+                    </button>
+
                 </div>
             </div>
         </div>

@@ -1,4 +1,4 @@
-import {Logo} from "./Logo";
+import {Logo} from "./Logo.tsx";
 import {Filters} from "./MemberFilter/Filters.tsx";
 import '../../StyleSheets/leftSideBar.css'
 
