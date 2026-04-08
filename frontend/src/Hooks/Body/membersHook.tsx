@@ -19,6 +19,7 @@ export function useMembers() {
     const timeMode = useFiltersStore((s) => s.timeMode);
     const page = useFiltersStore((s) => s.page);
     const status = useFiltersStore((s) => s.status);
+    const availableMicro = useFiltersStore((s) => s.availableMicro);
 
     const [members, setMembers] = useState<Member[]>([]);
     const [loading, setLoading] = useState(false);
@@ -32,11 +33,14 @@ export function useMembers() {
         }
         if (ageFrom != null) sp.set("ageFrom", String(ageFrom));
         if (ageTo != null) sp.set("ageTo", String(ageTo));
+        if(availableMicro){
+            sp.set('availableMicro', String(availableMicro));
+        }
         if (timeMode?.size > 0) sp.set("timemode", Array.from(timeMode).join(","));
         if (page > 1) sp.set("page", String(page));
         console.log(sp.toString());
         return sp.toString();
-    }, [mode, ageFrom, ageTo, timeMode, page, status]);
+    }, [mode, ageFrom, ageTo, timeMode, page, status, availableMicro]);
 
     useEffect(() => {
         const ac = new AbortController();
@@ -44,6 +48,7 @@ export function useMembers() {
         (async () => {
             try {
                 setLoading(true);
+                console.log(query);
                 const backend = import.meta.env.VITE_API_URL;
                 const res = await fetch(`${backend}/api/members?${query}`, {
                     signal: ac.signal,
@@ -57,7 +62,6 @@ export function useMembers() {
                 } else {
                     setError(false);
                     setMembers(data.data);
-                    console.log(data);
                 }
             } catch (e: any) {
                 if (e?.name !== "AbortError") {

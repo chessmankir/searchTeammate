@@ -9,6 +9,9 @@ type FiltersState = {
     toggleMode: (mode: GameMode) => void;
     resetModes: () => void;
 
+    available_micro: boolean;
+    setAvailable_micro: () => void;
+
     status: StatusMember;
     setStatus: (status: StatusMember) => void;
 
@@ -45,7 +48,7 @@ export const useFiltersStore = create<FiltersState>((set, get) => ({
 
     setAvailableMicro: (availableMicro) =>
         set(() => ({
-            availableMicro
+            availableMicro: availableMicro,
         })),
 
     setAgeFrom: (age) =>

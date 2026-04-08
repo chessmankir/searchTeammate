@@ -6,6 +6,7 @@ const router = Router();
 
 router.get("/", async (req: Request, res: Response) => {
     try {
+        console.log(req.query);
         const clan_id = req.query.clan_id ? Number(req.query.clan_id) : undefined;
         const number = req.query.number ? Number(req.query.number) : undefined;
         const pubg_id = req.query.pubg_id ? Number(req.query.pubg_id) : undefined;
@@ -19,6 +20,8 @@ router.get("/", async (req: Request, res: Response) => {
         const modesRaw = typeof req.query.modes === "string" ? req.query.modes : "";
         const timeRaw = typeof req.query.timemode === "string" ? req.query.timemode : "";
         const statusGame = typeof req.query.status === "string" ? req.query.status : "";
+
+        const availableMicro = typeof req.query.availableMicro === "string" ? req.query.availableMicro : false;
 
         const modes =
             modesRaw.trim().length > 0
@@ -59,11 +62,14 @@ router.get("/", async (req: Request, res: Response) => {
             where.push(`cm.clan_id = $${params.length}`);
         }
 
-        console.log(statusGame);
         if(statusGame !== undefined && statusGame !== "") {
-            console.log("statusGame");
             params.push(statusGame);
             where.push(`cm.status_game = $${params.length}`);
+        }
+
+        if(availableMicro !== undefined && availableMicro !== "false") {
+            params.push(availableMicro);
+            where.push(`cm.available_micro = $${params.length}`);
         }
 
         if (number !== undefined && Number.isFinite(number)) {
@@ -114,7 +120,6 @@ router.get("/", async (req: Request, res: Response) => {
             FROM clan_members cm
             ${whereSql}
         `;
-        console.log(sqlTotal);
 
         const resultTotal = await pool.query(sqlTotal, params);
         const total = Number(resultTotal.rows[0]?.total ?? 0);
@@ -145,7 +150,7 @@ router.get("/", async (req: Request, res: Response) => {
             LIMIT $${paramsData.length - 1}
             OFFSET $${paramsData.length}
         `;
-
+        console.log(sqlTotal);
         const result = await pool.query(sql, paramsData);
 
         return res.json({

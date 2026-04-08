@@ -23,6 +23,7 @@ import conversationsRoute from "./routes/Messages/conversationsRoute";
 import sendMessageRoute from "./routes/Messages/sendMessageRoute";
 import getConversationsRoute from "./routes/Messages/getConversationsRoute";
 import * as http from "node:http";
+import updateMemberRoute from "./routes/updateMemberRoute";
 
 dotenv.config();
 
@@ -89,6 +90,7 @@ app.use("/api/conversation", conversationRoute);
 app.use("/api/conversations", conversationsRoute);
 app.use("/api/conversations", sendMessageRoute);
 app.use("/api/get/conversations", getConversationsRoute);
+app.use("/api/update/member", updateMemberRoute);
 
 app.get("/api", (req, res) => {
     return res.json({ ok: true, message: "Welcome Backend API" });

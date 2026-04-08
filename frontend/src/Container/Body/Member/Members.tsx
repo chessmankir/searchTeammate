@@ -76,19 +76,19 @@ export function Members() {
                                     )}
                                     {m.status_game == "asd" && (
                                         <div className="status-content">
-                                            <img className="status-icon" src="/assets/asd.png" alt=""/>
+                                            <img className="status-icon" src="/assets/asd.gif" alt=""/>
                                             <span className="status-text">Продвижение до Ас-доминатора</span>
                                         </div>
                                     )}
                                     {m.status_game == "zavic" && (
                                         <div className="status-content">
-                                            <img className="status-icon" src="/assets/zavic.png" alt=""/>
+                                            <img className="status-icon" src="/assets/zavic.gif" alt=""/>
                                             <span className="status-text">Апаю завика</span>
                                         </div>
                                     )}
                                     {m.status_game == "legend" && (
                                         <div className="status-content">
-                                            <img className="status-icon" src="/assets/as.png" alt=""/>
+                                            <img className="status-icon" src="/assets/legend.gif" alt=""/>
                                             <span className="status-text">Апаю легенду</span>
                                         </div>
                                     )}
@@ -97,7 +97,7 @@ export function Members() {
                                 <td className="profile">
                                     <div className="myclan-row-actions"><a
                                         className="myclan-btn myclan-btn--small myclan-btn--ghost"
-                                        href="/profile/52310177022" data-discover="true">Профиль</a>
+                                        href={`/profile/`+m.pubg_id} data-discover="true">Профиль</a>
                                     </div>
                                 </td>
                                 {/*<td className="tg">
