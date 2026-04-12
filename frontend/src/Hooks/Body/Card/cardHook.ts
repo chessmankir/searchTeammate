@@ -1,17 +1,11 @@
 import { useEffect, useState } from "react";
 import { authStore } from "../../store/authStore.ts";
 import type { AlbumFlterType } from "../../types/AlbumFlterType.ts";
+import type {CardType} from "../../Container/Body/Cards/CardWrapper.tsx";
 
 interface QualityCard {
     quality_id: number;
     count: number;
-}
-
-interface Card {
-    id: number;
-    name: string;
-    imageSrc: string;
-    qualities: QualityCard[];
 }
 
 interface UseCardParams {
@@ -21,9 +15,9 @@ interface UseCardParams {
 
 export function useCards({ albumId, filter }: UseCardParams = {}) {
     const user = authStore((state) => state.user);
-    const [cards, setCards] = useState<Card[]>([]);
+    const [cards, setCards] = useState<CardType[]>([]);
 
-    const addCardHandler = async (card_id: number, qualityId: number = 1) => {
+    const addCardHandler = async (card_id: number) => {
         const url = import.meta.env.VITE_API_URL;
         const backendServer = `${url}/api/add/card`;
 
@@ -32,8 +26,7 @@ export function useCards({ albumId, filter }: UseCardParams = {}) {
             headers: { "Content-Type": "application/json" },
             credentials: "include",
             body: JSON.stringify({
-                card_id,
-                qualityId
+                card_id
             })
         });
 
@@ -41,29 +34,14 @@ export function useCards({ albumId, filter }: UseCardParams = {}) {
             setCards((prev) =>
                 prev.map((card) => {
                     if (card.id !== card_id) return card;
-
-                    const existing = card.qualities.find(
-                        (q) => q.quality_id === qualityId
-                    );
-
-                    if (existing) {
-                        return {
-                            ...card,
-                            qualities: card.qualities.map((q) =>
-                                q.quality_id === qualityId
-                                    ? { ...q, count: q.count + 1 }
-                                    : q
-                            ),
-                        };
+                    else{
+                        if(card.count > 0){
+                            return {...card, count: card.count + 1}
+                        }
+                        else{
+                            return {...card, count: 1}
+                        }
                     }
-
-                    return {
-                        ...card,
-                        qualities: [
-                            ...card.qualities,
-                            { quality_id: qualityId, count: 1 },
-                        ],
-                    };
                 })
             );
         }
@@ -90,16 +68,9 @@ export function useCards({ albumId, filter }: UseCardParams = {}) {
                 setCards((prev) =>
                     prev.map((card) => {
                         if (card.id !== card_id) return card;
-
                         return {
                             ...card,
-                            qualities: card.qualities
-                                .map((q) =>
-                                    q.quality_id === qualityId
-                                        ? { ...q, count: q.count - 1 }
-                                        : q
-                                )
-                                .filter((q) => q.count > 0)
+                            count: card.count -1
                         };
                     })
                 );
@@ -133,7 +104,7 @@ export function useCards({ albumId, filter }: UseCardParams = {}) {
                 });
 
                 const data = await response.json();
-
+                console.log(data);
                 if (data?.ok) {
                     setCards(data.data);
                 } else {
