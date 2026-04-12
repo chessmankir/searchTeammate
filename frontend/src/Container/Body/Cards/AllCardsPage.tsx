@@ -1,7 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 import "../../../StyleSheets/current_card.css";
 import { CardWrapper } from "./CardWrapper.tsx";
-import { useCards } from "../../../Hooks/Body/cardHook.ts";
+import { useCards } from "../../../Hooks/Body/Card/cardHook.ts";
 import { AlbumPageTopbar } from "./AlbumPageTopbar.tsx";
 import type { AlbumFlterType } from "../../../types/AlbumFlterType.ts";
 

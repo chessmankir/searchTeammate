@@ -24,6 +24,8 @@ import sendMessageRoute from "./routes/Messages/sendMessageRoute";
 import getConversationsRoute from "./routes/Messages/getConversationsRoute";
 import * as http from "node:http";
 import updateMemberRoute from "./routes/updateMemberRoute";
+import cardRouter from "./routes/cardRouter";
+import getUserCard from "./routes/getUserCard";
 
 dotenv.config();
 
@@ -81,6 +83,8 @@ app.use("/api/auth/me", authMeRouter);
 app.use("/api/logout", logoutRouter);
 app.use("/api/albums", albumsRouter);
 app.use("/api/cards", cardsRouter);
+app.use("/api/card", cardRouter);
+app.use("/api/get/usercard", getUserCard);
 app.use("/api/add/card", addCardRouter);
 app.use("/api/remove/card", removeCardRouter);
 app.use("/api/clanmember", clanMemberRoute);

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { authStore } from "../../store/authStore.ts";
-import type { AlbumFlterType } from "../../types/AlbumFlterType.ts";
-import type {CardType} from "../../Container/Body/Cards/CardWrapper.tsx";
+import { authStore } from "../../../store/authStore.ts";
+import type { AlbumFlterType } from "../../../types/AlbumFlterType.ts";
+import type {CardType} from "../../../Container/Body/Cards/CardWrapper.tsx";
 
 interface QualityCard {
     quality_id: number;

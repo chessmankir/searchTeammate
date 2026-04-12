@@ -21,7 +21,7 @@ router.get("/", async (req: Request, res: Response) => {
         const timeRaw = typeof req.query.timemode === "string" ? req.query.timemode : "";
         const statusGame = typeof req.query.status === "string" ? req.query.status : "";
 
-        const availableMicro = typeof req.query.availableMicro === "string" ? req.query.availableMicro : false;
+        const availableMicro = typeof req.query.availableMicro === "boolean" ? req.query.availableMicro : false;
 
         const modes =
             modesRaw.trim().length > 0
@@ -67,7 +67,7 @@ router.get("/", async (req: Request, res: Response) => {
             where.push(`cm.status_game = $${params.length}`);
         }
 
-        if(availableMicro !== undefined && availableMicro !== "false") {
+        if(availableMicro !== undefined && availableMicro) {
             params.push(availableMicro);
             where.push(`cm.available_micro = $${params.length}`);
         }
@@ -112,7 +112,6 @@ router.get("/", async (req: Request, res: Response) => {
                 )
             `);
         }
-        console.log(params);
         const whereSql = where.length ? `WHERE ${where.join(" AND ")}` : "";
 
         const sqlTotal = `
@@ -150,7 +149,6 @@ router.get("/", async (req: Request, res: Response) => {
             LIMIT $${paramsData.length - 1}
             OFFSET $${paramsData.length}
         `;
-        console.log(sqlTotal);
         const result = await pool.query(sql, paramsData);
 
         return res.json({

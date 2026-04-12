@@ -1,6 +1,6 @@
 type ButtonCardProps = {
     text: string;
-    actionClick: (cardId: number, quality: number) => void;
+    actionClick: (cardId: number) => void;
     cardId: number;
     quality: number;
     totalCount: number;
@@ -10,7 +10,6 @@ export function ButtonCard({
                                text,
                                actionClick,
                                cardId,
-                               quality,
                                totalCount
                            }: ButtonCardProps) {
     return (
@@ -19,7 +18,7 @@ export function ButtonCard({
             className="quality-btn"
             onClick={(e) => {
                 e.stopPropagation();
-                actionClick(cardId, quality);
+                actionClick(cardId);
             }}
             disabled={totalCount <= 0 && text === "-"}
         >

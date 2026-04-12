@@ -19,6 +19,7 @@ import ProfilePage from "./Container/Body/Profile/ProfilePage.tsx";
 import {ProfileLayout} from "./Container/Body/Profile/ProfileLayout.tsx";
 import {MessagesLayout} from "./Container/Body/Messages/MessagesLayout.tsx";
 import MessagesPage from "./Container/Body/Messages/MessagesPage.tsx";
+import {CardDuplicatesPage} from "./Container/Body/Cards/Duplicates/CardDuplicatePage.tsx";
 
 function App() {
     const checkAuth = authStore((state) => state.checkAuth);
@@ -57,6 +58,10 @@ function App() {
         <Route path="/messages" element={<MessagesLayout />}>
             <Route index element={<MessagesPage />} />
         </Route>
+        <Route path="/duplicates" element={<CardsLayout />}>
+            <Route index element={<CardDuplicatesPage />} />
+        </Route>
+
     </Routes>
   );
 }

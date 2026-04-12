@@ -12,16 +12,16 @@ dotenv.config();
     keepAlive: true,
 });*/
 
+/*
 export const pool = new Pool({
     host: "localhost",
     port: 5432,
     user: "postgres",
     password: "kir",
-    database: "checkmate2",
+    database: "checkmate",
 });
+*/
 
-
-/*
 export const pool = new Pool({
     host: "orgasedooysog.beget.app",
     port: 5432,
@@ -29,7 +29,6 @@ export const pool = new Pool({
     password: "w*sVwHf6Yn%*",
     database: "checkmate",
 });
-*/
 
 (async () => {
     try {

@@ -1,4 +1,4 @@
-export function CardDuplicateCard(){
+export function CardDuplicateHeader(){
     return (
         <div className="card-duplicates-page__header">
             <h1 className="card-duplicates-page__title">Дубликаты карточки</h1>

@@ -1,45 +1,31 @@
-type CardType = {
-    id: number;
-    name: string;
-    imageSrc: string;
-};
+import type {CardType} from "./CardWrapper.tsx";
 
 type CardProps = {
     card: CardType;
-    totalCount: number;
-    commonCount: number;
-    rareCount: number;
-    legendaryCount: number;
+    setSelectedCard: () => void;
 };
 
 export function Card({
-                         card,
-                         totalCount,
-                         commonCount,
-                         rareCount,
-                         legendaryCount
+                         card, setSelectedCard
                      }: CardProps) {
+    const totalCount = card.count == null ? 0 : card.count;
+    console.log(card)
     return (
         <div className="album-card__image-wrap">
             <img
-                src={"../" + card.imageSrc}
+                onClick={() => setSelectedCard(card)}
+                src={card.imageSrc}
                 alt={card.name}
                 className="album-card__image"
             />
 
-            {totalCount > 0 && (
+           {/* {totalCount > 0 && (
                 <div className="album-card__total">x{totalCount}</div>
-            )}
+            )}*/}
 
             <div className="album-card__badges">
-                {commonCount > 0 && (
-                    <span className="badge badge-common">x{commonCount}</span>
-                )}
-                {rareCount > 0 && (
-                    <span className="badge badge-rare">x{rareCount}</span>
-                )}
-                {legendaryCount > 0 && (
-                    <span className="badge badge-legendary">x{legendaryCount}</span>
+                {totalCount > 0 && (
+                    <span className="badge badge-common">x{totalCount}</span>
                 )}
             </div>
         </div>

@@ -88,8 +88,7 @@ router.get('/:albumId', async (req: Request, res: Response) => {
     const userid = user.id;
 
     const query = `
-        SELECT c.*, uc.id_user,
-               uc.quality_id,
+        SELECT c.*, uc.id_user, c.quality,
                uc.count
         FROM cards c
         JOIN albums a ON a.id = c.album_id
@@ -106,7 +105,7 @@ router.get('/:albumId', async (req: Request, res: Response) => {
         console.log("after response");
         return res.json({
             ok: true,
-            data: mapCardRows(responseAnswer.rows)
+            data: responseAnswer.rows
         });
     } catch (e) {
         console.log(e);

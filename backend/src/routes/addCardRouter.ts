@@ -5,9 +5,9 @@ import {Router, Request, Response, response} from "express";
 const router = Router();
 
 router.post("/", async (req: Request, res: Response) => {
-    const { card_id, qualityId } = req.body;
+    const { card_id } = req.body;
     const sid = req.cookies?.sid;
-
+    console.log(card_id);
     try {
         if (!sid) {
             return res.status(401).json({
@@ -29,23 +29,21 @@ router.post("/", async (req: Request, res: Response) => {
             SELECT *
             FROM user_card
             WHERE id_user = $1
-              AND quality_id = $2
-              AND card_id = $3
+              AND card_id = $2
             LIMIT 1
         `;
 
-        const findResult = await pool.query(findQuery, [user.id, qualityId, card_id]);
+        const findResult = await pool.query(findQuery, [user.id, card_id]);
         if (findResult.rows.length > 0) {
             const updateQuery = `
                 UPDATE user_card
                 SET count = count + 1
                 WHERE id_user = $1
-                  AND quality_id = $2
-                  AND card_id = $3
+                  AND card_id = $2
                 RETURNING *
             `;
 
-            const updateResult = await pool.query(updateQuery, [user.id, qualityId, card_id]);
+            const updateResult = await pool.query(updateQuery, [user.id, card_id]);
 
             return res.json({
                 ok: true,
@@ -54,12 +52,12 @@ router.post("/", async (req: Request, res: Response) => {
         }
 
         const insertQuery = `
-            INSERT INTO user_card (id_user, quality_id, card_id, count)
-            VALUES ($1, $2, $3, 1)
+            INSERT INTO user_card (id_user, card_id, count)
+            VALUES ($1, $2, 1)
             RETURNING *
         `;
         console.log('insertQuery');
-        const insertResult = await pool.query(insertQuery, [user.id, qualityId, card_id]);
+        const insertResult = await pool.query(insertQuery, [user.id, card_id]);
 
         return res.json({
             ok: true,

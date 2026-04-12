@@ -33,7 +33,10 @@ export function useMembers() {
         }
         if (ageFrom != null) sp.set("ageFrom", String(ageFrom));
         if (ageTo != null) sp.set("ageTo", String(ageTo));
-        if(availableMicro){
+        console.log('availableMicro')
+        console.log(availableMicro);
+        if(!!availableMicro){
+            console.log(" inner");
             sp.set('availableMicro', String(availableMicro));
         }
         if (timeMode?.size > 0) sp.set("timemode", Array.from(timeMode).join(","));

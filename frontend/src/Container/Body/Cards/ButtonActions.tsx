@@ -1,13 +1,11 @@
 import { ButtonCard } from "./ButtonCard.tsx";
+import type {CardType} from "./CardWrapper.tsx";
 
 type ButtonActionsProps = {
     removeCard: (cardId: number, quality: number) => void;
     addCard: (cardId: number, quality: number) => void;
-    card: {
-        id: number;
-    };
+    card: CardType;
     totalCount: number;
-    quality: number;
 };
 
 export function ButtonActions({
@@ -15,7 +13,6 @@ export function ButtonActions({
                                   addCard,
                                   card,
                                   totalCount,
-                                  quality
                               }: ButtonActionsProps) {
     return (
         <div className="quality-control__actions">
@@ -23,7 +20,6 @@ export function ButtonActions({
                 text={"-"}
                 actionClick={removeCard}
                 cardId={card.id}
-                quality={quality}
                 totalCount={totalCount}
             />
 
@@ -33,7 +29,6 @@ export function ButtonActions({
                 text={"+"}
                 actionClick={addCard}
                 cardId={card.id}
-                quality={quality}
                 totalCount={totalCount}
             />
         </div>

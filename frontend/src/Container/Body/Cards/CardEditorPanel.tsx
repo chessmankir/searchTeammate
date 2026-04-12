@@ -1,10 +1,5 @@
 import { ButtonActions } from "./ButtonActions.tsx";
-
-type CardType = {
-    id: number;
-    name: string;
-    imageSrc: string;
-};
+import type {CardType} from "./CardWrapper.tsx";
 
 type QualityMap = {
     COMMON: number;
@@ -17,8 +12,6 @@ type CardEditorPanelProps = {
     addCard: (cardId: number, quality: number) => void;
     card: CardType;
     commonCount: number;
-    rareCount: number;
-    legendaryCount: number;
     QUALITY: QualityMap;
 };
 
@@ -26,25 +19,21 @@ export function CardEditorPanel({
                                     removeCard,
                                     addCard,
                                     card,
-                                    commonCount,
-                                    rareCount,
-                                    legendaryCount,
-                                    QUALITY
                                 }: CardEditorPanelProps) {
+    const totalCount = card.count == null ? 0 : card.count;
     return (
         <div className="album-card__editor">
             <div className="quality-control quality-control--common">
-                <span className="quality-control__label">Обычная</span>
+                <span className="quality-control__label">Количество</span>
                 <ButtonActions
                     card={card}
+                    totalCount={totalCount}
                     removeCard={removeCard}
-                    totalCount={commonCount}
                     addCard={addCard}
-                    quality={QUALITY.COMMON}
                 />
             </div>
 
-            <div className="quality-control quality-control--rare">
+            {/*<div className="quality-control quality-control--rare">
                 <span className="quality-control__label">Синяя</span>
                 <ButtonActions
                     card={card}
@@ -64,7 +53,7 @@ export function CardEditorPanel({
                     addCard={addCard}
                     quality={QUALITY.LEGENDARY}
                 />
-            </div>
+            </div>*/}
         </div>
     );
 }

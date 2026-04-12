@@ -4,7 +4,7 @@ import {Router, Response, Request} from 'express';
 
 const router = Router();
 router.post('/', async (req: Request, res: Response) => {
-    const {card_id, qualityId} = req.body;
+    const {card_id} = req.body;
     const sid = req.cookies?.sid;
     try {
         const user = await getSession(sid);
@@ -12,21 +12,21 @@ router.post('/', async (req: Request, res: Response) => {
             return res.json({ok: false})
         }
 
-        const card = await getUserCard(user.id, card_id, qualityId);
+        const card = await getUserCard(user.id, card_id);
         let queryUpdate = "";
         if (card?.count > 1){
            queryUpdate = `UPDATE user_card 
            SET count = count - 1
-           WHERE id_user = $1 AND quality_id = $2 AND card_id = $3
+           WHERE id_user = $1  AND card_id = $2
            RETURNING *`;
 
         }
         else{
            queryUpdate = `DELETE FROM user_card 
-           WHERE id_user = $1 AND quality_id = $2 AND card_id = $3
+           WHERE id_user = $1  AND card_id = $2
            RETURNING *`;
         }
-        const responseUpdate = await pool.query(queryUpdate, [user.id, qualityId, card_id]);
+        const responseUpdate = await pool.query(queryUpdate, [user.id, card_id]);
         if(responseUpdate.rows.length > 0){
             return res.json({ok: true});
         }
@@ -38,17 +38,16 @@ router.post('/', async (req: Request, res: Response) => {
     }
 });
 
-async function getUserCard(userId: number, cardId: number, qualityId: number) {
+async function getUserCard(userId: number, cardId: number) {
     const findQuery = `
             SELECT *
             FROM user_card
             WHERE id_user = $1
               AND card_id = $2
-              AND quality_id = $3
             LIMIT 1
         `;
 
-    const response = await pool.query(findQuery, [userId, cardId, qualityId]);
+    const response = await pool.query(findQuery, [userId, cardId]);
     console.log(response.rows);
     if(response.rows.length > 0){
         return response.rows[0];
