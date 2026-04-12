@@ -2,7 +2,9 @@ import { Pool} from "pg";
 import {errorMonitor} from "node:events";
 import dotenv from "dotenv";
 dotenv.config();
-export const pool = new Pool({
+console.log(process.env.SUPABASE_DATABASE_URL);
+
+/*export const pool = new Pool({
     connectionString: process.env.SUPABASE_DATABASE_URL,
     ssl: {
         rejectUnauthorized: false,
@@ -10,7 +12,7 @@ export const pool = new Pool({
     },
     // помогает избежать неожиданных разрывов
     keepAlive: true,
-});
+});*/
 
 /*export const pool = new Pool({
     host: "localhost",
@@ -20,13 +22,13 @@ export const pool = new Pool({
     database: "checkmate",
 });*/
 
-/*export const pool = new Pool({
+export const pool = new Pool({
     host: "orgasedooysog.beget.app",
     port: 5432,
     user: "cloud_user",
     password: "w*sVwHf6Yn%*",
     database: "checkmate",
-});*/
+});
 
 (async () => {
     try {

@@ -23,7 +23,8 @@ router.put('/', async (req: Request, res: Response) => {
     const query = `UPDATE clan_members SET
                             nickname=$1, age=$2, city=$3, pubg_id=$4, name=$5, available_micro=$6 WHERE id = $7 
                             RETURNING *`;
-
+    console.log(query);
+    console.log(req.body);
     try{
         const data = await pool.query(query, [nickname, age, city,  pubgId, name, availableMicro, id]);
         await  deleteGameModeMember(user.id);
