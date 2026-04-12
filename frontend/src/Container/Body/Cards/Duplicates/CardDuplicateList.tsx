@@ -12,6 +12,7 @@ type DuplicateMember = {
     name: string;
     nickname: string;
     profile_link: string;
+    pubg_id: string;
     missing_cards: MissingCard[];
 };
 
@@ -24,6 +25,7 @@ export function CardDuplicateList({
                                       members,
                                       selectedCard,
                                   }: CardDuplicateListProps) {
+    console.log(members);
     return (
         <div className="card-duplicates-page__table-wrap">
             <table className="card-duplicates-page__table">
@@ -81,7 +83,7 @@ export function CardDuplicateList({
                         </td>
 
                         <td>
-                            <Link to={row.profile_link} className="profile-link">
+                            <Link to={`/profile/`+row.pubg_id} className="profile-link">
                                 Профиль
                             </Link>
                         </td>

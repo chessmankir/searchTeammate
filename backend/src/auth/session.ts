@@ -28,13 +28,15 @@ export async function createSession(user_id: number){
     }
 }
 
-export async function getSession(token: string){
+/*export async function getSession(token: string){
+    console.log("getSession");
+    console.log(token);
     const query = `SELECT cm.id, cm.pubg_id, cm.nickname, cm.actor_id, cm.clan_id
         FROM sessions s
         JOIN clan_members cm ON s.user_id = cm.id
-        WHERE s.id = $1`;
+        `;
     try{
-        const  result = await pool.query(query,[token]);
+        const  result = await pool.query(query);
         if(result?.rows.length > 0){
             const user = result.rows[0];
             return {
@@ -48,12 +50,41 @@ export async function getSession(token: string){
         return  null;
     }
     catch (e){
+        console.log("errror");
+        console.error(e);
+        return null;
+    }
+}*/
+
+export async function getSession(token: string){
+    console.log("getSession");
+    console.log(token);
+      const query = `SELECT cm.id, cm.pubg_id, cm.nickname, cm.actor_id, cm.clan_id
+          FROM sessions s
+          JOIN clan_members cm ON s.user_id = cm.id
+          WHERE s.id = $1`;
+    try{
+         const  result = await pool.query(query,[token]);
+        if(result?.rows.length > 0){
+            const user = result.rows[0];
+            return {
+                id: user.id,
+                pubg_id: user.pubg_id,
+                nickname: user.nickname,
+                actor_id: user.actor_id,
+                clan_id: user.clan_id,
+            }
+        }
+        return  null;
+    }
+    catch (e){
+        console.log("errror");
         console.error(e);
         return null;
     }
 }
 
 export async function deleteSession(token: string){
-    const query = "DELETE FROM sessions WHERE id = $1";
-    await pool.query(query,[token]);
+    //const query = "DELETE FROM sessions WHERE id = $1";
+    //await pool.query(query,[token]);
 }
