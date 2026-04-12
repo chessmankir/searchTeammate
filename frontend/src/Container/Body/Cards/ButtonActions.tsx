@@ -2,8 +2,8 @@ import { ButtonCard } from "./ButtonCard.tsx";
 import type {CardType} from "./CardWrapper.tsx";
 
 type ButtonActionsProps = {
-    removeCard: (cardId: number, quality: number) => void;
-    addCard: (cardId: number, quality: number) => void;
+    removeCard: (cardId: number) => void;
+    addCard: (cardId: number) => void;
     card: CardType;
     totalCount: number;
 };

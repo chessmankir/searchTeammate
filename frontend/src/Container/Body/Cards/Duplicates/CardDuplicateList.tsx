@@ -1,7 +1,29 @@
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import type { CardType } from "../CardWrapper.tsx";
 
-export function CardDuplicateList({members, selectedCard}){
-    console.log(members);
+type MissingCard = {
+    id: number;
+    name: string;
+    imageSrc: string;
+};
+
+type DuplicateMember = {
+    id: number;
+    name: string;
+    nickname: string;
+    profile_link: string;
+    missing_cards: MissingCard[];
+};
+
+type CardDuplicateListProps = {
+    members: DuplicateMember[];
+    selectedCard: CardType | null;
+};
+
+export function CardDuplicateList({
+                                      members,
+                                      selectedCard,
+                                  }: CardDuplicateListProps) {
     return (
         <div className="card-duplicates-page__table-wrap">
             <table className="card-duplicates-page__table">
@@ -14,52 +36,52 @@ export function CardDuplicateList({members, selectedCard}){
                     <th>Профиль</th>
                 </tr>
                 </thead>
+
                 <tbody>
                 {members.map((row) => (
                     <tr key={row.id}>
                         <td>
                             <div className="card-cell">
-                                <img
-                                    src={selectedCard?.imageSrc}
-                                    alt={selectedCard?.name}
-                                    className="card-cell__image"
-                                />
+                                {selectedCard && (
+                                    <img
+                                        src={selectedCard.imageSrc}
+                                        alt={selectedCard.name}
+                                        className="card-cell__image"
+                                    />
+                                )}
+
                                 <div className="card-cell__content">
                                     <div className="card-cell__title">
-                                        {selectedCard?.name}
+                                        {selectedCard?.name ?? "Карточка не выбрана"}
                                     </div>
                                 </div>
                             </div>
                         </td>
 
                         <td>
-                            <div className="user-cell">
-                                {row?.name}
-                            </div>
+                            <div className="user-cell">{row.name}</div>
                         </td>
 
                         <td>
-                            <div className="game-cell">
-                                {row?.nickname}
-                            </div>
+                            <div className="game-cell">{row.nickname}</div>
                         </td>
 
                         <td>
                             <div className="wants-cell">
-                                {row.missing_cards.map((want, index) => (
-                                   /* <span key={index} className="wants-cell__tag">
-                                                {want.name}
-                                            </span>*/
-                                        <img src={want.imageSrc} alt={want.name} className="card-cell__image" />
+                                {row.missing_cards.map((want: MissingCard) => (
+                                    <img
+                                        key={want.id}
+                                        src={want.imageSrc}
+                                        alt={want.name}
+                                        className="card-cell__image"
+                                        title={want.name}
+                                    />
                                 ))}
                             </div>
                         </td>
 
                         <td>
-                            <Link
-                                to={row.profile_link}
-                                className="profile-link"
-                            >
+                            <Link to={row.profile_link} className="profile-link">
                                 Профиль
                             </Link>
                         </td>
@@ -68,5 +90,5 @@ export function CardDuplicateList({members, selectedCard}){
                 </tbody>
             </table>
         </div>
-    )
+    );
 }

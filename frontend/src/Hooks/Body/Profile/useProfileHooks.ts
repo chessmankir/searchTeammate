@@ -1,23 +1,51 @@
 import { useEffect, useState } from "react";
 import type { ClanMember } from "../../../types/ClanMember.ts";
 import { useParams } from "react-router-dom";
-import type {GameMode, StatusMember} from "../../../store/filtersStore.ts";
+import type { GameMode, StatusMember } from "../../../store/filtersStore.ts";
+
+export type ProfileFormState = {
+    id?: number;
+    nickname: string;
+    age: string;
+    city: string;
+    name: string;
+    pubgId: string;
+    availableMicro: boolean;
+    status_game: StatusMember;
+    modes: GameMode[];
+};
+
+type SaveProfileParams = {
+    nickname: string;
+    age: string;
+    city: string;
+    nameMember: string;
+    pubgId: string;
+    id: number;
+    availableMicro: boolean;
+    status_game: StatusMember;
+    modes: GameMode[];
+};
+
+const initialFormState: ProfileFormState = {
+    id: undefined,
+    nickname: "",
+    age: "",
+    city: "",
+    name: "",
+    pubgId: "",
+    availableMicro: false,
+    status_game: "all",
+    modes: [],
+};
 
 export function useProfileHooks() {
-    const [member, setMember] = useState<ClanMember>();
-    const { pubg_id } = useParams();
-    const [nickname, setNickname] = useState("");
-    const [pubgId, setPubgId] = useState("");
-    const [name, setName] = useState("");
-    const [age, setAge] = useState("");
-    const [city, setCity] = useState("");
-    const [modes, setModes] = useState<GameMode[]>([]);
-    const [availableMicro, setAvailableMicro] = useState(false);
-    const [status_game, setStatus_game] = useState<StatusMember>("all");
-    const [id, setId] = useState();
+    const [member, setMember] = useState<ClanMember | undefined>(undefined);
+    const [form, setForm] = useState<ProfileFormState>(initialFormState);
+    const { pubg_id } = useParams<{ pubg_id?: string }>();
 
     useEffect(() => {
-        (async () => {
+        const fetchMember = async (): Promise<void> => {
             const params = new URLSearchParams();
 
             if (pubg_id) {
@@ -25,8 +53,9 @@ export function useProfileHooks() {
             } else {
                 params.set("pubg_id", "1");
             }
+
             const url = import.meta.env.VITE_API_URL;
-            const backend = `${url}/api/members?` + params.toString();
+            const backend = `${url}/api/members?${params.toString()}`;
 
             try {
                 const response = await fetch(backend, {
@@ -35,32 +64,61 @@ export function useProfileHooks() {
 
                 const data = await response.json();
 
-                if (data.ok) {
-                  /*  if (pubg_id) {*/
-                        setMember(data.data[0]);
-                        setNickname(data.data[0].nickname);
-                        setPubgId(data.data[0].pubg_id);
-                        setName(data.data[0].name);
-                        setAge(data.data[0].age);
-                        setCity(data.data[0].city);
-                        setAvailableMicro(data.data[0].available_micro);
-                        setStatus_game(data.data[0].status_game == null ? "all" : data.data[0].status_game);
-                        setModes(data.data[0].modes);
-                        setId(data.data[0].id);
-                   /* } else {
-                        setMember({ ...data.data[0], owner: true });
-                    }*/
+                if (data.ok && data.data?.[0]) {
+                    const currentMember = data.data[0];
+
+                    setMember(currentMember);
+
+                    setForm({
+                        id: currentMember.id,
+                        nickname: currentMember.nickname ?? "",
+                        pubgId: currentMember.pubg_id ?? "",
+                        name: currentMember.name ?? "",
+                        age: String(currentMember.age ?? ""),
+                        city: currentMember.city ?? "",
+                        availableMicro: Boolean(currentMember.available_micro),
+                        status_game:
+                            currentMember.status_game == null
+                                ? "all"
+                                : currentMember.status_game,
+                        modes: Array.isArray(currentMember.modes)
+                            ? currentMember.modes
+                            : [],
+                    });
                 }
             } catch (e) {
                 console.log(e);
             }
-        })();
+        };
+
+        void fetchMember();
     }, [pubg_id]);
 
-    const saveProfile = async function (nickname, age, city, nameMember, pubgId, id, availableMicro, status_game, modes) {
-        try{
+    const updateForm = <K extends keyof ProfileFormState>(
+        key: K,
+        value: ProfileFormState[K]
+    ): void => {
+        setForm((prev) => ({
+            ...prev,
+            [key]: value,
+        }));
+    };
+
+    const saveProfile = async ({
+                                   nickname,
+                                   age,
+                                   city,
+                                   nameMember,
+                                   pubgId,
+                                   id,
+                                   availableMicro,
+                                   status_game,
+                                   modes,
+                               }: SaveProfileParams): Promise<void> => {
+        try {
             const url = import.meta.env.VITE_API_URL;
             const backend = `${url}/api/update/member`;
+
             const response = await fetch(backend, {
                 credentials: "include",
                 method: "PUT",
@@ -68,43 +126,60 @@ export function useProfileHooks() {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    nickname: nickname,
-                    age: age,
-                    city: city,
+                    nickname,
+                    age,
+                    city,
                     name: nameMember,
-                    pubgId: pubgId,
-                    id: id,
-                    availableMicro: availableMicro,
-                    status_game: status_game,
-                    modes: modes,
-                })
+                    pubgId,
+                    id,
+                    availableMicro,
+                    status_game,
+                    modes,
+                }),
             });
+
             const data = await response.json();
+
             if (data.ok) {
-                console.log('data');
+                console.log("data");
             }
-        }
-        catch (e){
+        } catch (e) {
             console.log(e);
         }
-    }
+    };
 
-    const changeGameModeOption = function (modes, option, setModes){
-        console.log(option);
-        if(modes.includes(option)){
-            const newOptions = modes.filter((item) => {
-                console.log(item);
-                return item != option;
-            });
-            setModes(newOptions);
-        }
-        else{
-            const newOptions = [...modes, option];
-            setModes(newOptions);
-        }
-    }
+    const saveCurrentProfile = async (): Promise<void> => {
+        if (form.id === undefined) return;
 
-    return { member, nickname, age, city, name, pubgId, id, status_game, setNickname, setPubgId, setName, setAge, setCity,
-        availableMicro, setAvailableMicro, modes, setModes,  setStatus_game, saveProfile, changeGameModeOption};
+        await saveProfile({
+            nickname: form.nickname,
+            age: form.age,
+            city: form.city,
+            nameMember: form.name,
+            pubgId: form.pubgId,
+            id: form.id,
+            availableMicro: form.availableMicro,
+            status_game: form.status_game,
+            modes: form.modes,
+        });
+    };
+
+    const changeGameModeOption = (option: GameMode): void => {
+        if (form.modes.includes(option)) {
+            const newOptions = form.modes.filter((item) => item !== option);
+            updateForm("modes", newOptions);
+        } else {
+            updateForm("modes", [...form.modes, option]);
+        }
+    };
+
+    return {
+        member,
+        form,
+        setForm,
+        updateForm,
+        saveProfile,
+        saveCurrentProfile,
+        changeGameModeOption,
+    };
 }
-

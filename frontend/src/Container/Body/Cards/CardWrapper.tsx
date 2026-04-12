@@ -13,26 +13,12 @@ export type CardType = {
 
 type CardProps = {
     card: CardType;
-    addCard: (cardId: number, qualityId: number) => void;
-    removeCard: (cardId: number, qualityId: number) => void;
+    addCard: (cardId: number) => void;
+    removeCard: (cardId: number) => void;
+    setSelectedCard: (card: CardType) => void;
 };
 
-/*
-const QUALITY = {
-    COMMON: 1,
-    RARE: 2,
-    LEGENDARY: 3,
-} as const;
-*/
-
 export function CardWrapper({ card, addCard, removeCard, setSelectedCard }: CardProps) {
-  /*  const getQualityCount = (qualityId: number) => {
-        return card.qualities.find((q) => q.quality_id === qualityId)?.count ?? 0;
-    };
-
-    const commonCount = getQualityCount(QUALITY.COMMON);
-    const rareCount = getQualityCount(QUALITY.RARE);
-    const legendaryCount = getQualityCount(QUALITY.LEGENDARY);*/
     const totalCount = card.count == null ? 0 : card.count;
     const isOwned = totalCount > 0;
 

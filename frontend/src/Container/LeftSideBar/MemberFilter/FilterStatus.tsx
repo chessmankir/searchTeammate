@@ -1,22 +1,25 @@
-import { useFiltersStore } from "../../../store/filtersStore.ts";
+import { useFiltersStore, type StatusMember } from "../../../store/filtersStore.ts";
 
 export function FilterStatus() {
     const status = useFiltersStore((state) => state.status);
     const setStatus = useFiltersStore((state) => state.setStatus);
+
+    const handleChange = (value: StatusMember) => {
+        setStatus(value);
+    };
 
     return (
         <div className="filter-block">
             <div className="filter-block__label">Статус</div>
 
             <div className="radio-group">
-
                 <label className="radio-card">
                     <input
                         type="radio"
                         name="status"
                         value="all"
                         checked={status === "all"}
-                        onChange={(e) => setStatus(e.target.value)}
+                        onChange={() => handleChange("all")}
                     />
                     <span className="radio-card__control"></span>
                     <span className="radio-card__text">Любой</span>
@@ -28,7 +31,7 @@ export function FilterStatus() {
                         name="status"
                         value="as"
                         checked={status === "as"}
-                        onChange={(e) => setStatus(e.target.value)}
+                        onChange={() => handleChange("as")}
                     />
                     <span className="radio-card__control"></span>
                     <span className="radio-card__text">Продвижение Ас</span>
@@ -40,7 +43,7 @@ export function FilterStatus() {
                         name="status"
                         value="asm"
                         checked={status === "asm"}
-                        onChange={(e) => setStatus(e.target.value)}
+                        onChange={() => handleChange("asm")}
                     />
                     <span className="radio-card__control"></span>
                     <span className="radio-card__text">Продвижение Ас-мастер</span>
@@ -52,7 +55,7 @@ export function FilterStatus() {
                         name="status"
                         value="asd"
                         checked={status === "asd"}
-                        onChange={(e) => setStatus(e.target.value)}
+                        onChange={() => handleChange("asd")}
                     />
                     <span className="radio-card__control"></span>
                     <span className="radio-card__text">Продвижение Ас-доминатора</span>
@@ -64,7 +67,7 @@ export function FilterStatus() {
                         name="status"
                         value="zavic"
                         checked={status === "zavic"}
-                        onChange={(e) => setStatus(e.target.value)}
+                        onChange={() => handleChange("zavic")}
                     />
                     <span className="radio-card__control"></span>
                     <span className="radio-card__text">Апаю завика</span>
@@ -76,12 +79,11 @@ export function FilterStatus() {
                         name="status"
                         value="legend"
                         checked={status === "legend"}
-                        onChange={(e) => setStatus(e.target.value)}
+                        onChange={() => handleChange("legend")}
                     />
                     <span className="radio-card__control"></span>
                     <span className="radio-card__text">Апаю Легенду</span>
                 </label>
-
             </div>
         </div>
     );

@@ -1,8 +1,8 @@
 import type {CardType} from "../CardWrapper.tsx";
 
 type CardDuplicateSelectedCardProps = {
-    selectedCard: CardType;
-}
+    selectedCard: CardType | null;
+};
 
 export function CardDuplicateSelectedCard({selectedCard} : CardDuplicateSelectedCardProps) {
     console.log(selectedCard);

@@ -2,7 +2,6 @@ type ButtonCardProps = {
     text: string;
     actionClick: (cardId: number) => void;
     cardId: number;
-    quality: number;
     totalCount: number;
 };
 

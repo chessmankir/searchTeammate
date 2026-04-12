@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import type {CardType} from "../../../Container/Body/Cards/CardWrapper.tsx";
-import {useParams, useSearchParams} from "react-router-dom";
+import {useSearchParams} from "react-router-dom";
 
 export function useDuplicatesCard() {
     const [card, setCard] = useState<CardType>();

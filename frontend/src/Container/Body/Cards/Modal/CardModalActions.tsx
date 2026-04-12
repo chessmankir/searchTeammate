@@ -1,20 +1,30 @@
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 type CardModalActionsProps = {
     cardId: number;
-    handleTrade: () => void;
-}
+    handleTrade: (cardId: number) => void;
+};
 
-export function CardModalActions({cardId,  handleTrade} : CardModalActionsProps) {
+export function CardModalActions({
+                                     cardId,
+                                     handleTrade,
+                                 }: CardModalActionsProps) {
     const navigate = useNavigate();
-   return (
-       <div className="card-modal__actions">
-           <button className="card-modal__button" onClick={() => navigate(`/duplicates?cardid=${cardId}`)}>
-               Найти
-           </button>
-           <button className="card-modal__button" onClick={handleTrade}>
-               Обмен
-           </button>
-       </div>
-   )
+
+    return (
+        <div className="card-modal__actions">
+            <button
+                className="card-modal__button"
+                onClick={() => navigate(`/duplicates?cardid=${cardId}`)}
+            >
+                Найти
+            </button>
+            <button
+                className="card-modal__button"
+                onClick={() => handleTrade(cardId)}
+            >
+                Обмен
+            </button>
+        </div>
+    );
 }

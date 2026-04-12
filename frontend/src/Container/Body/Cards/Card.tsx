@@ -2,7 +2,7 @@ import type {CardType} from "./CardWrapper.tsx";
 
 type CardProps = {
     card: CardType;
-    setSelectedCard: () => void;
+    setSelectedCard: (card: CardType) => void;
 };
 
 export function Card({

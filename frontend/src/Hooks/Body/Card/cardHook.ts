@@ -3,11 +3,6 @@ import { authStore } from "../../../store/authStore.ts";
 import type { AlbumFlterType } from "../../../types/AlbumFlterType.ts";
 import type {CardType} from "../../../Container/Body/Cards/CardWrapper.tsx";
 
-interface QualityCard {
-    quality_id: number;
-    count: number;
-}
-
 interface UseCardParams {
     albumId?: string;
     filter?: AlbumFlterType;
@@ -47,7 +42,7 @@ export function useCards({ albumId, filter }: UseCardParams = {}) {
         }
     };
 
-    const removeCardHandler = async (card_id: number, qualityId: number) => {
+    const removeCardHandler = async (card_id: number) => {
         const url = import.meta.env.VITE_API_URL;
         const backendServer = `${url}/api/remove/card`;
 
@@ -57,8 +52,7 @@ export function useCards({ albumId, filter }: UseCardParams = {}) {
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
                 body: JSON.stringify({
-                    card_id,
-                    qualityId
+                    card_id
                 })
             });
 
