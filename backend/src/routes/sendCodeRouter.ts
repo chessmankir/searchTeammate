@@ -2,6 +2,7 @@ import {Router, Request, Response} from 'express';
 import {pool} from "../db/db";
 import {bot} from "../Bot/bot";
 import {createLoginCode} from "../auth/codes";
+import {createSession} from "../auth/session";
 
 const router = Router();
 router.post('/', async ( req: Request , res: Response) => {
@@ -18,8 +19,22 @@ router.post('/', async ( req: Request , res: Response) => {
         if(result.rows.length === 0){
             return res.json({ok:false});
         }
-        const member = result.rows[0];
-        const code : string = createLoginCode(pubgId);
+
+        //временно пока не работает отправка кода
+        const user = result.rows[0];
+        const sessionToken = await createSession(user.id);
+        const k = await res.cookie('sid', sessionToken, {
+            httpOnly: true,
+            sameSite: "lax",
+            secure: false,
+            maxAge: 1000*60*60*24*30
+        });
+        return  res.json({
+            ok: true
+        });
+
+
+        /*const code : string = createLoginCode(pubgId);
         const answerSendMessage = await bot.sendMessage(Number(member.actor_id), `Код для входа: ${code}` );
         console.log("answerSendMessage");
         console.log(answerSendMessage);
@@ -37,7 +52,7 @@ router.post('/', async ( req: Request , res: Response) => {
         return res.json({
             ok: false,
 
-        })
+        })*/
     }
     catch (e){
         console.log(e);

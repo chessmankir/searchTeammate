@@ -29,6 +29,10 @@ export function useLoginHook() {
             const data = await response.json();
 
             if (data.ok) {
+                //временно
+                setUser(data.user);
+                navigate("/players");
+                //
                 setStep("verify");
                 setError("");
                 setMessage("Введите полученный код от бота @checkmatePubgBot");

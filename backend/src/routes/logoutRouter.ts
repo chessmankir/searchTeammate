@@ -4,7 +4,7 @@ import {deleteSession} from "../auth/session";
 const router = Router();
 router.post("/", (req: Request, res: Response) => {
     const sid = req.cookies?.sid;
-
+    console.log('logout');
     if(sid){
         deleteSession(sid);
     }

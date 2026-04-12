@@ -1,11 +1,24 @@
-import {Link, NavLink} from "react-router-dom";
+import {Link, NavLink, useNavigate} from "react-router-dom";
 import {authStore} from "../../store/authStore.ts";
 import {useState} from "react";
+import {useProfileLogout} from "../../Hooks/Body/Profile/useProfileLogout.ts";
 
 export function ProfileHeader(){
     const user = authStore((state)=>state.user);
     const isAuth = authStore((state) =>state.isAuth );
     const [stateDropDown, setStateDropDown] = useState<boolean>(false);
+
+    const { logout } = useProfileLogout();
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        console.log("logout");
+        const ok = await logout();
+
+        if (ok) {
+            navigate("/");
+        }
+    };
 
     return (
       <div className="profile-header">
@@ -32,7 +45,7 @@ export function ProfileHeader(){
                               <NavLink to="/myclan">Мой клан</NavLink>
                           </button>
                           <button className="headerProfile__item">Настройки</button>
-                          <button className="headerProfile__item headerProfile__item--danger">Выйти</button>
+                          <button onClick={handleLogout} className="headerProfile__item headerProfile__item--danger">Выйти</button>
                       </div>
                   )}
               </div>
