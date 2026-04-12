@@ -88,8 +88,7 @@ router.get('/:albumId', async (req: Request, res: Response) => {
     const userid = user.id;
 
     const query = `
-        SELECT c.*, uc.id_user, c.quality,
-               uc.count
+        SELECT c.*, uc.id_user, uc.count
         FROM cards c
         JOIN albums a ON a.id = c.album_id
         LEFT JOIN user_card uc ON uc.card_id = c.id 
