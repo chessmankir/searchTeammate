@@ -15,7 +15,7 @@ export  function CurrentCardPage() {
     const { albumId } = useParams();
     const {cards, addCardHandler, removeCardHandler} = useCards({albumId});
     const { selectedCard, setSelectedCard, closeCardModal, handleTrade} = useCardModal();
-
+    console.log(cards);
     return (
         <div className="album-page">
             <div className="album-page__layout">

@@ -92,7 +92,7 @@ export function useCards({ albumId, filter }: UseCardParams = {}) {
                     urlParams.set("filter", filter);
                     backendURL += `?${urlParams.toString()}`;
                 }
-
+                console.log(backendURL);
                 const response = await fetch(backendURL, {
                     credentials: "include"
                 });
