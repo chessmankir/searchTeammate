@@ -128,7 +128,6 @@ router.get("/", async (req: Request, res: Response) => {
         const sql = `
             SELECT
                 cm.*,
-
                 COALESCE((
                     SELECT ARRAY_AGG(gm.name ORDER BY gm.name)
                     FROM member_modes mm

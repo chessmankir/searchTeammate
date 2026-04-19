@@ -5,7 +5,7 @@ import {userInfo} from "node:os";
 
 const router = Router();
 router.put('/', async (req: Request, res: Response) => {
-    const sid = req.cookies?.sid;
+/*    const sid = req.cookies?.sid;
     if (!sid) {
         return res.status(401).json({
             ok: false,
@@ -18,17 +18,18 @@ router.put('/', async (req: Request, res: Response) => {
             ok: false,
             message: "Сессия не найдена",
         });
-    }
+    }*/
+
+    console.log("update")
     const {nickname, age,  city, name, pubgId, id, availableMicro, modes} = req.body;
+    console.log("nickname");
     const query = `UPDATE clan_members SET
                             nickname=$1, age=$2, city=$3, pubg_id=$4, name=$5, available_micro=$6 WHERE id = $7 
                             RETURNING *`;
-    console.log(query);
-    console.log(req.body);
     try{
         const data = await pool.query(query, [nickname, age, city,  pubgId, name, availableMicro, id]);
-        await  deleteGameModeMember(user.id);
-        await addGameModeMember(user.id, modes);
+        await  deleteGameModeMember(id);
+        await addGameModeMember(id, modes);
         return res.json({ok: true});
     }
     catch(err){

@@ -26,6 +26,13 @@ import * as http from "node:http";
 import updateMemberRoute from "./routes/updateMemberRoute";
 import cardRouter from "./routes/cardRouter";
 import getUserCard from "./routes/getUserCard";
+import loginAndroidRouter from "./routes/loginAndroidRouter";
+import myClanAndroidRoute from "./routes/myClanAndroidRoute";
+import clanMemberAndroidRoute from "./routes/clanMemberAndroidRoute";
+import cardsAndoid from "./routes/cardsAndoid";
+import path from "path";
+import addCardAndroidRouter from "./routes/addCardAndroidRouter";
+import removeCardAndroidRouter from "./routes/removeCardAndroidRouter";
 
 dotenv.config();
 
@@ -40,6 +47,8 @@ app.use(
 
 app.use(express.json());
 app.use(cookieParser());
+
+app.use("/assets", express.static(path.join(__dirname, "assets")));
 
 const server = http.createServer(app);
 
@@ -83,18 +92,25 @@ app.use("/api/auth/me", authMeRouter);
 app.use("/api/logout", logoutRouter);
 app.use("/api/albums", albumsRouter);
 app.use("/api/cards", cardsRouter);
+app.use("/api/android/cards", cardsAndoid);
 app.use("/api/card", cardRouter);
 app.use("/api/get/usercard", getUserCard);
 app.use("/api/add/card", addCardRouter);
+app.use("/api/android/add/card", addCardAndroidRouter);
 app.use("/api/remove/card", removeCardRouter);
+app.use("/api/android/remove/card", removeCardAndroidRouter);
 app.use("/api/clanmember", clanMemberRoute);
+app.use("/api/android/clanmember", clanMemberAndroidRoute);
 app.use("/api/myclan", myClanRoute);
+app.use("/api/android/myclan", myClanAndroidRoute);
 app.use("/api/info", infoRoute);
 app.use("/api/conversation", conversationRoute);
 app.use("/api/conversations", conversationsRoute);
 app.use("/api/conversations", sendMessageRoute);
 app.use("/api/get/conversations", getConversationsRoute);
 app.use("/api/update/member", updateMemberRoute);
+app.use("/api/android/login", loginAndroidRouter);
+
 
 app.get("/api", (req, res) => {
     return res.json({ ok: true, message: "Welcome Backend API" });

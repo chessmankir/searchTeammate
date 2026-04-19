@@ -3,9 +3,9 @@ import {getSession} from "../auth/session";
 import {pool} from "../db/db";
 
 const router = Router();
-router.get('/', async(req: Request, res: Response) => {
+router.post('/', async(req: Request, res: Response) => {
     console.log("getUserCard");
-    /*const sid = req.cookies?.sid;
+    const sid = req.cookies?.sid;
 
     if(!sid){
         return res.json({
@@ -20,7 +20,7 @@ router.get('/', async(req: Request, res: Response) => {
             ok: false,
             message: "ошибка авторизации"
         })
-    }*/
+    }
 
     const card_id = req.query.card_id;
 
@@ -46,10 +46,8 @@ FROM user_card uc
 INNER JOIN clan_members cm ON cm.id = uc.id_user
 WHERE uc.card_id = $1
   AND uc.count > 1`;
-    console.log(query);
-    console.log(card_id);
+
     const data = await pool.query(query, [card_id])
-    console.log('user cards');
     console.log(data.rows);
     return  res.json({
         ok: true,

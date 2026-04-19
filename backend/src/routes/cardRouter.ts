@@ -4,8 +4,7 @@ import {pool} from "../db/db";
 
 const router = Router();
 router.get('/', async(req: Request, res: Response) => {
-    console.log("getCard");
-    const sid = req.cookies?.sid;
+    /*const sid = req.cookies?.sid;
 
     if(!sid){
         return res.json({
@@ -20,7 +19,7 @@ router.get('/', async(req: Request, res: Response) => {
             ok: false,
             message: "ошибка авторизации"
         })
-    }
+    }*/
 
     const card_id = req.query.card_id;
 
@@ -28,7 +27,6 @@ router.get('/', async(req: Request, res: Response) => {
         LEFT JOIN albums a ON a.id = c.album_id
         WHERE c.id = $1`;
     const data = await pool.query(query, [card_id])
-    console.log(data.rows);
     return  res.json({
         ok: true,
         data: data.rows[0]

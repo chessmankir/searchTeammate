@@ -5,18 +5,11 @@ import type { Member } from "../types/ClanMembers";
 
 const router = Router();
 
-router.get("/", async (req: Request, res: Response) => {
-    const sid = req.cookies?.sid;
-
+router.post("/", async (req: Request, res: Response) => {
     try {
-        const user = await getSession(sid);
-
-        if (!user?.id) {
-            return res.json({ ok: false });
-        }
-
-        const number = Number(req.query.number);
-        const search = String(req.query.search ?? "").trim();
+        const {clan_id, search, number} = req.body;
+        /*const number = Number(req.query.number);
+        const search = String(req.query.search ?? "").trim();*/
 
         let query = "";
         let params: (string | number)[] = [];
@@ -36,7 +29,7 @@ router.get("/", async (req: Request, res: Response) => {
                 LIMIT 100
             `;
 
-            params = [user.clan_id, `%${search}%`];
+            params = [clan_id, `%${search}%`];
         } else {
             // Если поиска нет — ищем только по выбранному номеру подклана
             query = `
@@ -48,11 +41,9 @@ router.get("/", async (req: Request, res: Response) => {
                 LIMIT 100
             `;
 
-            params = [user.clan_id, number];
+            params = [clan_id, number];
         }
-
         const result = await pool.query<Member>(query, params);
-
         const members = result.rows.map((member) => ({
             ...member,
             timeInClan: formatTimeInClan(member.created_at),
