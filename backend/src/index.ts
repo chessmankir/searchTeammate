@@ -49,6 +49,9 @@ app.use(
     })
 );
 
+console.log("cwd:", process.cwd());
+console.log("assets path:", path.resolve(process.cwd(), "src/assets"));
+
 app.use(express.json());
 app.use(cookieParser());
 
