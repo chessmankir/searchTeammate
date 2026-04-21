@@ -58,6 +58,8 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use("/assets", express.static(path.resolve(process.cwd(), "src/assets")));
+
+console.log("backend-assets dirname path:", path.resolve(__dirname, "../src/assets"));
 app.use("/backend-assets", express.static(path.resolve(__dirname, "../src/assets")));
 
 const server = http.createServer(app);
