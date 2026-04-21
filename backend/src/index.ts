@@ -52,7 +52,7 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/assets", express.static(path.join(__dirname, "assets")));
+app.use("/assets", express.static(path.resolve(process.cwd(), "src/assets")));
 
 const server = http.createServer(app);
 
