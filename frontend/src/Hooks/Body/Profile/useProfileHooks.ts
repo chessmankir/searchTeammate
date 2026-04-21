@@ -139,7 +139,6 @@ export function useProfileHooks() {
             });
 
             const data = await response.json();
-
             if (data.ok) {
                 console.log("data");
             }

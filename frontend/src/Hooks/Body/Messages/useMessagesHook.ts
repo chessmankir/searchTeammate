@@ -48,7 +48,7 @@ export function useMessagesHook() {
         if (!conversationId) return;
         const url = import.meta.env.VITE_API_URL;
         (async () => {
-            const backend = `${url}/api/conversations/${conversationId}`;
+            const backend = `${url}/api/conversations/${conversationId}/`;
             const response = await fetch(backend, {
                 credentials: "include",
             });

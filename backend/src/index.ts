@@ -33,6 +33,10 @@ import cardsAndoid from "./routes/cardsAndoid";
 import path from "path";
 import addCardAndroidRouter from "./routes/addCardAndroidRouter";
 import removeCardAndroidRouter from "./routes/removeCardAndroidRouter";
+import getConvarsationAndroidRoute from "./routes/Messages/getConversationAndroidRoute";
+import sendMessagesAndroidRouter from "./routes/Messages/sendMessagesAndroidRouter";
+import converationAndroidRouter from "./routes/Messages/converationAndroidRouter";
+import conversationCreateAndroidRouter from "./routes/Messages/conversationCreateAndroidRouter";
 
 dotenv.config();
 
@@ -65,6 +69,8 @@ io.on("connection", (socket) => {
     console.log("socket connected ", socket.id);
 
     socket.on("join", (userId: number) => {
+        console.log("joinSocket");
+        console.log(userId);
         if (!userId) return;
         onlineUsers.set(userId, socket.id);
         socket.join(`user:${userId}`);
@@ -105,8 +111,12 @@ app.use("/api/myclan", myClanRoute);
 app.use("/api/android/myclan", myClanAndroidRoute);
 app.use("/api/info", infoRoute);
 app.use("/api/conversation", conversationRoute);
+app.use("/api/android/conversation", conversationCreateAndroidRouter);
 app.use("/api/conversations", conversationsRoute);
+app.use("/api/android/conversations", converationAndroidRouter);
+app.use("/api/android/conversations",getConvarsationAndroidRoute)
 app.use("/api/conversations", sendMessageRoute);
+app.use("/api/conversations/android", sendMessagesAndroidRouter);
 app.use("/api/get/conversations", getConversationsRoute);
 app.use("/api/update/member", updateMemberRoute);
 app.use("/api/android/login", loginAndroidRouter);
