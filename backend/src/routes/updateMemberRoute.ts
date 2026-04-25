@@ -20,14 +20,12 @@ router.put('/', async (req: Request, res: Response) => {
         });
     }*/
 
-    console.log("update")
-    const {nickname, age,  city, name, pubgId, id, availableMicro, modes} = req.body;
-    console.log("nickname");
+    const {nickname, age,  city, name, pubgId, id, availableMicro, modes, status} = req.body;
     const query = `UPDATE clan_members SET
-                            nickname=$1, age=$2, city=$3, pubg_id=$4, name=$5, available_micro=$6 WHERE id = $7 
+                            nickname=$1, age=$2, city=$3, pubg_id=$4, name=$5, available_micro=$6, status_game=$8 WHERE id = $7 
                             RETURNING *`;
     try{
-        const data = await pool.query(query, [nickname, age, city,  pubgId, name, availableMicro, id]);
+        const data = await pool.query(query, [nickname, age, city,  pubgId, name, availableMicro, id, status]);
         await  deleteGameModeMember(id);
         await addGameModeMember(id, modes);
         return res.json({ok: true});
@@ -35,7 +33,6 @@ router.put('/', async (req: Request, res: Response) => {
     catch(err){
         console.log(err);
     }
-
 });
 
 const modeMap: Record<string, number> = {

@@ -33,15 +33,11 @@ export function useMembers() {
         }
         if (ageFrom != null) sp.set("ageFrom", String(ageFrom));
         if (ageTo != null) sp.set("ageTo", String(ageTo));
-        console.log('availableMicro')
-        console.log(availableMicro);
         if(!!availableMicro){
-            console.log(" inner");
             sp.set('availableMicro', String(availableMicro));
         }
         if (timeMode?.size > 0) sp.set("timemode", Array.from(timeMode).join(","));
         if (page > 1) sp.set("page", String(page));
-        console.log(sp.toString());
         return sp.toString();
     }, [mode, ageFrom, ageTo, timeMode, page, status, availableMicro]);
 
@@ -51,7 +47,6 @@ export function useMembers() {
         (async () => {
             try {
                 setLoading(true);
-                console.log(query);
                 const backend = import.meta.env.VITE_API_URL;
                 const res = await fetch(`${backend}/api/members?${query}`, {
                     signal: ac.signal,

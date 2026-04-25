@@ -1,12 +1,12 @@
 import { Router, Request, Response } from "express";
 import { pool } from "../db/db";
 import { getSession } from "../auth/session";
+import {onlineUsers} from "../index";
 
 const router = Router();
 
 router.get("/", async (req: Request, res: Response) => {
     try {
-        console.log(req.query);
         const clan_id = req.query.clan_id ? Number(req.query.clan_id) : undefined;
         const number = req.query.number ? Number(req.query.number) : undefined;
         const pubg_id = req.query.pubg_id ? Number(req.query.pubg_id) : undefined;
@@ -21,6 +21,7 @@ router.get("/", async (req: Request, res: Response) => {
         const timeRaw = typeof req.query.timemode === "string" ? req.query.timemode : "";
         const statusGame = typeof req.query.status === "string" ? req.query.status : "";
 
+        const searchData = typeof req.query.search === "string" ? req.query.search : "";
         const availableMicro = typeof req.query.availableMicro === "boolean" ? req.query.availableMicro : false;
 
         const modes =
@@ -40,56 +41,64 @@ router.get("/", async (req: Request, res: Response) => {
         const where: string[] = [];
         const params: any[] = [];
 
-        if (pubg_id !== undefined) {
-            if (pubg_id === 1) {
-                const sid = req.cookies?.sid;
-                const user = await getSession(sid);
+        if(searchData){
+            params.push(`%${searchData}%`);
+            where.push(
+                `cm.pubg_id::text ILIKE $${params.length}\n
+                 OR cm.nickname ILIKE $${params.length}\n 
+                 OR cm.name ILIKE $${params.length}`)
+        }
+        else{
+            if (pubg_id !== undefined) {
+                if (pubg_id === 1) {
+                    const sid = req.cookies?.sid;
+                    const user = await getSession(sid);
 
-                if (!user?.pubg_id) {
-                    return res.status(401).json({ ok: false, error: "user not found" });
+                    if (!user?.pubg_id) {
+                        return res.status(401).json({ ok: false, error: "user not found" });
+                    }
+
+                    params.push(user.pubg_id);
+                } else {
+                    params.push(pubg_id);
                 }
 
-                params.push(user.pubg_id);
-            } else {
-                params.push(pubg_id);
+                where.push(`cm.pubg_id = $${params.length}`);
             }
 
-            where.push(`cm.pubg_id = $${params.length}`);
-        }
+            if (clan_id !== undefined && Number.isFinite(clan_id)) {
+                params.push(clan_id);
+                where.push(`cm.clan_id = $${params.length}`);
+            }
 
-        if (clan_id !== undefined && Number.isFinite(clan_id)) {
-            params.push(clan_id);
-            where.push(`cm.clan_id = $${params.length}`);
-        }
+            if(statusGame !== undefined && statusGame !== "") {
+                params.push(statusGame);
+                where.push(`cm.status_game = $${params.length}`);
+            }
 
-        if(statusGame !== undefined && statusGame !== "") {
-            params.push(statusGame);
-            where.push(`cm.status_game = $${params.length}`);
-        }
+            if(availableMicro !== undefined && availableMicro) {
+                params.push(availableMicro);
+                where.push(`cm.available_micro = $${params.length}`);
+            }
 
-        if(availableMicro !== undefined && availableMicro) {
-            params.push(availableMicro);
-            where.push(`cm.available_micro = $${params.length}`);
-        }
+            if (number !== undefined && Number.isFinite(number)) {
+                params.push(number);
+                where.push(`cm.number = $${params.length}`);
+            }
 
-        if (number !== undefined && Number.isFinite(number)) {
-            params.push(number);
-            where.push(`cm.number = $${params.length}`);
-        }
+            if (ageFrom !== undefined && Number.isFinite(ageFrom)) {
+                params.push(ageFrom);
+                where.push(`cm.age >= $${params.length}`);
+            }
 
-        if (ageFrom !== undefined && Number.isFinite(ageFrom)) {
-            params.push(ageFrom);
-            where.push(`cm.age >= $${params.length}`);
-        }
+            if (ageTo !== undefined && Number.isFinite(ageTo)) {
+                params.push(ageTo);
+                where.push(`cm.age <= $${params.length}`);
+            }
 
-        if (ageTo !== undefined && Number.isFinite(ageTo)) {
-            params.push(ageTo);
-            where.push(`cm.age <= $${params.length}`);
-        }
-
-        if (modes.length > 0) {
-            params.push(modes);
-            where.push(`
+            if (modes.length > 0) {
+                params.push(modes);
+                where.push(`
                 EXISTS (
                     SELECT 1
                     FROM member_modes mm
@@ -98,11 +107,11 @@ router.get("/", async (req: Request, res: Response) => {
                       AND gm.name = ANY($${params.length}::text[])
                 )
             `);
-        }
+            }
 
-        if (timeModes.length > 0) {
-            params.push(timeModes);
-            where.push(`
+            if (timeModes.length > 0) {
+                params.push(timeModes);
+                where.push(`
                 EXISTS (
                     SELECT 1
                     FROM member_time_slots mts
@@ -111,7 +120,10 @@ router.get("/", async (req: Request, res: Response) => {
                       AND ts.name = ANY($${params.length}::text[])
                 )
             `);
+            }
+
         }
+
         const whereSql = where.length ? `WHERE ${where.join(" AND ")}` : "";
 
         const sqlTotal = `
@@ -128,6 +140,7 @@ router.get("/", async (req: Request, res: Response) => {
         const sql = `
             SELECT
                 cm.*,
+                c.name AS clan_name,
                 COALESCE((
                     SELECT ARRAY_AGG(gm.name ORDER BY gm.name)
                     FROM member_modes mm
@@ -143,6 +156,7 @@ router.get("/", async (req: Request, res: Response) => {
                 ), '{}') AS time_modes
 
             FROM clan_members cm
+            LEFT JOIN clans c ON c.id = cm.clan_id
             ${whereSql}
             ORDER BY cm.id DESC
             LIMIT $${paramsData.length - 1}
@@ -152,7 +166,7 @@ router.get("/", async (req: Request, res: Response) => {
 
         return res.json({
             ok: true,
-            data: result.rows,
+            data: result.rows.map((member)=>({ ...member, is_online: onlineUsers.has(member.id)})),
             meta: {
                 total,
                 page,

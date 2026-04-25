@@ -1,10 +1,12 @@
 import {Router, Request, Response} from 'express';
 import {getSession} from "../../auth/session";
 import {pool} from "../../db/db";
+import {onlineUsers} from "../../index";
 
 const router = Router();
 //поиск диалога
 router.post('/:conversationId', async (req: Request, res: Response) => {
+    console.log(req.params.conversationId);
     try {
         const {userid} = req.body;
         const currentUserId = Number(userid);
@@ -24,7 +26,8 @@ router.post('/:conversationId', async (req: Request, res: Response) => {
                 cm.id AS user_id,
                 cm.nickname,
                 cm.pubg_id,
-                cm.name
+                cm.name,
+                cm.last_seen_at
             FROM conversations c
             JOIN conversation_participants cp_self
                 ON cp_self.conversation_id = c.id
@@ -46,10 +49,9 @@ router.post('/:conversationId', async (req: Request, res: Response) => {
                 message: "Диалог не найден или нет доступа"
             });
         }
-
         return res.json({
             ok: true,
-            data: response.rows[0]
+            data: {...response.rows[0], is_online: onlineUsers.has(response.rows[0].user_id)}
         });
 
     } catch (e) {
@@ -61,19 +63,11 @@ router.post('/:conversationId', async (req: Request, res: Response) => {
     }
 })
 
-/*
+
 router.put("/:conversationId/read", async (req: Request, res: Response) => {
-    const conversationId = req.params.conversationId;
-    const sid = req.cookies?.sid;
-    const user = await getSession(sid);
-    console.log(user);
-    if (!user) {
-        return res.status(401).json({
-            ok: false,
-            message: "Пользователь не найден"
-        });
-    }
-    console.log("Conversation ID: ", conversationId);
+    const {userid} = req.body;
+    const currentUserId = Number(userid);
+    const conversationId = Number(req.params.conversationId);
     const query = `
         UPDATE messages SET read_at = NOW()
         WHERE conversation_id = $1
@@ -82,8 +76,7 @@ router.put("/:conversationId/read", async (req: Request, res: Response) => {
     `;
 
     try{
-        const data = await pool.query(query, [conversationId, user.id]);
-        console.log(data.rows);
+        const data = await pool.query(query, [conversationId, currentUserId]);
     }
     catch (e) {
         console.log(e);
@@ -93,6 +86,5 @@ router.put("/:conversationId/read", async (req: Request, res: Response) => {
         ok: true,
     })
 });
-*/
 
 export default  router;

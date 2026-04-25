@@ -11,44 +11,73 @@ router.post("/", async (req: Request, res: Response) => {
         /*const number = Number(req.query.number);
         const search = String(req.query.search ?? "").trim();*/
 
-        let query = "";
+        let whereSql = "";
         let params: (string | number)[] = [];
 
-        // Если есть поиск — ищем по всем подкланам внутри clan_id
         if (search) {
-            query = `
-                SELECT id, name, nickname, city, pubg_id, age, created_at
-                FROM clan_members
-                WHERE clan_id = $1
-                  AND active = TRUE
-                  AND (
-                    pubg_id::text ILIKE $2
-                    OR nickname ILIKE $2
-                    OR name ILIKE $2
-                  )
-                LIMIT 100
-            `;
+            whereSql = `
+        cm.clan_id = $1
+        AND cm.active = TRUE
+        AND (
+            cm.pubg_id::text ILIKE $2
+            OR cm.nickname ILIKE $2
+            OR cm.name ILIKE $2
+        )
+    `;
 
             params = [clan_id, `%${search}%`];
         } else {
-            // Если поиска нет — ищем только по выбранному номеру подклана
-            query = `
-                SELECT id, name, nickname, city, pubg_id, age, created_at
-                FROM clan_members
-                WHERE clan_id = $1
-                  AND clan = $2
-                  AND active = TRUE
-                LIMIT 100
-            `;
+            whereSql = `
+        cm.clan_id = $1
+        AND cm.clan = $2
+        AND cm.active = TRUE
+    `;
 
             params = [clan_id, number];
         }
+
+        const query = `
+            SELECT 
+                cm.id,
+                cm.name,
+                cm.nickname,
+                cm.city,
+                cm.pubg_id,
+                cm.age,
+                cm.created_at,
+        
+                CASE 
+                    WHEN sc.leader_actor_id = cm.actor_id THEN TRUE 
+                    ELSE FALSE 
+                END AS "isLeader",
+        
+                CASE 
+                    WHEN mod.actor_id IS NOT NULL THEN TRUE 
+                    ELSE FALSE 
+                END AS "isModerator"
+        
+            FROM clan_members cm
+        
+            LEFT JOIN subclans sc 
+                ON sc.clan_id = cm.clan_id
+               AND sc.number = cm.clan
+        
+            LEFT JOIN clan_moderators mod 
+                ON mod.actor_id = cm.actor_id
+               AND mod.clan_id = cm.clan_id
+        
+            WHERE ${whereSql}
+        
+            LIMIT 100
+        `;
+        console.log(query);
+        console.log(params);
         const result = await pool.query<Member>(query, params);
         const members = result.rows.map((member) => ({
             ...member,
             timeInClan: formatTimeInClan(member.created_at),
         }));
-
+        console.log(members);
         return res.json({
             ok: true,
             members,

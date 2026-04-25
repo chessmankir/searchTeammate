@@ -37,6 +37,7 @@ import getConvarsationAndroidRoute from "./routes/Messages/getConversationAndroi
 import sendMessagesAndroidRouter from "./routes/Messages/sendMessagesAndroidRouter";
 import converationAndroidRouter from "./routes/Messages/converationAndroidRouter";
 import conversationCreateAndroidRouter from "./routes/Messages/conversationCreateAndroidRouter";
+import {pool} from "./db/db";
 
 dotenv.config();
 
@@ -50,16 +51,10 @@ app.use(
 );
 
 
-
-console.log("cwd:", process.cwd());
-console.log("assets path:", path.resolve(process.cwd(), "src/assets"));
-
 app.use(express.json());
 app.use(cookieParser());
 
 app.use("/assets", express.static(path.resolve(process.cwd(), "src/assets")));
-
-console.log("backend-assets dirname path:", path.resolve(__dirname, "../src/assets"));
 app.use("/backend-assets", express.static(path.resolve(__dirname, "../src/assets")));
 
 const server = http.createServer(app);
@@ -71,27 +66,39 @@ export const io = new Server(server, {
     },
 });
 
-const onlineUsers = new Map<number, string>();
+export const onlineUsers = new Map<number, string>();
 
 io.on("connection", (socket) => {
     console.log("socket connected ", socket.id);
 
     socket.on("join", (userId: number) => {
-        console.log("joinSocket");
-        console.log(userId);
         if (!userId) return;
         onlineUsers.set(userId, socket.id);
         socket.join(`user:${userId}`);
         console.log(`user ${userId} joined room user:${userId}`);
+        io.emit("user:online", { userId });
     });
 
-    socket.on("disconnect", () => {
+    socket.on("disconnect", async () => {
+        const userId = [...onlineUsers.entries()]
+            .find(([_, socketId]) => socketId === socket.id)?.[0];
+
         for (const [userId, socketId] of onlineUsers.entries()) {
             if (socketId === socket.id) {
                 onlineUsers.delete(userId);
                 break;
             }
         }
+
+        await pool.query(
+            `UPDATE clan_members SET last_seen_at = NOW() WHERE id = $1`,
+            [userId]
+        );
+
+        io.emit("user:offline",{
+            userId: userId,
+            last_seen_at: new Date().toISOString(),
+        })
         console.log("socket disconnected", socket.id);
     });
 });
@@ -128,7 +135,6 @@ app.use("/api/conversations/android", sendMessagesAndroidRouter);
 app.use("/api/get/conversations", getConversationsRoute);
 app.use("/api/update/member", updateMemberRoute);
 app.use("/api/android/login", loginAndroidRouter);
-
 
 app.get("/api", (req, res) => {
     return res.json({ ok: true, message: "Welcome Backend API" });
