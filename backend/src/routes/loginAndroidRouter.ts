@@ -11,8 +11,27 @@ router.post('/', async (req: Request, res: Response) => {
                             FROM member_modes mm
                             JOIN game_modes gm ON gm.id = mm.mode_id
                             WHERE mm.member_id = cm.id
-                        ), '{}') AS modes 
-           FROM clan_members cm WHERE pubg_id = ${pubgId}`;
+                        ), '{}') AS modes, 
+                CASE 
+                    WHEN sc.leader_actor_id = cm.actor_id THEN TRUE 
+                    ELSE FALSE 
+                END AS "isLeader",
+        
+                CASE 
+                    WHEN mod.actor_id IS NOT NULL THEN TRUE 
+                    ELSE FALSE 
+                END AS "isModerator"
+        
+            FROM clan_members cm
+        
+            LEFT JOIN subclans sc 
+                ON sc.clan_id = cm.clan_id
+               AND sc.number = cm.clan
+        
+            LEFT JOIN clan_moderators mod 
+                ON mod.actor_id = cm.actor_id
+               AND mod.clan_id = cm.clan_id
+           WHERE pubg_id = ${pubgId}`;
     try{
         const response = await pool.query(query);
 

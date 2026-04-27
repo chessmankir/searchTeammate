@@ -61,6 +61,7 @@ router.post('/:conversation/send/messages', async (req: Request, res: Response) 
 router.post('/:conversation/messages', async (req: Request, res: Response) => {
     const conversation = req.params.conversation;
     console.log(conversation);
+    console.log('messages');
     if (!conversation) {
         return res.json({
             ok: false,

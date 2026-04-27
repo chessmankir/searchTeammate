@@ -7,7 +7,6 @@ const router = Router();
 router.post("/", async (req: Request, res: Response) => {
     const { card_id } = req.body;
     const sid = req.cookies?.sid;
-    console.log(card_id);
     try {
         if (!sid) {
             return res.status(401).json({

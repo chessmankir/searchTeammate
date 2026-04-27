@@ -6,9 +6,6 @@ const router = Router();
 //Получение диалога
 router.post('/', async (req: Request, res: Response) => {
     const {member_id, userid} = req.body;
-    console.log("android createRouter");
-    console.log(member_id);
-    console.log(userid);
 
     if (userid == member_id) {
         res.json({ok: false, message: "нельзя писать самому себе"});
@@ -77,7 +74,6 @@ async function createConversationParticipant(conversationId: number, userId: num
         const query = `INSERT INTO conversation_participants (conversation_id, user_id)
             VALUES ($1, $2), ($1, $3) `;
         const response = await pool.query(query, [conversationId, targetUserId, userId]);
-        console.log(response.rows);
     }
     catch (e){
 

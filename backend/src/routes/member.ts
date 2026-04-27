@@ -141,6 +141,7 @@ router.get("/", async (req: Request, res: Response) => {
             SELECT
                 cm.*,
                 c.name AS clan_name,
+                sc.title AS subclan_name,
                 COALESCE((
                     SELECT ARRAY_AGG(gm.name ORDER BY gm.name)
                     FROM member_modes mm
@@ -157,6 +158,8 @@ router.get("/", async (req: Request, res: Response) => {
 
             FROM clan_members cm
             LEFT JOIN clans c ON c.id = cm.clan_id
+            LEFT JOIN subclans sc
+                ON sc.clan_id = cm.clan_id AND sc.number = cm.clan
             ${whereSql}
             ORDER BY cm.id DESC
             LIMIT $${paramsData.length - 1}

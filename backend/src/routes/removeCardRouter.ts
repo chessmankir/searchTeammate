@@ -48,7 +48,6 @@ async function getUserCard(userId: number, cardId: number) {
         `;
 
     const response = await pool.query(findQuery, [userId, cardId]);
-    console.log(response.rows);
     if(response.rows.length > 0){
         return response.rows[0];
     }

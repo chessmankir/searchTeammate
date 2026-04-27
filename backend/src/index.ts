@@ -38,6 +38,9 @@ import sendMessagesAndroidRouter from "./routes/Messages/sendMessagesAndroidRout
 import converationAndroidRouter from "./routes/Messages/converationAndroidRouter";
 import conversationCreateAndroidRouter from "./routes/Messages/conversationCreateAndroidRouter";
 import {pool} from "./db/db";
+import setLeader from "./routes/Moderation/setLeader";
+import setModerator from "./routes/Moderation/setModerator";
+import banUser from "./routes/Moderation/banUser";
 
 dotenv.config();
 
@@ -135,6 +138,10 @@ app.use("/api/conversations/android", sendMessagesAndroidRouter);
 app.use("/api/get/conversations", getConversationsRoute);
 app.use("/api/update/member", updateMemberRoute);
 app.use("/api/android/login", loginAndroidRouter);
+app.use("/api/set/leader", setLeader);
+app.use("/api/moderation", setModerator);
+app.use("/api/ban/user", banUser);
+
 
 app.get("/api", (req, res) => {
     return res.json({ ok: true, message: "Welcome Backend API" });

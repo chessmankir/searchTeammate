@@ -6,7 +6,6 @@ import {onlineUsers} from "../../index";
 const router = Router();
 //поиск диалога
 router.post('/:conversationId', async (req: Request, res: Response) => {
-    console.log(req.params.conversationId);
     try {
         const {userid} = req.body;
         const currentUserId = Number(userid);

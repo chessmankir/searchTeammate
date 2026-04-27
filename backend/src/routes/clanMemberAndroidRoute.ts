@@ -45,7 +45,9 @@ router.post("/", async (req: Request, res: Response) => {
                 cm.pubg_id,
                 cm.age,
                 cm.created_at,
-        
+                cm.clan,
+                cm.clan_id,
+                cm.actor_id,
                 CASE 
                     WHEN sc.leader_actor_id = cm.actor_id THEN TRUE 
                     ELSE FALSE 
@@ -70,14 +72,11 @@ router.post("/", async (req: Request, res: Response) => {
         
             LIMIT 100
         `;
-        console.log(query);
-        console.log(params);
         const result = await pool.query<Member>(query, params);
         const members = result.rows.map((member) => ({
             ...member,
             timeInClan: formatTimeInClan(member.created_at),
         }));
-        console.log(members);
         return res.json({
             ok: true,
             members,
