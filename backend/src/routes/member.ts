@@ -2,6 +2,7 @@ import { Router, Request, Response } from "express";
 import { pool } from "../db/db";
 import { getSession } from "../auth/session";
 import {onlineUsers} from "../index";
+import {getUserByPubId} from "../services/getUser";
 
 const router = Router();
 
@@ -41,6 +42,8 @@ router.get("/", async (req: Request, res: Response) => {
         const where: string[] = [];
         const params: any[] = [];
 
+        let activitySql = '';
+
         if(searchData){
             params.push(`%${searchData}%`);
             where.push(
@@ -55,7 +58,7 @@ router.get("/", async (req: Request, res: Response) => {
                     const user = await getSession(sid);
 
                     if (!user?.pubg_id) {
-                        return res.status(401).json({ ok: false, error: "user not found" });
+                        return res.status(401).json({ok: false, error: "user not found"});
                     }
 
                     params.push(user.pubg_id);
@@ -64,8 +67,39 @@ router.get("/", async (req: Request, res: Response) => {
                 }
 
                 where.push(`cm.pubg_id = $${params.length}`);
-            }
 
+
+                activitySql = `,
+                     json_build_object(
+
+                         'week', COALESCE((
+                             SELECT SUM(md.msg_count)
+                             FROM message_stats_daily md
+                             WHERE md.user_id = cm.actor_id
+                               AND md.day >= CURRENT_DATE - INTERVAL '6 days'
+                         ), 0),
+
+                         'month', COALESCE((
+                             SELECT SUM(md.msg_count)
+                             FROM message_stats_daily md
+                             WHERE md.user_id = cm.actor_id
+                               AND md.day >= CURRENT_DATE - INTERVAL '30 days'
+                         ), 0),
+
+                         'total', COALESCE((
+                             SELECT SUM(ut.total_count)
+                             FROM user_activity_totals ut
+                             WHERE ut.user_id = cm.actor_id
+                         ), 0),
+
+                         'last_message_at', (
+                             SELECT MAX(ut.last_msg_at)
+                             FROM user_activity_totals ut
+                             WHERE ut.user_id = cm.actor_id
+                         )
+                     ) AS activity
+                 `;
+            }
             if (clan_id !== undefined && Number.isFinite(clan_id)) {
                 params.push(clan_id);
                 where.push(`cm.clan_id = $${params.length}`);
@@ -155,6 +189,8 @@ router.get("/", async (req: Request, res: Response) => {
                     JOIN time_slots ts ON ts.id = mts.time_slot_id
                     WHERE mts.member_id = cm.id
                 ), '{}') AS time_modes
+                ${activitySql}
+               
 
             FROM clan_members cm
             LEFT JOIN clans c ON c.id = cm.clan_id
@@ -165,8 +201,9 @@ router.get("/", async (req: Request, res: Response) => {
             LIMIT $${paramsData.length - 1}
             OFFSET $${paramsData.length}
         `;
-        const result = await pool.query(sql, paramsData);
 
+        const result = await pool.query(sql, paramsData);
+        console.log(result.rows);
         return res.json({
             ok: true,
             data: result.rows.map((member)=>({ ...member, is_online: onlineUsers.has(member.id)})),

@@ -36,6 +36,36 @@ router.post("/", async (req: Request, res: Response) => {
             params = [clan_id, number];
         }
 
+        const activitySql = `
+                     json_build_object(
+                         'week', COALESCE((
+                             SELECT SUM(md.msg_count)
+                             FROM message_stats_daily md
+                             WHERE md.user_id = cm.actor_id
+                               AND md.day >= CURRENT_DATE - INTERVAL '6 days'
+                         ), 0),
+
+                         'month', COALESCE((
+                             SELECT SUM(md.msg_count)
+                             FROM message_stats_daily md
+                             WHERE md.user_id = cm.actor_id
+                               AND md.day >= CURRENT_DATE - INTERVAL '30 days'
+                         ), 0),
+
+                         'total', COALESCE((
+                             SELECT SUM(ut.total_count)
+                             FROM user_activity_totals ut
+                             WHERE ut.user_id = cm.actor_id
+                         ), 0),
+
+                         'last_message_at', (
+                             SELECT MAX(ut.last_msg_at)
+                             FROM user_activity_totals ut
+                             WHERE ut.user_id = cm.actor_id
+                         )
+                     ) AS activity
+                 `;
+
         const query = `
             SELECT 
                 cm.id,
@@ -48,6 +78,7 @@ router.post("/", async (req: Request, res: Response) => {
                 cm.clan,
                 cm.clan_id,
                 cm.actor_id,
+                ${activitySql},
                 CASE 
                     WHEN sc.leader_actor_id = cm.actor_id THEN TRUE 
                     ELSE FALSE 
