@@ -203,7 +203,6 @@ router.get("/", async (req: Request, res: Response) => {
         `;
 
         const result = await pool.query(sql, paramsData);
-        console.log(result.rows);
         return res.json({
             ok: true,
             data: result.rows.map((member)=>({ ...member, is_online: onlineUsers.has(member.id)})),

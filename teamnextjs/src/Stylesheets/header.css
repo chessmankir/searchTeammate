@@ -1,0 +1,334 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* сам sticky header-контейнер */
+.app-header {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+
+    min-height: 76px;
+    padding: 12px 24px;
+
+    background: rgba(15, 23, 42, 0.82);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    border-bottom: 1px solid rgba(51, 65, 85, 0.7);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+}
+
+/* твой текущий внутренний wrapper */
+#header {
+    width: 100%;
+    min-width: 0;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 18px;
+}
+
+/* левая часть */
+.navigation-tabs {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+}
+
+.navigation-tabs ul {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    min-width: 0;
+}
+
+/* ссылки навигации */
+.nav-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 40px;
+    padding: 0 14px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+
+    color: #cbd5e1;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.nav-link:hover {
+    background: rgba(148, 163, 184, 0.08);
+    border-color: #334155;
+    color: #ffffff;
+}
+
+/* если захочешь активную ссылку */
+.nav-link.active,
+.nav-item.active .nav-link,
+.nav-link[aria-current="page"] {
+    background: rgba(37, 99, 235, 0.16);
+    border-color: rgba(59, 130, 246, 0.35);
+    color: #ffffff;
+}
+
+/* центр */
+.infoTab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.infoTab ul {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    padding: 10px 14px;
+    border-radius: 14px;
+    background: rgba(17, 24, 39, 0.72);
+    border: 1px solid #1e293b;
+
+    white-space: nowrap;
+}
+
+.infoTab ul li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: #94a3b8;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.infoTab ul li.nav-item {
+    padding-right: 14px;
+    border-right: 1px solid #334155;
+}
+
+.infoTab span {
+    color: #f8fafc;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.search {
+    display: none;
+}
+
+/* правая часть */
+.profile-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.header-user {
+    display: flex;
+    align-items: center;
+}
+
+.headerProfile {
+    position: relative;
+}
+
+/* кнопка профиля */
+.headerProfile__trigger {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    height: 42px;
+    padding: 0 12px;
+
+    border-radius: 14px;
+    border: 1px solid #334155;
+    background: #111827;
+
+    color: #e5e7eb;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.headerProfile__trigger:hover {
+    background: #172033;
+    border-color: #475569;
+}
+
+.headerProfile__avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.headerProfile__name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #f8fafc;
+    white-space: nowrap;
+}
+
+.headerProfile__arrow {
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+/* выпадающее меню */
+.headerProfile__menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 180px;
+    padding: 8px;
+
+    border-radius: 16px;
+    background: #111827;
+    border: 1px solid #1e293b;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.28);
+
+    z-index: 120;
+}
+
+.headerProfile__item {
+    width: 100%;
+    border: none;
+    background: transparent;
+    text-align: left;
+
+    padding: 12px 14px;
+    border-radius: 10px;
+
+    cursor: pointer;
+    font-size: 14px;
+    color: #e5e7eb;
+    transition: 0.2s ease;
+}
+
+.headerProfile__item:hover {
+    background: #172033;
+}
+
+.headerProfile__item--danger {
+    color: #f87171;
+}
+
+.headerProfile__item--danger:hover {
+    background: rgba(239, 68, 68, 0.12);
+}
+
+/* служебные старые классы, чтобы не ломались */
+.container {
+}
+
+.clear {
+    clear: both;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.login-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 90px;
+    height: 38px;
+    padding: 0 14px;
+
+    border-radius: 10px;
+    border: none;
+
+    background: #2563eb;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.login-btn:hover {
+    background: #1d4ed8;
+    color: #fff;
+}
+
+/* адаптив */
+@media (max-width: 1100px) {
+    .app-header {
+        padding: 12px 18px;
+    }
+
+    #header {
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 14px;
+    }
+
+    .infoTab {
+        display: none;
+    }
+}
+
+@media (max-width: 760px) {
+    .app-header {
+        min-height: auto;
+        padding: 12px 14px;
+    }
+
+    #header {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .navigation-tabs ul {
+        width: 100%;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .nav-link {
+        min-height: 38px;
+        padding: 0 12px;
+        font-size: 13px;
+    }
+
+    .profile-header {
+        justify-content: flex-start;
+    }
+
+    .headerProfile__name {
+        max-width: 140px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
