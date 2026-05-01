@@ -49,7 +49,7 @@ export function useMembers() {
         (async () => {
             try {
                 setLoading(true);
-                const backend = process.env.VITE_API_URL;
+                const backend = process.env.NEXT_PUBLIC_API_URL;
                 console.log("backend", backend);
                 const res = await fetch(`${backend}/api/members?${query}`, {
                     signal: ac.signal,

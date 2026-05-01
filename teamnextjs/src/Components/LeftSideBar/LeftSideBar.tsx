@@ -1,6 +1,7 @@
-import {Logo} from "./Logo.tsx";
-import {Filters} from "./MemberFilter/Filters.tsx";
-import '../../StyleSheets/leftSideBar.css'
+import '@/src/StyleSheets/leftSideBar.css';
+import '@/src/StyleSheets/myclanSidebar.css';
+import {Logo} from "@/src/Components/LeftSideBar/Logo";
+import {Filters} from "@/src/Components/LeftSideBar/MemberFilter/Filters";
 
 export  function LeftSideBar(){
     return (

@@ -1,3 +1,5 @@
+"use client";
+
 export function InfoTabs(){
     return (
         <div className="infoTab">

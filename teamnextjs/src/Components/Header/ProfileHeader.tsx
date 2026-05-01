@@ -1,3 +1,5 @@
+"use client";
+
 import {authStore} from "@/src/Store/authStore.ts";
 import {useState} from "react";
 import {useProfileLogout} from "@/src/Hooks/Body/Profile/useProfileLogout.ts";

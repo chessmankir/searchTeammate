@@ -1,5 +1,5 @@
-import "../../../StyleSheets/body.css";
-import "../../../StyleSheets/pagination.css";
+import "@/src/StyleSheets/body.css";
+import "@/src/StyleSheets/pagination.css";
 import {Members} from "./Members.tsx";
 
 export  function MembersPage(){
