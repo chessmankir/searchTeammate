@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
-import type { MyClan } from "../../../types/MyClan.ts";
+import type { MyClan } from "@/src/types/MyClan.ts";
+import {useRouter} from "next/navigation";
 
 type Props = {
     clans: MyClan[];
@@ -7,7 +7,7 @@ type Props = {
 };
 
 export function MyClanTabs({ clans, currentClan }: Props) {
-    const navigate = useNavigate();
+    const navigate = useRouter();
 
     return (
         <div className="myclan-tabs">
@@ -19,7 +19,7 @@ export function MyClanTabs({ clans, currentClan }: Props) {
                         clan.number === currentClan ? "myclan-tab--active" : ""
                     }`}
                     onClick={() => {
-                        navigate(`/myclan?number=${clan.number}`);
+                        navigate.push(`/myclan?number=${clan.number}`);
                     }}
                 >
                     <span className="myclan-tab__name">{clan.name}</span>

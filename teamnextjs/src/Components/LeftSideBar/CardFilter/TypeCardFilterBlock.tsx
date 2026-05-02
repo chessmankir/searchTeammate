@@ -1,5 +1,5 @@
-import { TypeCardFilter } from "./TypeCardFilter.tsx";
-import type { CardFilterType } from "../../../types/CardFilterType.ts";
+import type { CardFilterType } from "@/src/types/CardFilterType.ts";
+import {TypeCardFilter} from "@/src/Components/LeftSideBar/CardFilter/TypeCardFilter";
 
 type TypeCardFilterBlockProps = {
     setCardFilter: (value: CardFilterType) => void;

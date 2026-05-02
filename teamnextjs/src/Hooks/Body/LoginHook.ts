@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import type { LoginStep } from "@/src/types/LoginStep.ts";
 import { authStore } from "@/src/Store/authStore.ts";
@@ -62,7 +64,6 @@ export function useLoginHook() {
             });
 
             const data = await response.json();
-            console.log(data);
             if (data.ok) {
                 setUser(data.user);
                 setPubgId("");

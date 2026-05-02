@@ -1,6 +1,8 @@
-import {Outlet} from "react-router-dom";
-import {Header} from "../../Header/Header.tsx";
-import {LeftSideBarTournaments} from "../../LeftSideBar/LeftSideBarTournaments.tsx";
+"use client";
+
+import {Header} from "@/src/Components/Header/Header.tsx";
+import {LeftSideBarTournaments} from "@/src/Components/LeftSideBar/LeftSideBarTournaments.tsx";
+import {TournamentsPage} from "@/src/Components/Body/Tournament/TournamentsPage";
 
 export function TournamentsLayout() {
     return (
@@ -11,7 +13,7 @@ export function TournamentsLayout() {
             <div className="app-main">
                 <Header/>
                 <main className="app-content">
-                    <Outlet/>
+                    <TournamentsPage/>
                 </main>
             </div>
         </div>

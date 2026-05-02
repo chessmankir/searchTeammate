@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect } from "react";
 import { albumsStore } from "@/src/Store/albumsStore.ts";
 
@@ -12,7 +14,7 @@ export function useLoadAlbums() {
                 const backendURL = `${url}/api/albums`;
                 const response = await fetch(backendURL);
                 const data = await response.json();
-
+                console.log(data);
                 if (data?.ok) {
                     setAlbums(data.data);
                 } else {

@@ -1,8 +1,8 @@
-import "../../../../StyleSheets/cardModal.css";
-import { createPortal } from "react-dom";
-import { CardModalActions } from "./CardModalActions.tsx";
-import { CardModalImage } from "./CardModalImage.tsx";
-import type { CardType } from "../CardWrapper.tsx";
+import "@/src/StyleSheets/cardModal.css";
+import {CardType} from "@/src/Components/Body/Cards/CardWrapper";
+import {createPortal} from "react-dom";
+import {CardModalActions} from "@/src/Components/Body/Cards/Modal/CardModalActions";
+import {CardModalImage} from "@/src/Components/Body/Cards/Modal/CardModalImage";
 
 type CardModalProps = {
     closeCardModal: () => void;
@@ -27,7 +27,7 @@ export function CardModal({
 
                 <CardModalImage
                     name={selectedCard.name}
-                    imageSrc={selectedCard.imageSrc}
+                    imageSrc={`/assets/${selectedCard.imageSrc}`}
                 />
 
                 <h2 className="card-modal__title">{selectedCard.name}</h2>

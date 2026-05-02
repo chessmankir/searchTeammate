@@ -3,6 +3,7 @@ import {Members} from "@/src/Components/Body/Member/Members";
 import {LeftSideBar} from "@/src/Components/LeftSideBar/LeftSideBar";
 import {Header} from "@/src/Components/Header/Header";
 import  "@/src/StyleSheets/baseMarkup.css";
+import  "@/src/StyleSheets/myclanSidebar.css";
 
 export default function Home() {
   return (

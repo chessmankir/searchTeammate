@@ -1,5 +1,7 @@
+"use client";
+
 import {useEffect, useState} from "react";
-import type {CardType} from "../../../Container/Body/Cards/CardWrapper.tsx";
+import type {CardType} from "@/src/Components/Body/Cards/CardWrapper.tsx";
 
 export function useCardModal(){
     const [selectedCard, setSelectedCard] = useState<CardType | null>(null);

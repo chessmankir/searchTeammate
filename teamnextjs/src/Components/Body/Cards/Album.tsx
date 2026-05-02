@@ -1,12 +1,12 @@
-import { useNavigate } from "react-router-dom";
-import type { AlbumType } from "../../../types/AlbumType.ts";
+import type { AlbumType } from "@/src/types/AlbumType.ts";
+import {useRouter} from "next/navigation";
 
 type AlbumProps = {
     card: AlbumType;
 };
 
 export function Album({ card }: AlbumProps) {
-    const navigate = useNavigate();
+    const navigate = useRouter();
 
     return (
         <button
@@ -14,9 +14,9 @@ export function Album({ card }: AlbumProps) {
             type="button"
             onClick={() => {
                 if (card.slug) {
-                    navigate("/cards/" + card.slug);
+                    navigate.push("/cards/" + card.slug);
                 } else {
-                    navigate("/albums");
+                    navigate.push("/albums");
                 }
             }}
         >

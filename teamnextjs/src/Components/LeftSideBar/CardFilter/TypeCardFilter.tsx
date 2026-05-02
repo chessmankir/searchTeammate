@@ -1,5 +1,7 @@
-import { useNavigate, useSearchParams } from "react-router-dom";
-import type { CardFilterType } from "../../../types/CardFilterType.ts";
+"use client";
+
+import type { CardFilterType } from "@/src/types/CardFilterType.ts";
+import {useRouter, useSearchParams} from "next/navigation";
 
 type Props = {
     type: CardFilterType;
@@ -8,8 +10,8 @@ type Props = {
 };
 
 export function TypeCardFilter({ type, text, setCardFilter }: Props) {
-    const navigate = useNavigate();
-    const [searchParams] = useSearchParams();
+    const navigate = useRouter();
+    const searchParams = useSearchParams();
 
     const filter = (searchParams.get("filter") as CardFilterType) || "all";
 
@@ -18,8 +20,8 @@ export function TypeCardFilter({ type, text, setCardFilter }: Props) {
             className={`filter-chip ${filter === type ? "active" : ""}`}
             onClick={(e) => {
                 e.preventDefault();
-                setCardFilter(type); // ✅ исправлено
-                navigate(`/cards?filter=${type}`);
+                setCardFilter(type);
+                navigate.push(`/cards?filter=${type}`);
             }}
             type="button"
         >

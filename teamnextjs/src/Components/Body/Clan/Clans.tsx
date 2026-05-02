@@ -1,5 +1,7 @@
-import "../../../StyleSheets/clan.css";
-import {useClans} from "../../../Hooks/Body/clanHook.tsx";
+"use client";
+
+import "@/src/StyleSheets/clan.css";
+import {useClans} from "@/src/Hooks/Body/clanHook.tsx";
 
 export function Clans() {
     const loading = useClans().error;

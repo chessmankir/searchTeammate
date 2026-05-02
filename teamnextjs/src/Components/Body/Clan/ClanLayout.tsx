@@ -1,6 +1,10 @@
-import {Outlet} from "react-router-dom";
-import {Header} from "../../Header/Header.tsx";
-import {LeftSideBarClans} from "../../LeftSideBar/LeftSIdeBarClans.tsx";
+"use client";
+
+import {Header} from "@/src/Components/Header/Header.tsx";
+import {LeftSideBarClans} from "@/src/Components/LeftSideBar/LeftSIdeBarClans.tsx";
+import {ClanPage} from "@/src/Components/Body/Clan/ClanPage";
+/*import  "@/src/StyleSheets/baseMarkup.css";
+import  "@/src/StyleSheets/myclanSidebar.css";*/
 
 export function ClanLayout(){
     return (
@@ -11,7 +15,7 @@ export function ClanLayout(){
         <div className="app-main">
             <Header/>
             <main className="app-content">
-                <Outlet/>
+                <ClanPage />
             </main>
         </div>
     </div>

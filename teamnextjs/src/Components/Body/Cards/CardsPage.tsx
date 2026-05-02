@@ -1,13 +1,14 @@
 import { useState } from "react";
-import "../../../StyleSheets/Card.css";
-import { Albums } from "./Albums.tsx";
-import { albumsStore } from "../../../store/albumsStore.ts";
+import "@/src/StyleSheets/Card.css";
+import { albumsStore } from "@/src/Store/albumsStore.ts";
+import {Albums} from "@/src/Components/Body/Cards/Albums";
 
 type TabKey = "cards" | "clan" | "tournaments";
 
 export function CardsPage() {
     const [activeTab] = useState<TabKey>("cards");
     const albums = albumsStore((state) => state.albums);
+    console.log(albums);
 
     return (
         <div className="profile-page">

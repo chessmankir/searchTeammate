@@ -1,6 +1,8 @@
+"use client";
+
 import { FolderOpen } from "lucide-react";
-import { ButtonAlbum } from "./ButtonAlbum.tsx";
-import type { AlbumType } from "../../../types/AlbumType.ts";
+import type { AlbumType } from "@/src/types/AlbumType.ts";
+import {ButtonAlbum} from "@/src/Components/LeftSideBar/CardFilter/ButtonAlbum";
 
 type ButtonAlbumBlockProps = {
     albums: AlbumType[];

@@ -1,5 +1,5 @@
-import type { ProfileFormState } from "../../../Hooks/Body/Profile/useProfileHooks.ts";
-import type { GameMode } from "../../../store/filtersStore.ts";
+import type { ProfileFormState } from "@/src/Hooks/Body/Profile/useProfileHooks.ts";
+import type { GameMode } from "@/src/Store/filtersStore.ts";
 
 type ProfileGameInformationProps = {
     isMyProfile: boolean;

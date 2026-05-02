@@ -1,8 +1,9 @@
-import { Logo } from "../Logo.tsx";
+"use client";
 import { CardFilters } from "../CardFilter/CardFilters";
-import { albumsStore } from "../../../store/albumsStore.ts";
-import { profileLinks } from "../../../Data/navItems.ts";
-import { ProfileSidebar } from "../Profile/ProfileSidebar.tsx";
+import { albumsStore } from "@/src/Store/albumsStore.ts";
+import { profileLinks } from "@/src/Data/navItems.ts";
+import {ProfileSidebar} from "@/src/Components/LeftSideBar/Profile/ProfileSidebar";
+import {Logo} from "@/src/Components/LeftSideBar/Logo";
 
 export function CardFilterWrapper() {
     const selectedAlbum = albumsStore((state) => state.selectedAlbum);

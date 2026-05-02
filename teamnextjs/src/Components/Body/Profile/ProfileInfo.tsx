@@ -1,4 +1,4 @@
-import type { ClanMember } from "../../../types/ClanMember.ts";
+import type { ClanMember } from "@/src/types/ClanMember.ts";
 
 type Props = {
     member?: ClanMember;

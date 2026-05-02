@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import type { ClanMember } from "@/src/types/ClanMember.ts";
 import type { GameMode, StatusMember } from "@/src/Store/filtersStore.ts";

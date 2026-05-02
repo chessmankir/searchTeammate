@@ -1,5 +1,5 @@
-import "../../../StyleSheets/Card.css";
-import { useCards } from "../../../Hooks/Body/Card/cardHook.ts";
+import "@/src/StyleSheets/Card.css";
+import { useCards } from "@/src/Hooks/Body/Card/cardHook.ts";
 
 type AlbumType = {
     id: number;

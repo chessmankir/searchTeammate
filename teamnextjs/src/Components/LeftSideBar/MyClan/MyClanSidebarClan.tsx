@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
-import type { MyClan } from "../../../types/MyClan.ts";
+import type { MyClan } from "@/src/types/MyClan.ts";
+import {useRouter} from "next/navigation";
 
 type MyClanSidebarClanProps = {
     clans: MyClan[];
@@ -10,7 +10,7 @@ export function MyClanSidebarClan({
                                       clans,
                                       currentClan,
                                   }: MyClanSidebarClanProps) {
-    const navigate = useNavigate();
+    const navigate = useRouter();
 
     return (
         <div className="myclan-sidebar__section">
@@ -23,7 +23,7 @@ export function MyClanSidebarClan({
                         className={`myclan-clan-item ${
                             clan.number === currentClan ? "myclan-clan-item--active" : ""
                         }`}
-                        onClick={() => navigate(`/myclan?number=${clan.number}`)}
+                        onClick={() => navigate.push(`/myclan?number=${clan.number}`)}
                     >
                         <span>{clan.title}</span>
                         <span className="myclan-clan-item__count">{clan.real_count}</span>

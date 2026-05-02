@@ -1,8 +1,8 @@
-import type { ClanMember } from "../../../types/ClanMember.ts";
-import { ProfileMemberCardTop } from "./ProfileMemberCardTop.tsx";
-import { ProfileMemberSendMessage } from "./ProfileMemberSendMessage.tsx";
-import {authStore} from "../../../store/authStore.ts";
+import type { ClanMember } from "@/src/types/ClanMember.ts";
+import {authStore} from "@/src/Store/authStore.ts";
 import {ProfileSummary} from "./ProfileSummary.tsx";
+import {ProfileMemberCardTop} from "@/src/Components/Body/Profile/ProfileMemberCardTop";
+import {ProfileMemberSendMessage} from "@/src/Components/Body/Profile/ProfileMemberSendMessage";
 
 type Props = {
     member?: ClanMember;

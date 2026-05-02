@@ -1,4 +1,4 @@
-import type {CardType} from "./CardWrapper.tsx";
+import {CardType} from "@/src/Components/Body/Cards/CardWrapper";
 
 type CardProps = {
     card: CardType;
@@ -14,7 +14,7 @@ export function Card({
         <div className="album-card__image-wrap">
             <img
                 onClick={() => setSelectedCard(card)}
-                src={card.imageSrc}
+                src={`/assets/${card.imageSrc}`}
                 alt={card.name}
                 className="album-card__image"
             />

@@ -1,16 +1,15 @@
-import { useSearchParams } from "react-router-dom";
 import { useState } from "react";
-import "../../../StyleSheets/current_card.css";
-import { CardWrapper } from "./CardWrapper.tsx";
-import { useCards } from "../../../Hooks/Body/Card/cardHook.ts";
-import { AlbumPageTopbar } from "./AlbumPageTopbar.tsx";
-import type { AlbumFlterType } from "../../../types/AlbumFlterType.ts";
-import type { CardType } from "./CardWrapper.tsx";
+import "@/src/StyleSheets/current_card.css";
+import { useCards } from "@/src/Hooks/Body/Card/cardHook.ts";
+import type { AlbumFlterType } from "@/src/types/AlbumFlterType.ts";
+import {useSearchParams} from "next/navigation";
+import {CardType, CardWrapper} from "@/src/Components/Body/Cards/CardWrapper";
+import {AlbumPageTopbar} from "@/src/Components/Body/Cards/AlbumPageTopbar";
 
 const validFilters: AlbumFlterType[] = ["all", "duplicates", "missing", "trades"];
 
 export function AllCardsPage() {
-    const [searchParams] = useSearchParams();
+    const searchParams = useSearchParams();
     const [, setSelectedCard] = useState<CardType | null>(null);
     const rawFilter = searchParams.get("filter");
 

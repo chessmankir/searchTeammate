@@ -1,9 +1,11 @@
-import "../../../StyleSheets/CardFilter.css";
+"use client";
+
+import "@/src/StyleSheets/CardFilter.css";
 import { CardFilterTitle } from "./CardFilterTitle.tsx";
 import { TypeCardFilterBlock } from "./TypeCardFilterBlock.tsx";
 import { ButtonAlbumBLock } from "./ButtonAlbumBLock.tsx";
 import { CardFIlterFooter } from "./CardFIlterFooter.tsx";
-import type {AlbumType} from "../../../types/AlbumType.ts";
+import type {AlbumType} from "@/src/types/AlbumType.ts";
 
 
 type CardFilterType = "all" | "duplicates" | "missing" | "trades";

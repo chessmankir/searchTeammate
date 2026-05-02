@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import type { ClanMember } from "@/src/types/ClanMember.ts";
 import { myClanStore } from "@/src/Store/myClanStore.ts";
@@ -24,6 +26,7 @@ export function useClanMember() {
                     query.set("number", String(number));
                 }
                 const url = process.env.NEXT_PUBLIC_API_URL;
+                console.log("url", url);
                 const response = await fetch(
                     `${url}/api/clanmember?${query.toString()}`,
                     {

@@ -1,6 +1,6 @@
-import "../../../StyleSheets/body.css";
-import "../../../StyleSheets/pagination.css";
-import {Tournaments} from "./Tournaments.tsx";
+import "@/src/StyleSheets/body.css";
+import "@/src/StyleSheets/pagination.css";
+import {Tournaments} from "@/src/Components/Body/Tournament/Tournaments";
 
 export  function TournamentsPage(){
     return (

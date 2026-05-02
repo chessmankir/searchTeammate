@@ -1,5 +1,4 @@
 import "@/src/StyleSheets/Login/login.css";
-import "@/src/StyleSheets/baseMarkup.css";
 import {Header} from "@/src/Components/Header/Header";
 import {LoginInfo} from "@/src/Components/Body/Login/LoginInfo";
 import {LoginCard} from "@/src/Components/Body/Login/LoginCard";

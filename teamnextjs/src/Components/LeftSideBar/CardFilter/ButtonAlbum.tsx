@@ -1,5 +1,6 @@
-import { useNavigate } from "react-router-dom";
-import type { AlbumType } from "../../../types/AlbumType.ts";
+"use client";
+import type { AlbumType } from "@/src/types/AlbumType.ts";
+import {useRouter} from "next/navigation";
 
 type ButtonAlbumProps = {
     album: AlbumType;
@@ -12,7 +13,7 @@ export function ButtonAlbum({
                                 selectedAlbum,
                                 setSelectedAlbum,
                             }: ButtonAlbumProps) {
-    const navigate = useNavigate();
+    const navigate = useRouter();
 
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -20,9 +21,9 @@ export function ButtonAlbum({
         setSelectedAlbum(album.id ?? null);
 
         if (!album.slug) {
-            navigate("/albums");
+            navigate.push("/albums");
         } else {
-            navigate("/cards/" + album.slug);
+            navigate.push("/cards/" + album.slug);
         }
     };
 

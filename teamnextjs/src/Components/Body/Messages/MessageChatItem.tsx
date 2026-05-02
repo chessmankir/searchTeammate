@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
-import type { Conversation } from "../../../types/Conversation.ts";
+import type { Conversation } from "@/src/types/Conversation.ts";
+import {useRouter} from "next/navigation";
 
 type Props = {
     conversation: Conversation;
@@ -7,11 +7,11 @@ type Props = {
 };
 
 export function MessageChatItem({ conversation, conversationId }: Props) {
-    const navigate = useNavigate();
+    const navigate = useRouter();
     return (
         <div
             onClick={() => {
-                navigate(`/messages?conversation=${conversation.conversation_id}`);
+                navigate.push(`/messages?conversation=${conversation.conversation_id}`);
             }}
             className={
                 String(conversationId) === String(conversation.conversation_id)

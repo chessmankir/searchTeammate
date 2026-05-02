@@ -1,11 +1,11 @@
-import "../../../StyleSheets/myclan.css";
-import {useClanMember} from "../../../Hooks/Body/clanMemberHook.tsx";
-import {MyClanHeader} from "./MyClanHeader.tsx";
-import {MyClanTableMember} from "./MyClanTableMember.tsx";
-import {MyClanTabs} from "./MyClanTabs.tsx";
-import {MyClanSearch} from "./MyClanSearch.tsx";
-import {useSubclans} from "../../../Hooks/Body/useSublanHook.ts";
-import {myClanStore} from "../../../store/myClanStore.ts";
+import "@/src/StyleSheets/myclan.css";
+import {useClanMember} from "@/src/Hooks/Body/clanMemberHook.tsx";
+import {useSubclans} from "@/src/Hooks/Body/useSublanHook.ts";
+import {myClanStore} from "@/src/store/myClanStore.ts";
+import {MyClanHeader} from "@/src/Components/Body/MyClans/MyClanHeader";
+import {MyClanTabs} from "@/src/Components/Body/MyClans/MyClanTabs";
+import {MyClanSearch} from "@/src/Components/Body/MyClans/MyClanSearch";
+import {MyClanTableMember} from "@/src/Components/Body/MyClans/MyClanTableMember";
 
 export function MyClansPage() {
     useSubclans();

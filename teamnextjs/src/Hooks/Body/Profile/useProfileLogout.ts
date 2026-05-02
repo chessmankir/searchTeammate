@@ -1,3 +1,5 @@
+"use client";
+
 import { authStore } from "@/src/Store/authStore.ts";
 
 export function useProfileLogout() {

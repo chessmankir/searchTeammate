@@ -1,10 +1,13 @@
-import { useParams } from "react-router-dom";
-import "../../../StyleSheets/current_card.css";
-import {CardWrapper} from "./CardWrapper.tsx";
-import {useCards} from "../../../Hooks/Body/Card/cardHook.ts"
-import {AlbumPageTopbar} from "./AlbumPageTopbar.tsx";
-import {useCardModal} from "../../../Hooks/Body/Card/useCardModal.ts";
-import {CardModal} from "./Modal/CardModal.tsx";
+"use client";
+
+import "@/src/StyleSheets/current_card.css";
+import "@/src/StyleSheets/Card.css";
+import {useCards} from "@/src/Hooks/Body/Card/cardHook.ts"
+import {useCardModal} from "@/src/Hooks/Body/Card/useCardModal.ts";
+import {useParams} from "next/navigation";
+import {AlbumPageTopbar} from "@/src/Components/Body/Cards/AlbumPageTopbar";
+import {CardWrapper} from "@/src/Components/Body/Cards/CardWrapper";
+import {CardModal} from "@/src/Components/Body/Cards/Modal/CardModal";
 
 /*function getProgressPercent(collected: number, total: number) {
     if (!total) return 0;
@@ -12,8 +15,9 @@ import {CardModal} from "./Modal/CardModal.tsx";
 }*/
 
 export  function CurrentCardPage() {
-    const { albumId } = useParams();
-    const {cards, addCardHandler, removeCardHandler} = useCards({albumId});
+    const { slug  } = useParams();
+    console.log(slug);
+    const {cards, addCardHandler, removeCardHandler} = useCards({slug });
     const { selectedCard, setSelectedCard, closeCardModal, handleTrade} = useCardModal();
     console.log(cards);
     return (

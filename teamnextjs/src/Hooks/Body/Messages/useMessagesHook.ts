@@ -6,7 +6,7 @@ import { socket } from "@/src/Api/socket.ts";
 import {useSearchParams} from "next/navigation";
 
 export function useMessagesHook() {
-    const [searchParams] = useSearchParams();
+    const searchParams = useSearchParams();
     const conversationId = searchParams.get("conversation");
 
     const [activeConversation, setActiveConversation] = useState<Conversation>();

@@ -1,3 +1,5 @@
+"use client";
+
 import {useEffect, useState} from "react";
 import type {CardType} from "@/src/Components/Body/Cards/CardWrapper.tsx";
 import {useSearchParams} from "next/navigation";
@@ -5,7 +7,7 @@ import {useSearchParams} from "next/navigation";
 export function useDuplicatesCard() {
     const [card, setCard] = useState<CardType>();
     const [members, setMembers] = useState([]);
-    const [searchParams] = useSearchParams();
+    const searchParams = useSearchParams();
 
     const card_id = searchParams.get("cardid");
 

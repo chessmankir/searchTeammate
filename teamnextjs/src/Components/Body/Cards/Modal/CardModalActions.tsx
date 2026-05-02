@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import {useRouter} from "next/navigation";
 
 type CardModalActionsProps = {
     cardId: number;
@@ -9,13 +9,13 @@ export function CardModalActions({
                                      cardId,
                                      handleTrade,
                                  }: CardModalActionsProps) {
-    const navigate = useNavigate();
+    const navigate = useRouter();
 
     return (
         <div className="card-modal__actions">
             <button
                 className="card-modal__button"
-                onClick={() => navigate(`/duplicates?cardid=${cardId}`)}
+                onClick={() => navigate.push(`/duplicates?cardid=${cardId}`)}
             >
                 Найти
             </button>

@@ -1,4 +1,4 @@
-import type {CardType} from "../CardWrapper.tsx";
+import {CardType} from "@/src/Components/Body/Cards/CardWrapper";
 
 type CardDuplicateSelectedCardProps = {
     selectedCard: CardType | null;

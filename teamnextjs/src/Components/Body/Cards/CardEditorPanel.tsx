@@ -1,5 +1,5 @@
-import { ButtonActions } from "./ButtonActions.tsx";
-import type {CardType} from "./CardWrapper.tsx";
+import {ButtonActions} from "@/src/Components/Body/Cards/ButtonActions";
+import {CardType} from "@/src/Components/Body/Cards/CardWrapper";
 
 type CardEditorPanelProps = {
     removeCard: (cardId: number) => void;

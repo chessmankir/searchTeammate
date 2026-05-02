@@ -1,4 +1,4 @@
-import type { ProfileFormState } from "../../../Hooks/Body/Profile/useProfileHooks.ts";
+import type { ProfileFormState } from "@/src/Hooks/Body/Profile/useProfileHooks.ts";
 
 type ProfileMainInformationProps = {
     isMyProfile: boolean;

@@ -1,13 +1,13 @@
-import {useNavigate} from "react-router-dom";
+import {useRouter} from "next/navigation";
 
 export function AlbumPageTopbar() {
-    const navigate = useNavigate();
+    const navigate = useRouter();
     return (
         <div className="album-page__topbar">
             <div className="album-page__left-meta">
                 <button
                     className="album-page__back"
-                    onClick={() => navigate("/albums")}
+                    onClick={() => navigate.push("/albums")}
                 >
                     ← Назад к альбомам
                 </button>

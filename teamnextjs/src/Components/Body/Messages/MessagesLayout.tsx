@@ -1,6 +1,6 @@
-import {Outlet} from "react-router-dom";
-import {Header} from "../../Header/Header.tsx";
-import MessagesSidebarWrapper from "../../LeftSideBar/Messages/MessagesSidebarWrapper.tsx";
+import {Header} from "@/src/Components/Header/Header.tsx";
+import MessagesSidebarWrapper from "@/src/Components/LeftSideBar/Messages/MessagesSidebarWrapper.tsx";
+import MessagesPage from "@/src/Components/Body/Messages/MessagesPage";
 
 export function MessagesLayout() {
 
@@ -12,7 +12,7 @@ export function MessagesLayout() {
             <div className="app-main">
                 <Header/>
                 <main className="app-content">
-                    <Outlet/>
+                   <MessagesPage />
                 </main>
             </div>
         </div>

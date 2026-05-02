@@ -1,7 +1,9 @@
-import {Outlet} from "react-router-dom";
-import {Header} from "../../Header/Header.tsx";
-import {CardFilterWrapper} from "../../LeftSideBar/CardFilter/CardFilterWrapper.tsx";
-import {useLoadAlbums} from "../../../Hooks/Body/albumHook.ts";
+"use client";
+
+import {Header} from "@/src/Components/Header/Header.tsx";
+import {CardFilterWrapper} from "@/src/Components/LeftSideBar/CardFilter/CardFilterWrapper.tsx";
+import {useLoadAlbums} from "@/src/Hooks/Body/albumHook.ts";
+import {CardsPage} from "@/src/Components/Body/Cards/CardsPage";
 
 export function CardsLayout(){
     useLoadAlbums();
@@ -19,7 +21,7 @@ export function CardsLayout(){
         <div className="app-main">
             <Header/>
             <main className="app-content">
-                <Outlet/>
+                <CardsPage/>
             </main>
         </div>
     </div>

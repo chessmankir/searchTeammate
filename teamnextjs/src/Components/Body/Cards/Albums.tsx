@@ -1,5 +1,5 @@
-import {Album} from "./Album.tsx";
-import type {AlbumType} from "../../../types/AlbumType.ts";
+import type {AlbumType} from "@/src/types/AlbumType.ts";
+import {Album} from "@/src/Components/Body/Cards/Album";
 
 type AlbumsProps = {
     albums: AlbumType[];

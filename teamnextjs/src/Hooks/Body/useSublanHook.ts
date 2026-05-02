@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef} from "react";
 import {myClanStore} from "@/src/Store/myClanStore.ts";
 

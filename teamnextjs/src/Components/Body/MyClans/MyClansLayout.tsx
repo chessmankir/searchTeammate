@@ -1,7 +1,6 @@
-import {Outlet} from "react-router-dom";
-import {Header} from "../../Header/Header.tsx";
-import {MyClanWrapperSidebar} from "../../LeftSideBar/MyClan/MyClanWrapperSidebar.tsx";
-
+import {Header} from "@/src/Components/Header/Header.tsx";
+import {MyClanWrapperSidebar} from "@/src/Components/LeftSideBar/MyClan/MyClanWrapperSidebar.tsx";
+import {MyClansPage} from "@/src/Components/Body/MyClans/MyClansPage";
 
 export function MyClansLayout(){
     return (
@@ -12,7 +11,7 @@ export function MyClansLayout(){
             <div className="app-main">
                 <Header/>
                 <main className="app-content">
-                    <Outlet/>
+                    <MyClansPage />
                 </main>
             </div>
         </div>

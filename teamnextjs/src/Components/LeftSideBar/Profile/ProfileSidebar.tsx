@@ -1,37 +1,41 @@
-import { NavLink } from "react-router-dom";
+"use client";
 
-type NavItem = {
-    to: string;
-    label: string;
-};
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import "@/src/Stylesheets/profile.css";
 
-type ProfileSidebarProps = {
-    navItems: NavItem[];
-};
+const navItems2 = [
+    {to: "/profile", label: "Профиль"},
+    {to: "/albums", label: "Карты"},
+    {to: "/myclan", label: "Мой клан"},
+    {to: "/messages", label: "Сообщения"},
+    {to: "/settings", label: "Настройки"},
+];
 
-export function ProfileSidebar({ navItems }: ProfileSidebarProps) {
+export function ProfileSidebar({navItems}) {
+    const pathname = usePathname();
+
     return (
-        <div className="profile-sidebar">
-            <div className="profile-sidebar__top">
-                <div className="profile-sidebar__logo">Checkmate</div>
-                <p className="profile-sidebar__subtitle">Личный кабинет</p>
-            </div>
-
+        <aside className="profile-sidebar">
             <nav className="profile-sidebar__nav">
-                {navItems.map((item) => (
-                    <NavLink
-                        key={item.to}
-                        to={item.to}
-                        className={({ isActive }) =>
-                            isActive
-                                ? "profile-sidebar__link profile-sidebar__link--active"
-                                : "profile-sidebar__link"
-                        }
-                    >
-                        {item.label}
-                    </NavLink>
-                ))}
+                {navItems.map((item) => {
+                    const isActive = pathname === item.to;
+
+                    return (
+                        <Link
+                            key={item.to}
+                            href={item.to}
+                            className={
+                                isActive
+                                    ? "profile-sidebar__link profile-sidebar__link--active"
+                                    : "profile-sidebar__link"
+                            }
+                        >
+                            {item.label}
+                        </Link>
+                    );
+                })}
             </nav>
-        </div>
+        </aside>
     );
 }

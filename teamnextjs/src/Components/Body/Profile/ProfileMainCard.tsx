@@ -1,9 +1,9 @@
-import {authStore} from "../../../store/authStore.ts";
-import type {ProfileFormState} from "../../../Hooks/Body/Profile/useProfileHooks.ts";
-import type {GameMode} from "../../../store/filtersStore.ts";
-import {ProfileGameInformation} from "./ProfileGameInformation.tsx";
-import {ProfileMainInformation} from "./ProfileMainInformation.tsx";
-import {ProfileActionButtons} from "./ProfileActionButtons.tsx";
+import {authStore} from "@/src/Store/authStore.ts";
+import type {ProfileFormState} from "@/src/Hooks/Body/Profile/useProfileHooks.ts";
+import type {GameMode} from "@/src/Store/filtersStore.ts";
+import {ProfileMainInformation} from "@/src/Components/Body/Profile/ProfileMainInformation";
+import {ProfileGameInformation} from "@/src/Components/Body/Profile/ProfileGameInformation";
+import {ProfileActionButtons} from "@/src/Components/Body/Profile/ProfileActionButtons";
 
 type ProfileMainCardProps = {
     form: ProfileFormState;

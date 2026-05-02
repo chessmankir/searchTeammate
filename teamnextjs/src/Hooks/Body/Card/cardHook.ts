@@ -1,14 +1,16 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { authStore } from "@/src/Store/authStore.ts";
 import type { AlbumFlterType } from "@/src/types/AlbumFlterType.ts";
 import type {CardType} from "@/src/Components/Body/Cards/CardWrapper.tsx";
 
 interface UseCardParams {
-    albumId?: string;
+    slug?: string;
     filter?: AlbumFlterType;
 }
 
-export function useCards({ albumId, filter }: UseCardParams = {}) {
+export function useCards({ slug, filter }: UseCardParams = {}) {
     const user = authStore((state) => state.user);
     const [cards, setCards] = useState<CardType[]>([]);
 
@@ -82,8 +84,8 @@ export function useCards({ albumId, filter }: UseCardParams = {}) {
                 const url = process.env.NEXT_PUBLIC_API_URL;
                 let backendURL = `${url}/api/cards`;
 
-                if (albumId) {
-                    backendURL += `/${albumId}`;
+                if (slug) {
+                    backendURL += `/${slug}`;
                 }
 
                 const urlParams = new URLSearchParams();
@@ -109,7 +111,7 @@ export function useCards({ albumId, filter }: UseCardParams = {}) {
                 console.error(e);
             }
         })();
-    }, [albumId, filter, user?.id]);
+    }, [slug, filter, user?.id]);
 
     return { cards, addCardHandler, removeCardHandler };
 }

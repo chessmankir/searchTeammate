@@ -1,6 +1,8 @@
-import {Logo} from "../Logo.tsx";
-import {ProfileSidebar} from "./ProfileSidebar.tsx";
-import {profileLinks} from "../../../Data/navItems.ts";
+"use client";
+
+import {profileLinks} from "@/src/Data/navItems.ts";
+import {Logo} from "@/src/Components/LeftSideBar/Logo";
+import {ProfileSidebar} from "@/src/Components/LeftSideBar/Profile/ProfileSidebar";
 
 export default function ProfileSidebarWrapper() {
     return (

@@ -1,6 +1,6 @@
-import {Outlet} from "react-router-dom";
-import {Header} from "../../Header/Header.tsx";
-import ProfileSidebarWrapper from "../../LeftSideBar/Profile/ProfileSidebarWrapper.tsx";
+import {Header} from "@/src/Components/Header/Header.tsx";
+import ProfileSidebarWrapper from "@/src/Components/LeftSideBar/Profile/ProfileSidebarWrapper.tsx";
+import ProfilePage from "@/src/Components/Body/Profile/ProfilePage";
 
 export function ProfileLayout() {
     return (
@@ -12,7 +12,7 @@ export function ProfileLayout() {
             <div className="app-main">
                 <Header />
                 <main className="app-content">
-                    <Outlet />
+                    <ProfilePage />
                 </main>
             </div>
         </div>

@@ -1,6 +1,6 @@
-import "../../../StyleSheets/body.css";
-import "../../../StyleSheets/pagination.css";
-import {Clans} from "./Clans.tsx";
+import "@/src/StyleSheets/body.css";
+import "@/src/StyleSheets/pagination.css";
+import {Clans} from "@/src/Components/Body/Clan/Clans";
 
 export  function ClanPage(){
     return (

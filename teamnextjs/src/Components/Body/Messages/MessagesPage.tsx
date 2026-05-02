@@ -1,10 +1,10 @@
-import "../../../StyleSheets/messages.css";
-import {MessageHeader} from "./MessageHeader.tsx";
-import {MessageSidebar} from "./MessageSidebar/MessageSidebar.tsx";
-import {MessageChat} from "./MessageChat.tsx";
-import {useMessagesHook} from "../../../Hooks/Body/Messages/useMessagesHook.ts";
-import {useSocketJoin} from "../../../Hooks/Body/Messages/userSocketJoin.ts";
-import {authStore} from "../../../store/authStore.ts";
+import "@/src/StyleSheets/messages.css";
+import {useMessagesHook} from "@/src/Hooks/Body/Messages/useMessagesHook.ts";
+import {useSocketJoin} from "@/src/Hooks/Body/Messages/userSocketJoin.ts";
+import {authStore} from "@/src/Store/authStore.ts";
+import {MessageHeader} from "@/src/Components/Body/Messages/MessageHeader";
+import {MessageSidebar} from "@/src/Components/Body/Messages/MessageSidebar/MessageSidebar";
+import {MessageChat} from "@/src/Components/Body/Messages/MessageChat";
 
 export default function MessagesPage() {
     const user = authStore((state) => state.user);

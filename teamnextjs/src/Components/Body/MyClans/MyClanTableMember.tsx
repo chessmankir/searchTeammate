@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-import type { ClanMember } from "../../../types/ClanMember.ts";
+import type { ClanMember } from "@/src/types/ClanMember.ts";
 
 type Props = {
     members: ClanMember[];
