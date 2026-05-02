@@ -1,11 +1,12 @@
-import "../../../StyleSheets/myclanSidebar.css";
-import {LogoCheckmate} from "./LogoCheckmate.tsx";
-import {myClanStore} from "../../../store/myClanStore.ts";
-import {MyClanFooter} from "./MyClanFooter.tsx";
-import {MyClanInfo} from "./MyClanInfo.tsx";
-import {MyClanSidebarClan} from "./MyClanSidebarClan.tsx";
-import {profileLinks} from "../../../Data/navItems.ts";
-import {ProfileSidebar} from "../Profile/ProfileSidebar.tsx";
+"use client";
+import "@/src/StyleSheets/myclanSidebar.css";
+import {myClanStore} from "@/src/Store/myClanStore.ts";
+import {profileLinks} from "@/src/Data/navItems.ts";
+import {LogoCheckmate} from "@/src/Components/LeftSideBar/MyClan/LogoCheckmate";
+import {ProfileSidebar} from "@/src/Components/LeftSideBar/Profile/ProfileSidebar";
+import {MyClanSidebarClan} from "@/src/Components/LeftSideBar/MyClan/MyClanSidebarClan";
+import {MyClanInfo} from "@/src/Components/LeftSideBar/MyClan/MyClanInfo";
+import {MyClanFooter} from "@/src/Components/LeftSideBar/MyClan/MyClanFooter";
 
 export function MyClanWrapperSidebar() {
     const clans = myClanStore((state) => state.clans);

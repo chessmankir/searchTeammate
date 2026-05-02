@@ -49,7 +49,6 @@ export function useProfileHooks() {
     useEffect(() => {
         const fetchMember = async (): Promise<void> => {
             const params = new URLSearchParams();
-
             if (pubg_id) {
                 params.set("pubg_id", pubg_id);
             } else {
@@ -135,7 +134,7 @@ export function useProfileHooks() {
                     pubgId,
                     id,
                     availableMicro,
-                    status_game,
+                    staatus_game,
                     modes,
                 }),
             });

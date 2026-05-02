@@ -1,3 +1,5 @@
+"use client";
+
 import "@/src/StyleSheets/myclan.css";
 import {useClanMember} from "@/src/Hooks/Body/clanMemberHook.tsx";
 import {useSubclans} from "@/src/Hooks/Body/useSublanHook.ts";

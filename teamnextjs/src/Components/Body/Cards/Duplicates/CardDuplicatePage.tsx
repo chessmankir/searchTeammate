@@ -1,3 +1,5 @@
+"use client";
+
 import "@/src/StyleSheets/cardDuplicate.css";
 import { CardDuplicateSelectedCard } from "./CardDuplicateSelectedCard.tsx";
 import { useDuplicatesCard } from "@/src/Hooks/Body/Card/useDuplicatesCard.ts";

@@ -7,7 +7,7 @@ import {useSearchParams} from "next/navigation";
 
 export function useClanMember() {
     const [clanMembers, setClanMembers] = useState<ClanMember[]>([]);
-    const [searchParams] = useSearchParams();
+    const searchParams = useSearchParams();
     const setCurrentClan = myClanStore((state) => state.setCurrentClan);
     const setTotalMembers = myClanStore((state) => state.setTotalMembers);
     const number = Number(searchParams.get("number")) || 1;
@@ -26,7 +26,6 @@ export function useClanMember() {
                     query.set("number", String(number));
                 }
                 const url = process.env.NEXT_PUBLIC_API_URL;
-                console.log("url", url);
                 const response = await fetch(
                     `${url}/api/clanmember?${query.toString()}`,
                     {

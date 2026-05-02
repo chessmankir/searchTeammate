@@ -8,8 +8,6 @@ type TabKey = "cards" | "clan" | "tournaments";
 export function CardsPage() {
     const [activeTab] = useState<TabKey>("cards");
     const albums = albumsStore((state) => state.albums);
-    console.log(albums);
-
     return (
         <div className="profile-page">
             {activeTab === "cards" && <Albums albums={albums} />}

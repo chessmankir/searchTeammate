@@ -19,13 +19,11 @@ export function useCardModal(){
     }, [selectedCard]);
 
     const closeCardModal = () => {
-        console.log("Closing CardModal");
         setSelectedCard(null);
     };
 
     const handleTrade = () => {
         if (!selectedCard) return;
-        console.log("Обмен карточки:", selectedCard.id);
         // например переход:
         // navigate(`/cards/${selectedCard.id}/trade`);
     }

@@ -1,3 +1,5 @@
+"use client";
+
 import "@/src/StyleSheets/messages.css";
 import {useMessagesHook} from "@/src/Hooks/Body/Messages/useMessagesHook.ts";
 import {useSocketJoin} from "@/src/Hooks/Body/Messages/userSocketJoin.ts";

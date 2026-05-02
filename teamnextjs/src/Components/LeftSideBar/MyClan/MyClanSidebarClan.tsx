@@ -1,3 +1,4 @@
+"use client";
 import type { MyClan } from "@/src/types/MyClan.ts";
 import {useRouter} from "next/navigation";
 

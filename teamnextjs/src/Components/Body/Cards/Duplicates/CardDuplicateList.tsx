@@ -1,4 +1,5 @@
 import {CardType} from "@/src/Components/Body/Cards/CardWrapper";
+import Link from "next/link";
 
 type MissingCard = {
     id: number;
@@ -24,7 +25,6 @@ export function CardDuplicateList({
                                       members,
                                       selectedCard,
                                   }: CardDuplicateListProps) {
-    console.log(members);
     return (
         <div className="card-duplicates-page__table-wrap">
             <table className="card-duplicates-page__table">
@@ -45,7 +45,7 @@ export function CardDuplicateList({
                             <div className="card-cell">
                                 {selectedCard && (
                                     <img
-                                        src={selectedCard.imageSrc}
+                                        src={`/assets/${selectedCard.imageSrc}`}
                                         alt={selectedCard.name}
                                         className="card-cell__image"
                                     />
@@ -72,7 +72,7 @@ export function CardDuplicateList({
                                 {row.missing_cards.map((want: MissingCard) => (
                                     <img
                                         key={want.id}
-                                        src={want.imageSrc}
+                                        src={`/assets/${want.imageSrc}`}
                                         alt={want.name}
                                         className="card-cell__image"
                                         title={want.name}
@@ -82,7 +82,7 @@ export function CardDuplicateList({
                         </td>
 
                         <td>
-                            <Link to={`/profile/`+row.pubg_id} className="profile-link">
+                            <Link href={`/profile/`+row.pubg_id} className="profile-link">
                                 Профиль
                             </Link>
                         </td>

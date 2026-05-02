@@ -34,7 +34,6 @@ export const authStore = create<AuthState>((set) => ({
                 method: "GET",
                 credentials: "include"
             });
-            console.log(response);
             const  data = await response.json();
             if(data.ok){
                 set({user: data.user, isAuth: true});

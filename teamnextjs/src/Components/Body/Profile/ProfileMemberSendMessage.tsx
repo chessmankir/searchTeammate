@@ -11,10 +11,7 @@ export function ProfileMemberSendMessage({ startConversation, member }: Props) {
             className="profile-btn profile-btn--secondary profile-player-card__write"
             onClick={(e) => {
                 e.preventDefault();
-                console.log('click');
-                console.log(member);
                 if (!member?.id) return;
-                console.log("after");
                 startConversation(member.id);
             }}
         >

@@ -9,7 +9,6 @@ export function Card({
                          card, setSelectedCard
                      }: CardProps) {
     const totalCount = card.count == null ? 0 : card.count;
-    console.log(card)
     return (
         <div className="album-card__image-wrap">
             <img

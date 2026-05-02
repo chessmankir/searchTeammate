@@ -1,3 +1,5 @@
+"use client";
+
 import {io} from 'socket.io-client';
 const url = process.env.NEXT_PUBLIC_API_URL || undefined;
 export const socket = io(`${url}`,{

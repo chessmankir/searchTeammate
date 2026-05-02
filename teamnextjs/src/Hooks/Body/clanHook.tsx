@@ -23,7 +23,6 @@ export function useClans(){
                 if(data.ok){
                     setClans(data.data);
                 }
-                console.log(data);
             }
             catch (e){
                 console.log(e);

@@ -94,13 +94,11 @@ export function useCards({ slug, filter }: UseCardParams = {}) {
                     urlParams.set("filter", filter);
                     backendURL += `?${urlParams.toString()}`;
                 }
-                console.log(backendURL);
                 const response = await fetch(backendURL, {
                     credentials: "include"
                 });
 
                 const data = await response.json();
-                console.log(data);
                 if (data?.ok) {
                     setCards(data.data);
                 } else {

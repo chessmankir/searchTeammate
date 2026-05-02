@@ -5,11 +5,10 @@ type CardDuplicateSelectedCardProps = {
 };
 
 export function CardDuplicateSelectedCard({selectedCard} : CardDuplicateSelectedCardProps) {
-    console.log(selectedCard);
     return (
         <div className="card-duplicates-page__selected-card">
             <img
-                src={selectedCard?.imageSrc}
+                src={`/assets/${selectedCard?.imageSrc}`}
                 alt={selectedCard?.name}
                 className="card-duplicates-page__selected-image"
             />

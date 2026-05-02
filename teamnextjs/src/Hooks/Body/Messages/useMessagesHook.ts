@@ -103,7 +103,6 @@ export function useMessagesHook() {
 
     useEffect(() => {
         const handleNewMessage = async (newMessage: Message) => {
-            console.log("handleNewMessage:", newMessage);
 
             const isActiveChat =
                 Number(conversationId) === Number(newMessage.conversation_id);
@@ -185,10 +184,7 @@ export function useMessagesHook() {
             });
 
             const data = await response.json();
-            console.log('sendMessage:');
-            console.log(data);
             if (data.ok) {
-                console.log("сообщение успешно");
                 setMessage("");
                 return true;
             }

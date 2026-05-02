@@ -1,4 +1,5 @@
 import type { ClanMember } from "@/src/types/ClanMember.ts";
+import Link from "next/link";
 
 type Props = {
     members: ClanMember[];
@@ -59,7 +60,7 @@ export function MyClanTableMember({ members }: Props) {
                         <td>
                             <div className="myclan-row-actions">
                                 <Link
-                                    to={`/profile/${member.pubg_id}`}
+                                    href={`/profile/${member.pubg_id}`}
                                     className="myclan-btn myclan-btn--small myclan-btn--ghost"
                                 >
                                     Профиль

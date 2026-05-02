@@ -15,7 +15,6 @@ export function ProfileHeader(){
     const router = useRouter();
 
     const handleLogout = async () => {
-        console.log("logout");
         const ok = await logout();
         if (ok) {
             router.push("/");

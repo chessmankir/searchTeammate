@@ -19,7 +19,6 @@ export function useDuplicatesCard() {
                 "credentials": "include",
             });
             const data = await response.json();
-            console.log(data.data);
             if(data.ok){
                 setCard(data.data);
             }

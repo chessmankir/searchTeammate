@@ -16,10 +16,8 @@ import {CardModal} from "@/src/Components/Body/Cards/Modal/CardModal";
 
 export  function CurrentCardPage() {
     const { slug  } = useParams();
-    console.log(slug);
     const {cards, addCardHandler, removeCardHandler} = useCards({slug });
     const { selectedCard, setSelectedCard, closeCardModal, handleTrade} = useCardModal();
-    console.log(cards);
     return (
         <div className="album-page">
             <div className="album-page__layout">
