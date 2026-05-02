@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import type { ClanMember } from "../../types/ClanMember.ts";
-import { useSearchParams } from "react-router-dom";
-import { myClanStore } from "../../store/myClanStore.ts";
+import type { ClanMember } from "@/src/types/ClanMember.ts";
+import { myClanStore } from "@/src/Store/myClanStore.ts";
+import {useSearchParams} from "next/navigation";
 
 export function useClanMember() {
     const [clanMembers, setClanMembers] = useState<ClanMember[]>([]);
@@ -23,7 +23,7 @@ export function useClanMember() {
                 } else {
                     query.set("number", String(number));
                 }
-                const url = import.meta.env.VITE_API_URL;
+                const url = process.env.NEXT_PUBLIC_API_URL;
                 const response = await fetch(
                     `${url}/api/clanmember?${query.toString()}`,
                     {

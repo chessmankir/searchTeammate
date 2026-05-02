@@ -1,0 +1,55 @@
+"use client";
+
+import {useLoginHook} from "@/src/Hooks/Body/LoginHook";
+import {LoginSteps} from "@/src/Components/Body/Login/LoginSteps";
+import {LoginRequestStep} from "@/src/Components/Body/Login/LoginRequestStep";
+import {LoginVerifyStep} from "@/src/Components/Body/Login/LoginVerifyStep";
+import {LoginFooter} from "@/src/Components/Body/Login/LoginFooter";
+
+export function LoginCard() {
+    const login = useLoginHook();
+
+    return (
+        <div className="login-card">
+            <div className="login-card__top">
+                <h2 className="login-card__title">Авторизация</h2>
+                <p className="login-card__subtitle">
+                    {login.step === "request"
+                        ? "Введите PUBG ID, чтобы получить код"
+                        : "Введите код, который пришёл в Telegram"}
+                </p>
+            </div>
+
+            <LoginSteps step={login.step} />
+
+            {login.step === "request" ? (
+                <LoginRequestStep
+                    pubgId={login.pubgId}
+                    setPubgId={login.setPubgId}
+                    setStep={login.setStep}
+                    sendCodeSubmit={login.sendCodeSubmit}
+                />
+            ) : (
+                <LoginVerifyStep
+                    code={login.code}
+                    setCode={login.setCode}
+                    verifyCodeSubmit={login.verifyCodeSubmit}
+                />
+            )}
+
+            {login.message && (
+                <div className="login-card__message login-card__message--success">
+                    {login.message}
+                </div>
+            )}
+
+            {login.error && (
+                <div className="login-card__message login-card__message--error">
+                    {login.error}
+                </div>
+            )}
+
+            <LoginFooter />
+        </div>
+    );
+}

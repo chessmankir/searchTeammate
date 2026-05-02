@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { albumsStore } from "../../store/albumsStore.ts";
+import { albumsStore } from "@/src/Store/albumsStore.ts";
 
 export function useLoadAlbums() {
     const albums = albumsStore((state) => state.albums);
@@ -8,7 +8,7 @@ export function useLoadAlbums() {
     useEffect(() => {
         (async () => {
             try {
-                const url = import.meta.env.VITE_API_URL;
+                const url = process.env.NEXT_PUBLIC_API_URL;
                 const backendURL = `${url}/api/albums`;
                 const response = await fetch(backendURL);
                 const data = await response.json();

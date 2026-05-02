@@ -58,6 +58,10 @@
     vertical-align: middle;
 }
 
+.member-list td.nameContainer {
+    width: 260px;
+}
+
 .member-list tbody tr {
     transition: background 0.2s ease;
 }

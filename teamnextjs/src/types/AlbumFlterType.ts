@@ -1,0 +1,1 @@
+export type AlbumFlterType = "all" | "duplicates" | "missing" | "trades";

@@ -4,6 +4,7 @@ import {getSession} from "../auth/session";
 
 const router = Router();
 router.get('/', async (req: Request, res: Response) => {
+    console.log('api/auth/me');
     const sid = req.cookies?.sid;
     console.log(sid);
     if(!sid){

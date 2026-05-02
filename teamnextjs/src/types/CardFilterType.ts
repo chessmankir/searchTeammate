@@ -1,0 +1,1 @@
+export type CardFilterType = "all" | "duplicates" | "missing" | "trades";

@@ -1,5 +1,5 @@
 import { useEffect, useRef} from "react";
-import {myClanStore} from "../../store/myClanStore.ts";
+import {myClanStore} from "@/src/Store/myClanStore.ts";
 
 
 export function useSubclans() {
@@ -13,7 +13,7 @@ export function useSubclans() {
 
         (async () => {
             try {
-                const url = import.meta.env.VITE_API_URL;
+                const url = process.env.NEXT_PUBLIC_API_URL;
                 const response = await fetch(`${url}/api/myclan`, {
                     credentials: "include"
                 });

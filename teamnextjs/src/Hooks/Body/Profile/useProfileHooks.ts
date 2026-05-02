@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import type { ClanMember } from "../../../types/ClanMember.ts";
-import { useParams } from "react-router-dom";
-import type { GameMode, StatusMember } from "../../../store/filtersStore.ts";
+import type { ClanMember } from "@/src/types/ClanMember.ts";
+import type { GameMode, StatusMember } from "@/src/Store/filtersStore.ts";
+import {useParams} from "next/navigation";
 
 export type ProfileFormState = {
     id?: number;
@@ -54,7 +54,7 @@ export function useProfileHooks() {
                 params.set("pubg_id", "1");
             }
 
-            const url = import.meta.env.VITE_API_URL;
+            const url = process.env.NEXT_PUBLIC_API_URL;
             const backend = `${url}/api/members?${params.toString()}`;
 
             try {
@@ -116,7 +116,7 @@ export function useProfileHooks() {
                                    modes,
                                }: SaveProfileParams): Promise<void> => {
         try {
-            const url = import.meta.env.VITE_API_URL;
+            const url = process.env.NEXT_PUBLIC_API_URL;
             const backend = `${url}/api/update/member`;
 
             const response = await fetch(backend, {

@@ -29,11 +29,12 @@ export const authStore = create<AuthState>((set) => ({
     }),
     checkAuth: async () => {
         try{
-            const url = import.meta.env.VITE_API_URL;
+            const url = process.env.NEXT_PUBLIC_API_URL;
             const response = await fetch(`${url}/api/auth/me`,{
                 method: "GET",
                 credentials: "include"
             });
+            console.log(response);
             const  data = await response.json();
             if(data.ok){
                 set({user: data.user, isAuth: true});

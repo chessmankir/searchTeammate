@@ -1,11 +1,11 @@
-import { authStore } from "../../../store/authStore.ts";
+import { authStore } from "@/src/Store/authStore.ts";
 
 export function useProfileLogout() {
     const setUser = authStore((state) => state.setUser);
 
     const logout = async (): Promise<boolean> => {
         try {
-            const url = import.meta.env.VITE_API_URL;
+            const url = process.env.NEXT_PUBLIC_API_URL;
             const response = await fetch(`${url}/api/logout`, {
                 method: "POST",
                 credentials: "include",

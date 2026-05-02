@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { authStore } from "../../../store/authStore.ts";
-import type { AlbumFlterType } from "../../../types/AlbumFlterType.ts";
-import type {CardType} from "../../../Container/Body/Cards/CardWrapper.tsx";
+import { authStore } from "@/src/Store/authStore.ts";
+import type { AlbumFlterType } from "@/src/types/AlbumFlterType.ts";
+import type {CardType} from "@/src/Components/Body/Cards/CardWrapper.tsx";
 
 interface UseCardParams {
     albumId?: string;
@@ -13,7 +13,7 @@ export function useCards({ albumId, filter }: UseCardParams = {}) {
     const [cards, setCards] = useState<CardType[]>([]);
 
     const addCardHandler = async (card_id: number) => {
-        const url = import.meta.env.VITE_API_URL;
+        const url = process.env.NEXT_PUBLIC_API_URL;
         const backendServer = `${url}/api/add/card`;
 
         const response = await fetch(backendServer, {
@@ -43,7 +43,7 @@ export function useCards({ albumId, filter }: UseCardParams = {}) {
     };
 
     const removeCardHandler = async (card_id: number) => {
-        const url = import.meta.env.VITE_API_URL;
+        const url = process.env.NEXT_PUBLIC_API_URL;
         const backendServer = `${url}/api/remove/card`;
 
         try {
@@ -79,7 +79,7 @@ export function useCards({ albumId, filter }: UseCardParams = {}) {
 
         (async () => {
             try {
-                const url = import.meta.env.VITE_API_URL;
+                const url = process.env.NEXT_PUBLIC_API_URL;
                 let backendURL = `${url}/api/cards`;
 
                 if (albumId) {

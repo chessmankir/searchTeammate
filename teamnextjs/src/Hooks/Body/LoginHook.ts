@@ -1,7 +1,7 @@
 import { useState } from "react";
-import type { LoginStep } from "../../types/LoginStep.ts";
-import { useNavigate } from "react-router-dom";
-import { authStore } from "../../store/authStore.ts";
+import type { LoginStep } from "@/src/types/LoginStep.ts";
+import { authStore } from "@/src/Store/authStore.ts";
+import {useRouter} from "next/navigation";
 
 export function useLoginHook() {
     const [pubgId, setPubgId] = useState("");
@@ -9,13 +9,14 @@ export function useLoginHook() {
     const [code, setCode] = useState("");
     const [error, setError] = useState("");
     const [message, setMessage] = useState("");
+    const router = useRouter();
 
     const setUser = authStore((state) => state.setUser);
-    const navigate = useNavigate();
+    const navigate = useRouter();
 
     const sendCodeSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const url = import.meta.env.VITE_API_URL;
+        const url = process.env.NEXT_PUBLIC_API_URL;
         const backendServer = `${url}/api/sendcode`;
 
         try {
@@ -30,8 +31,8 @@ export function useLoginHook() {
 
             if (data.ok) {
                 //временно
-                setUser(data.user);
-                navigate("/players");
+               /* setUser(data.user);
+                navigate.push("/players");*/
                 //
                 setStep("verify");
                 setError("");
@@ -49,7 +50,7 @@ export function useLoginHook() {
 
     const verifyCodeSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const url = import.meta.env.VITE_API_URL;
+        const url = process.env.NEXT_PUBLIC_API_URL;
         const backendServer = `${url}/api/verifycode`;
 
         try {
@@ -61,15 +62,15 @@ export function useLoginHook() {
             });
 
             const data = await response.json();
-
+            console.log(data);
             if (data.ok) {
                 setUser(data.user);
-                navigate("/players");
                 setPubgId("");
                 setCode("");
                 setStep("request");
                 setError("");
                 setMessage("");
+                router.push("/");
             } else {
                 setError("Не совпадают данные");
                 setMessage("");

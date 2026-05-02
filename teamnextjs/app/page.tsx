@@ -1,5 +1,5 @@
 import Image from "next/image";
-import {Members} from "@/src/Components/Member/Members";
+import {Members} from "@/src/Components/Body/Member/Members";
 import {LeftSideBar} from "@/src/Components/LeftSideBar/LeftSideBar";
 import {Header} from "@/src/Components/Header/Header";
 import  "@/src/StyleSheets/baseMarkup.css";

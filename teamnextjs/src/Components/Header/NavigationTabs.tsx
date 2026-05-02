@@ -9,7 +9,7 @@ export function NavigationTabs(){
         <div className="navigation-tabs">
             <ul className="navbar-nav" role="navigation" aria-label="Navigation 1">
                 <li className="nav-item ">
-                    <Link href="/players" className={`nav-link ${pathname === "/players" ? "active" : ""}`}>Игроки</Link></li>
+                    <Link href="/" className={`nav-link ${pathname === "/players" ? "active" : ""}`}>Игроки</Link></li>
                 <li className="nav-item ">
                     <Link href="/clans" className={`nav-link ${pathname === "/clans" ? "active" : ""}`}>Кланы</Link>
                 </li>

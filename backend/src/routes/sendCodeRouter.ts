@@ -6,6 +6,7 @@ import {createSession} from "../auth/session";
 
 const router = Router();
 router.post('/', async ( req: Request , res: Response) => {
+    console.log('send code');
     const {pubgId } = req.body;
     try{
         if(!pubgId){
@@ -21,20 +22,22 @@ router.post('/', async ( req: Request , res: Response) => {
         }
 
         //временно пока не работает отправка кода
-        const user = result.rows[0];
-        const sessionToken = await createSession(user.id);
+        const member = result.rows[0];
+        console.log(member);
+        const sessionToken = await createSession(member.id);
+        console.log(sessionToken);
         const k = await res.cookie('sid', sessionToken, {
             httpOnly: true,
             sameSite: "lax",
             secure: false,
             maxAge: 1000*60*60*24*30
         });
-        return  res.json({
+     /*   return  res.json({
             ok: true
-        });
+        });*/
 
 
-        /*const code : string = createLoginCode(pubgId);
+        const code : string = createLoginCode(pubgId);
         const answerSendMessage = await bot.sendMessage(Number(member.actor_id), `Код для входа: ${code}` );
         console.log("answerSendMessage");
         console.log(answerSendMessage);
@@ -52,7 +55,7 @@ router.post('/', async ( req: Request , res: Response) => {
         return res.json({
             ok: false,
 
-        })*/
+        })
     }
     catch (e){
         console.log(e);

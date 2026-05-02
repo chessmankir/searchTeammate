@@ -1,12 +1,12 @@
-import { useNavigate } from "react-router-dom";
+import {useRouter} from "next/navigation";
 
 export function useStartConversation() {
-    const navigate = useNavigate();
+    const navigate = useRouter();
 
     const startConversation = async (member_id: number): Promise<boolean> => {
         console.log("startConversation");
         console.log(member_id);
-        const url = import.meta.env.VITE_API_URL;
+        const url = process.env.NEXT_PUBLIC_API_URL;
         const backend = `${url}/api/conversation?member_id=${member_id}`;
         console.log(backend);
         try {
@@ -17,7 +17,7 @@ export function useStartConversation() {
             const data = await response.json();
             console.log(data);
             if (data.ok) {
-                navigate(`/messages?conversation=${data.conversationId}`);
+                navigate.push(`/messages?conversation=${data.conversationId}`);
                 return true;
             }
 

@@ -1,8 +1,9 @@
-import { useSearchParams } from "react-router-dom";
+
 import { useEffect, useRef, useState } from "react";
-import type { Conversation } from "../../../types/Conversation.ts";
-import type { Message } from "../../../types/Message.ts";
-import { socket } from "../../../api/socket.ts";
+import type { Conversation } from "@/src/types/Conversation.ts";
+import type { Message } from "@/src/types/Message.ts";
+import { socket } from "@/src/Api/socket.ts";
+import {useSearchParams} from "next/navigation";
 
 export function useMessagesHook() {
     const [searchParams] = useSearchParams();
@@ -18,7 +19,7 @@ export function useMessagesHook() {
         if(!conversationId) return;
 
         (async () => {
-            const url = import.meta.env.VITE_API_URL;
+            const url = process.env.NEXT_PUBLIC_API_URL;
             const backendServer = `${url}/api/conversations/${conversationId}/read`;
             try {
                 const response = await fetch(backendServer, {
@@ -46,7 +47,7 @@ export function useMessagesHook() {
 
     useEffect(() => {
         if (!conversationId) return;
-        const url = import.meta.env.VITE_API_URL;
+        const url = process.env.NEXT_PUBLIC_API_URL;
         (async () => {
             const backend = `${url}/api/conversations/${conversationId}/`;
             const response = await fetch(backend, {
@@ -62,7 +63,7 @@ export function useMessagesHook() {
 
     useEffect(() => {
         if (!conversationId) return;
-        const url = import.meta.env.VITE_API_URL;
+        const url = process.env.NEXT_PUBLIC_API_URL;
         (async () => {
 
             const backend = `${url}/api/conversations/${conversationId}/messages`;
@@ -86,7 +87,7 @@ export function useMessagesHook() {
     }, [conversationId]);
 
     useEffect(() => {
-        const url = import.meta.env.VITE_API_URL;
+        const url = process.env.NEXT_PUBLIC_API_URL;
         (async () => {
             const backend = `${url}/api/get/conversations`;
             const response = await fetch(backend, {
@@ -117,7 +118,7 @@ export function useMessagesHook() {
 
                 // 🔥 сразу помечаем как прочитанное
                 try {
-                    const url = import.meta.env.VITE_API_URL;
+                    const url = process.env.NEXT_PUBLIC_API_URL;
                     await fetch(
                         `${url}/api/conversations/${newMessage.conversation_id}/read`,
                         {
@@ -170,7 +171,7 @@ export function useMessagesHook() {
     }, [activeMessages]);
 
     const sendMessage = async () => {
-        const url = import.meta.env.VITE_API_URL;
+        const url = process.env.NEXT_PUBLIC_API_URL;
         const backend = `${url}/api/conversations/${conversationId}/messages`;
 
         try {

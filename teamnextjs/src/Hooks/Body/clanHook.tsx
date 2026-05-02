@@ -16,7 +16,7 @@ export function useClans(){
     useEffect(() => {
         (async () => {
             try {
-                const url = import.meta.env.VITE_API_URL;
+                const url = process.env.NEXT_PUBLIC_API_URL;
                 const clans = await fetch(`${url}/api/clans`);
                 const data = await clans.json();
                 if(data.ok){
