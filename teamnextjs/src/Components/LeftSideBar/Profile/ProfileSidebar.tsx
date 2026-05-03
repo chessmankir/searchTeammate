@@ -9,7 +9,7 @@ const navItems2 = [
     {to: "/albums", label: "Карты"},
     {to: "/myclan", label: "Мой клан"},
     {to: "/messages", label: "Сообщения"},
-    {to: "/settings", label: "Настройки"},
+   /* {to: "/settings", label: "Настройки"},*/
 ];
 
 export function ProfileSidebar({navItems}) {
