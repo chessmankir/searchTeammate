@@ -23,9 +23,7 @@ router.post('/', async ( req: Request , res: Response) => {
 
         //временно пока не работает отправка кода
         const member = result.rows[0];
-        console.log(member);
         const sessionToken = await createSession(member.id);
-        console.log(sessionToken);
         const k = await res.cookie('sid', sessionToken, {
             httpOnly: true,
             sameSite: "lax",
@@ -38,6 +36,7 @@ router.post('/', async ( req: Request , res: Response) => {
 
 
         const code : string = createLoginCode(pubgId);
+        console.log(code);
         const answerSendMessage = await bot.sendMessage(Number(member.actor_id), `Код для входа: ${code}` );
         console.log("answerSendMessage");
         console.log(answerSendMessage);

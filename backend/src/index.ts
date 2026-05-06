@@ -41,6 +41,8 @@ import {pool} from "./db/db";
 import setLeader from "./routes/Moderation/setLeader";
 import setModerator from "./routes/Moderation/setModerator";
 import banUser from "./routes/Moderation/banUser";
+import banRouter from "./routes/Messages/Ban/banRouter";
+import veriryCodeAndroid from "./routes/veriryCodeAndroid";
 
 dotenv.config();
 
@@ -112,6 +114,7 @@ app.use("/api/tournaments", tournamentRouter);
 app.use("/api/clans", clanRoute);
 app.use("/api/sendcode", sendCodeRouter);
 app.use("/api/verifycode", verifyCodeRouter);
+app.use("/api/android/verifycode", veriryCodeAndroid);
 app.use("/api/auth/me", authMeRouter);
 app.use("/api/logout", logoutRouter);
 app.use("/api/albums", albumsRouter);
@@ -141,7 +144,7 @@ app.use("/api/android/login", loginAndroidRouter);
 app.use("/api/set/leader", setLeader);
 app.use("/api/moderation", setModerator);
 app.use("/api/ban/user", banUser);
-
+app.use("/api/block", banRouter);
 
 app.get("/api", (req, res) => {
     return res.json({ ok: true, message: "Welcome Backend API" });

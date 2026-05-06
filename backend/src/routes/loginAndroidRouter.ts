@@ -1,9 +1,12 @@
 import {Router, Response, Request} from 'express';
 import {pool} from "../db/db";
+import {createLoginCode} from "../auth/codes";
+import {bot} from "../Bot/bot";
 
 const router = Router();
 
 router.post('/', async (req: Request, res: Response) => {
+    console.log("login");
     const { pubgId } = req.body;
     const query = `SELECT cm.*,
             COALESCE((
@@ -34,14 +37,22 @@ router.post('/', async (req: Request, res: Response) => {
            WHERE pubg_id = ${pubgId}`;
     try{
         const response = await pool.query(query);
-
+        console.log(response.rows);
         if(response.rows.length > 0){
+            const member = response.rows[0];
+            console.log(member);
             if(!response.rows[0].status_game){
                 response.rows[0].status_game = "all";
             }
+
+            const code : string = createLoginCode(pubgId);
+            console.log(code);
+            const answerSendMessage = await bot.sendMessage(Number(member.actor_id), `Код для входа: ${code}` );
+            console.log("answerSendMessage");
+            console.log(answerSendMessage);
             return res.json({
                 ok: true,
-                data: response.rows[0]
+                data: code
             })
         }
         return res.json({

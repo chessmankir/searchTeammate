@@ -86,7 +86,6 @@ async function createConversationParticipant(conversationId: number, userId: num
         const query = `INSERT INTO conversation_participants (conversation_id, user_id)
             VALUES ($1, $2), ($1, $3) `;
         const response = await pool.query(query, [conversationId, targetUserId, userId]);
-        console.log(response.rows);
     }
     catch (e){
 

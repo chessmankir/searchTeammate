@@ -60,8 +60,6 @@ router.post('/:conversation/send/messages', async (req: Request, res: Response) 
 
 router.post('/:conversation/messages', async (req: Request, res: Response) => {
     const conversation = req.params.conversation;
-    console.log(conversation);
-    console.log('messages');
     if (!conversation) {
         return res.json({
             ok: false,
@@ -71,7 +69,6 @@ router.post('/:conversation/messages', async (req: Request, res: Response) => {
 
     const query = `SELECT * FROM messages WHERE conversation_id = $1 ORDER BY id ASC`;
     const response = await pool.query(query, [conversation]);
-    console.log(response.rows);
     return res.json({
         ok: true,
         messages: response.rows
