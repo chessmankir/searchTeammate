@@ -2,8 +2,23 @@ services:
   backend:
     build: ./backend
     container_name: sback
-    ports:
-      - "4000:4000"
+    restart: always
     env_file:
       - ./backend/.env
+    ports:
+      - "4000:4000"
+    networks:
+      - app-network
+
+  frontend:
+    build: ./frontend
+    container_name: sfront
     restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      VITE_API_URL: "https://checkmatepubg.ru"
+    depends_on:
+      - backend
+    networks:
+      - app-network
