@@ -7,8 +7,6 @@ services:
       - ./backend/.env
     ports:
       - "4000:4000"
-    networks:
-      - app-network
 
   frontend:
     build: ./frontend
@@ -20,5 +18,3 @@ services:
       VITE_API_URL: "https://checkmatepubg.ru"
     depends_on:
       - backend
-    networks:
-      - app-network
