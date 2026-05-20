@@ -29,11 +29,16 @@ export const authStore = create<AuthState>((set) => ({
     }),
     checkAuth: async () => {
         try{
+            const token = localStorage.getItem("token");
             const url = process.env.NEXT_PUBLIC_API_URL;
-            const response = await fetch(`${url}/api/auth/me`,{
+            const response = await fetch(`${url}/api/auth/me`, {
                 method: "GET",
-                credentials: "include"
+                credentials: "include",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
             });
+
             const  data = await response.json();
             if(data.ok){
                 set({user: data.user, isAuth: true});

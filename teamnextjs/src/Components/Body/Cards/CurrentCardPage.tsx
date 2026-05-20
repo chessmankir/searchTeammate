@@ -2,8 +2,8 @@
 
 import "@/src/StyleSheets/current_card.css";
 import "@/src/StyleSheets/Card.css";
-import {useCards} from "@/src/Hooks/Body/Card/cardHook.ts"
-import {useCardModal} from "@/src/Hooks/Body/Card/useCardModal.ts";
+import {useCards} from "@/src/Hooks/Body/Card/cardHook"
+import {useCardModal} from "@/src/Hooks/Body/Card/useCardModal";
 import {useParams} from "next/navigation";
 import {AlbumPageTopbar} from "@/src/Components/Body/Cards/AlbumPageTopbar";
 import {CardWrapper} from "@/src/Components/Body/Cards/CardWrapper";

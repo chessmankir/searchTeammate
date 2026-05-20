@@ -1,0 +1,409 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model albums {
+  id          Int      @id(map: "Albums_pkey") @default(autoincrement())
+  created_at  DateTime @default(now()) @db.Timestamptz(6)
+  slug        String?
+  name        String?
+  imageSrc    String?
+  total_cards Int?
+  cards       cards[]
+}
+
+/// This model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info.
+model ban_reasons {
+  id              Int      @id @default(autoincrement())
+  clan_id         Int
+  actor_id        BigInt?
+  telegram_tag    String
+  reason          String
+  moderator_tg_id BigInt?
+  moderator_tag   String?
+  created_at      DateTime @default(now()) @db.Timestamptz(6)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model card_quality {
+  id    BigInt  @id @default(autoincrement())
+  title String?
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model cards {
+  id         Int         @id @default(autoincrement())
+  created_at DateTime    @default(now()) @db.Timestamptz(6)
+  name       String?
+  imageSrc   String?
+  album_id   Int?
+  quality    String?
+  album      albums?     @relation(fields: [album_id], references: [id], onDelete: SetNull)
+  user_cards user_card[]
+}
+
+/// This model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info.
+model city_coords {
+  city       String   @id
+  lat        Float
+  lon        Float
+  updated_at DateTime @default(now()) @db.Timestamptz(6)
+}
+
+model clan_chats {
+  clan_id    Int
+  chat_id    BigInt
+  is_primary Boolean  @default(true)
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  clans      clans    @relation(fields: [clan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([clan_id, chat_id])
+  @@index([chat_id], map: "idx_clan_chats_chat")
+}
+
+model clan_invites {
+  id      BigInt  @id @default(autoincrement())
+  clan_id Int
+  code    String
+  active  Boolean @default(true)
+  clans   clans   @relation(fields: [clan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([clan_id, code], map: "clan_invites_clan_code_uidx")
+}
+
+model clan_member_chats {
+  id         BigInt   @id @default(autoincrement())
+  clan_id    Int
+  chat_id    BigInt   @unique
+  is_primary Boolean  @default(false)
+  active     Boolean  @default(true)
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  clans      clans    @relation(fields: [clan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([chat_id], map: "idx_cmc_chat_id")
+  @@index([clan_id], map: "idx_cmc_clan_id")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model clan_members {
+  id                                               Int                         @id @default(autoincrement())
+  name                                             String
+  nickname                                         String
+  telegram_tag                                     String
+  age                                              Int?
+  pubg_id                                          BigInt                      @unique(map: "uq_clan_members_pubg_id")
+  city                                             String
+  clan                                             Int
+  created_at                                       DateTime?                   @default(now()) @db.Timestamp(6)
+  actor_id                                         BigInt?                     @unique(map: "clan_member_actor_id_unique")
+  active                                           Boolean?                    @default(true)
+  admin                                            Int?                        @default(1)
+  clan_id                                          Int?
+  notes                                            String?
+  vk_id                                            BigInt?                     @unique
+  available_micro                                  Boolean?
+  status_game                                      String?
+  last_seen_at                                     DateTime?                   @db.Timestamp(6)
+  clans                                            clans?                      @relation(fields: [clan_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  conversation_participants                        conversation_participants[]
+  member_modes                                     member_modes[]
+  member_time_slots                                member_time_slots[]
+  messages                                         messages[]
+  push_tokens                                      push_tokens[]
+  sessions                                         sessions[]
+  user_blocks_user_blocks_blocked_idToclan_members user_blocks[]               @relation("user_blocks_blocked_idToclan_members")
+  user_blocks_user_blocks_blocker_idToclan_members user_blocks[]               @relation("user_blocks_blocker_idToclan_members")
+
+  @@unique([clan_id, actor_id])
+}
+
+model clan_moderators {
+  id         BigInt   @id @default(autoincrement())
+  clan_id    Int
+  number     Int
+  actor_id   BigInt
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+
+  @@unique([clan_id, number, actor_id])
+}
+
+model clans {
+  id                Int                 @id @default(autoincrement())
+  name              String
+  owner_actor_id    BigInt
+  is_active         Boolean             @default(true)
+  created_at        DateTime            @default(now()) @db.Timestamptz(6)
+  admin_chat_id     BigInt?             @unique(map: "uq_clans_admin_chat")
+  invite_link       String?
+  tagActive         Boolean?
+  clan_chats        clan_chats[]
+  clan_invites      clan_invites[]
+  clan_member_chats clan_member_chats[]
+  clan_members      clan_members[]
+  invites           invites[]
+  marriages         marriages[]
+  rules             rules?
+  subclans          subclans[]
+}
+
+model conversation_participants {
+  id                   BigInt        @id @default(autoincrement())
+  conversation_id      BigInt
+  user_id              Int
+  joined_at            DateTime      @default(now()) @db.Timestamp(6)
+  last_read_message_id BigInt?
+  conversations        conversations @relation(fields: [conversation_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  clan_members         clan_members  @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([conversation_id, user_id])
+}
+
+model conversations {
+  id                        BigInt                      @id @default(autoincrement())
+  created_at                DateTime                    @default(now()) @db.Timestamp(6)
+  type                      String                      @default("direct") @db.VarChar(20)
+  direct_key                String?                     @unique @db.VarChar(100)
+  conversation_participants conversation_participants[]
+  messages                  messages[]
+}
+
+model game_modes {
+  id           Int            @id @default(autoincrement())
+  name         String         @unique
+  member_modes member_modes[]
+}
+
+model invites {
+  id          String    @id @default(dbgenerated("extensions.uuid_generate_v4()")) @db.Uuid
+  invite_code String
+  is_active   Boolean?  @default(true)
+  clan_name   String
+  created_at  DateTime? @default(now()) @db.Timestamptz(6)
+  clan_id     Int?
+  clans       clans?    @relation(fields: [clan_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+/// This model has constraints using non-default deferring rules and requires additional setup for migrations. Visit https://pris.ly/d/constraint-deferring for more info.
+model marriage_proposals {
+  id          BigInt   @id @default(autoincrement())
+  chat_id     BigInt
+  proposer_id BigInt
+  target_id   BigInt
+  status      String   @default("pending")
+  created_at  DateTime @default(now()) @db.Timestamptz(6)
+  message_id  BigInt?
+
+  @@unique([chat_id, proposer_id, target_id, status], map: "uq_active_pair")
+  @@unique([chat_id, proposer_id, target_id], map: "ux_proposals_active_pair")
+}
+
+model marriages {
+  id           BigInt    @id @default(autoincrement())
+  chat_id      BigInt
+  partner_a_id BigInt
+  partner_b_id BigInt
+  started_at   DateTime  @default(now()) @db.Timestamptz(6)
+  ended_at     DateTime? @db.Timestamptz(6)
+  created_by   BigInt?
+  clan_id      Int?
+  clans        clans?    @relation(fields: [clan_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([chat_id, partner_a_id, partner_b_id, started_at])
+  @@unique([chat_id, partner_a_id], map: "ux_active_a")
+  @@unique([chat_id, partner_b_id], map: "ux_active_b")
+  @@index([chat_id, started_at(sort: Desc)], map: "ix_marriages_active_chat")
+}
+
+model member_modes {
+  member_id    Int
+  mode_id      Int
+  clan_members clan_members @relation(fields: [member_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  game_modes   game_modes   @relation(fields: [mode_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([member_id, mode_id])
+}
+
+model member_time_slots {
+  member_id    Int
+  time_slot_id Int
+  clan_members clan_members @relation(fields: [member_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  time_slots   time_slots   @relation(fields: [time_slot_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([member_id, time_slot_id])
+}
+
+model message_stats_daily {
+  chat_id   BigInt
+  user_id   BigInt
+  day       DateTime @db.Date
+  msg_count Int      @default(0)
+
+  @@id([chat_id, user_id, day])
+  @@index([chat_id, day], map: "idx_message_stats_daily_chat_day")
+}
+
+model messages {
+  id              BigInt        @id @default(autoincrement())
+  conversation_id BigInt
+  sender_id       Int
+  body            String
+  is_edited       Boolean       @default(false)
+  created_at      DateTime      @default(now()) @db.Timestamp(6)
+  read_at         DateTime?     @db.Timestamp(6)
+  conversations   conversations @relation(fields: [conversation_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  clan_members    clan_members  @relation(fields: [sender_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model premium_subscriptions {
+  id                 Int      @id @default(autoincrement())
+  user_id            BigInt   @unique(map: "premium_subscriptions_user_id_uq")
+  chat_id            BigInt
+  premium_until      DateTime @db.Timestamptz(6)
+  total_payments_xtr BigInt   @default(0)
+  created_at         DateTime @default(now()) @db.Timestamptz(6)
+  updated_at         DateTime @default(now()) @db.Timestamptz(6)
+}
+
+model push_tokens {
+  id           Int          @id @default(autoincrement())
+  user_id      Int
+  token        String       @unique
+  created_at   DateTime?    @default(now()) @db.Timestamp(6)
+  clan_members clan_members @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model rules {
+  id      Int    @id @default(autoincrement())
+  content String
+  clan_id Int?   @unique(map: "rules_clan_id_uidx")
+  clans   clans? @relation(fields: [clan_id], references: [id], onDelete: Cascade)
+}
+
+model sessions {
+  id           String       @id @db.Uuid
+  user_id      Int
+  expires_at   DateTime     @db.Timestamp(6)
+  created_at   DateTime     @default(now()) @db.Timestamp(6)
+  clan_members clan_members @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([expires_at], map: "idx_sessions_expires_at")
+  @@index([user_id], map: "idx_sessions_user_id")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model subclans {
+  id              BigInt   @id @default(autoincrement())
+  clan_id         Int
+  leader_actor_id BigInt
+  invite_link     String
+  member_limit    Int
+  active          Boolean  @default(true)
+  created_at      DateTime @default(now()) @db.Timestamptz(6)
+  updated_at      DateTime @default(now()) @db.Timestamptz(6)
+  number          Int?
+  title           String?
+  clans           clans    @relation(fields: [clan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([clan_id, leader_actor_id], map: "subclans_leader_active_uidx")
+  @@index([clan_id])
+}
+
+model time_slots {
+  id                Int                 @id @default(autoincrement())
+  name              String              @unique
+  member_time_slots member_time_slots[]
+}
+
+model tournament_map_results {
+  id            BigInt   @id @default(autoincrement())
+  clan_id       Int
+  map_no        Int
+  team_rank     Int
+  team_key      String
+  players       String[]
+  total_kills   Int
+  kills_pts     Int
+  placement_pts Int
+  total_pts     Int
+  created_at    DateTime @default(now()) @db.Timestamptz(6)
+
+  @@unique([clan_id, map_no, team_key], map: "tournament_map_results_uq")
+}
+
+model tournament_participants {
+  id            BigInt      @id @default(autoincrement())
+  tournament_id Int
+  actor_id      BigInt
+  team_no       Int
+  created_at    DateTime    @default(now()) @db.Timestamptz(6)
+  tournaments   tournaments @relation(fields: [tournament_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([tournament_id, actor_id], map: "tournament_participants_unique")
+  @@index([tournament_id, team_no], map: "tournament_participants_team_idx")
+}
+
+model tournament_results {
+  id            BigInt   @id @default(autoincrement())
+  tournament_id Int
+  map_no        Int
+  team_no       Int
+  place         Int?
+  total_kills   Int      @default(0)
+  kills_pts     Int      @default(0)
+  placement_pts Int      @default(0)
+  total_pts     Int      @default(0)
+  created_at    DateTime @default(now()) @db.Timestamptz(6)
+
+  @@unique([tournament_id, map_no, team_no])
+}
+
+model tournaments {
+  id                      Int                       @id @default(autoincrement())
+  clan_id                 Int
+  name                    String
+  team_size               Int
+  active                  Boolean                   @default(true)
+  created_at              DateTime                  @default(now()) @db.Timestamptz(6)
+  maps                    String?
+  tournament_participants tournament_participants[]
+
+  @@index([clan_id, created_at(sort: Desc)], map: "tournaments_clan_id_idx")
+}
+
+model user_activity_totals {
+  chat_id     BigInt
+  user_id     BigInt
+  total_count BigInt    @default(0)
+  last_msg_at DateTime? @db.Timestamptz(6)
+
+  @@id([chat_id, user_id])
+  @@index([chat_id, total_count(sort: Desc)], map: "idx_user_activity_totals_chat_total")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model user_blocks {
+  id                                                Int          @id @default(autoincrement())
+  blocker_id                                        Int
+  blocked_id                                        Int
+  created_at                                        DateTime?    @default(now()) @db.Timestamp(6)
+  clan_members_user_blocks_blocked_idToclan_members clan_members @relation("user_blocks_blocked_idToclan_members", fields: [blocked_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_blocked")
+  clan_members_user_blocks_blocker_idToclan_members clan_members @relation("user_blocks_blocker_idToclan_members", fields: [blocker_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_blocker")
+
+  @@unique([blocker_id, blocked_id], map: "unique_block")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model user_card {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  id_user    Int?
+  count      Int?     @default(1)
+  card_id    Int?
+  card       cards?   @relation(fields: [card_id], references: [id])
+}

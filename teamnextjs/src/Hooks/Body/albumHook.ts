@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { albumsStore } from "@/src/Store/albumsStore.ts";
+import { albumsStore } from "@/src/Store/albumsStore";
 
 export function useLoadAlbums() {
     const albums = albumsStore((state) => state.albums);
@@ -10,12 +10,18 @@ export function useLoadAlbums() {
     useEffect(() => {
         (async () => {
             try {
+                const token = localStorage.getItem("token");
                 const url = process.env.NEXT_PUBLIC_API_URL;
-                const backendURL = `${url}/api/albums`;
-                const response = await fetch(backendURL);
+                const backendURL = `${url}/api/card/albums`;
+                console.log(backendURL);
+                const response = await fetch(backendURL,{
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
                 const data = await response.json();
                 if (data?.ok) {
-                    setAlbums(data.data);
+                    setAlbums(data.albums);
                 } else {
                     setAlbums([]);
                 }

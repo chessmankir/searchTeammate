@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "@/src/StyleSheets/current_card.css";
-import { useCards } from "@/src/Hooks/Body/Card/cardHook.ts";
+import { useCards } from "@/src/Hooks/Body/Card/cardHook";
 import type { AlbumFlterType } from "@/src/types/AlbumFlterType.ts";
 import {useSearchParams} from "next/navigation";
 import {CardType, CardWrapper} from "@/src/Components/Body/Cards/CardWrapper";

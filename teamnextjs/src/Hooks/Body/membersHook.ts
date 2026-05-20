@@ -1,7 +1,7 @@
 "use client";
 
 import {useEffect, useMemo, useState} from "react";
-import { useFiltersStore } from "@/src/Store/filtersStore.ts";
+import { useFiltersStore } from "@/src/Store/filtersStore";
 
 type Member = {
     id: number;
@@ -50,11 +50,16 @@ export function useMembers() {
             try {
                 setLoading(true);
                 const backend = process.env.NEXT_PUBLIC_API_URL;
+                const token = localStorage.getItem("token");
                 const res = await fetch(`${backend}/api/members?${query}`, {
                     signal: ac.signal,
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
                 });
 
                 const data = await res.json();
+                console.log(data);
 
                 if (!data.ok) {
                     setError("Не удалось загрузить игроков");

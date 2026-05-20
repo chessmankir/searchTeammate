@@ -14,7 +14,7 @@ export type Tournament = {
 
 export function useTournamentHook() {
     const [tournaments, setTournaments] = useState<Tournament[]>([]);
-
+    const token = localStorage.getItem("token");
     useEffect(() => {
         const ac = new AbortController();
 
@@ -23,7 +23,13 @@ export function useTournamentHook() {
                 const url = process.env.NEXT_PUBLIC_API_URL;
                 const response = await fetch(
                     `${url}/api/tournaments`,
-                    { signal: ac.signal }
+                    {
+                        signal: ac.signal,
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    },
+
                 );
 
                 if (!response.ok) {

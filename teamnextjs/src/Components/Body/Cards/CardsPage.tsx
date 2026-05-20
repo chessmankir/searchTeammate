@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "@/src/StyleSheets/Card.css";
-import { albumsStore } from "@/src/Store/albumsStore.ts";
+import { albumsStore } from "@/src/Store/albumsStore";
 import {Albums} from "@/src/Components/Body/Cards/Albums";
 
 type TabKey = "cards" | "clan" | "tournaments";

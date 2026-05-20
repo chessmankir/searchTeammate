@@ -1,9 +1,9 @@
 "use client";
 
 import "@/src/StyleSheets/myclan.css";
-import {useClanMember} from "@/src/Hooks/Body/clanMemberHook.tsx";
-import {useSubclans} from "@/src/Hooks/Body/useSublanHook.ts";
-import {myClanStore} from "@/src/store/myClanStore.ts";
+import {useClanMember} from "@/src/Hooks/Body/clanMemberHook";
+import {useSubclans} from "@/src/Hooks/Body/useSublanHook";
+import {myClanStore} from "@/src/Store/myClanStore";
 import {MyClanHeader} from "@/src/Components/Body/MyClans/MyClanHeader";
 import {MyClanTabs} from "@/src/Components/Body/MyClans/MyClanTabs";
 import {MyClanSearch} from "@/src/Components/Body/MyClans/MyClanSearch";

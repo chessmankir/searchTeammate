@@ -8,7 +8,7 @@ type Props = {
 
 export function MyClanTabs({ clans, currentClan }: Props) {
     const navigate = useRouter();
-
+    console.log(clans);
     return (
         <div className="myclan-tabs">
             {clans.map((clan) => (
@@ -22,7 +22,7 @@ export function MyClanTabs({ clans, currentClan }: Props) {
                         navigate.push(`/myclan?number=${clan.number}`);
                     }}
                 >
-                    <span className="myclan-tab__name">{clan.name}</span>
+                    <span className="myclan-tab__name">{clan.title}</span>
                     <span className="myclan-tab__count">{clan.real_count}</span>
                 </button>
             ))}

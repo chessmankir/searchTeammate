@@ -1,7 +1,7 @@
 "use client";
 
 import "@/src/StyleSheets/tournaments.css";
-import {useTournamentHook} from "@/src/Hooks/Body/tournamentHook.tsx";
+import {useTournamentHook} from "@/src/Hooks/Body/tournamentHook.ts";
 
 export function Tournaments() {
     const {tournaments} = useTournamentHook();

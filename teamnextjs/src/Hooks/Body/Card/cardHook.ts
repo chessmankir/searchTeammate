@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { authStore } from "@/src/Store/authStore.ts";
+import { authStore } from "@/src/Store/authStore";
 import type { AlbumFlterType } from "@/src/types/AlbumFlterType.ts";
 import type {CardType} from "@/src/Components/Body/Cards/CardWrapper.tsx";
 
@@ -16,11 +16,14 @@ export function useCards({ slug, filter }: UseCardParams = {}) {
 
     const addCardHandler = async (card_id: number) => {
         const url = process.env.NEXT_PUBLIC_API_URL;
-        const backendServer = `${url}/api/add/card`;
-
+        const backendServer = `${url}/api/card/add`;
+        const token = localStorage.getItem("token");
         const response = await fetch(backendServer, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
             credentials: "include",
             body: JSON.stringify({
                 card_id
@@ -46,16 +49,20 @@ export function useCards({ slug, filter }: UseCardParams = {}) {
 
     const removeCardHandler = async (card_id: number) => {
         const url = process.env.NEXT_PUBLIC_API_URL;
-        const backendServer = `${url}/api/remove/card`;
-
+        const backendServer = `${url}/api/card/remove`;
+        const token = localStorage.getItem("token");
         try {
+
             const response = await fetch(backendServer, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
                 credentials: "include",
                 body: JSON.stringify({
                     card_id
-                })
+                }),
             });
 
             const data = await response.json();
@@ -81,8 +88,9 @@ export function useCards({ slug, filter }: UseCardParams = {}) {
 
         (async () => {
             try {
+                const token = localStorage.getItem("token");
                 const url = process.env.NEXT_PUBLIC_API_URL;
-                let backendURL = `${url}/api/cards`;
+                let backendURL = `${url}/api/card/cards`;
 
                 if (slug) {
                     backendURL += `/${slug}`;
@@ -95,12 +103,16 @@ export function useCards({ slug, filter }: UseCardParams = {}) {
                     backendURL += `?${urlParams.toString()}`;
                 }
                 const response = await fetch(backendURL, {
-                    credentials: "include"
+                    credentials: "include",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
                 });
 
                 const data = await response.json();
+                console.log(data);
                 if (data?.ok) {
-                    setCards(data.data);
+                    setCards(data.cards);
                 } else {
                     setCards([]);
                 }

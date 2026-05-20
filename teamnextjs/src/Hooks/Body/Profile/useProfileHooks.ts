@@ -61,6 +61,9 @@ export function useProfileHooks() {
             try {
                 const response = await fetch(backend, {
                     credentials: "include",
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    }
                 });
 
                 const data = await response.json();
@@ -134,7 +137,7 @@ export function useProfileHooks() {
                     pubgId,
                     id,
                     availableMicro,
-                    staatus_game,
+                    status_game,
                     modes,
                 }),
             });

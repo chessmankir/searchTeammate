@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useRef} from "react";
-import {myClanStore} from "@/src/Store/myClanStore.ts";
-
+import {myClanStore} from "@/src/Store/myClanStore";
 
 export function useSubclans() {
     /*const clans = myClanStore((state) => state.clans);*/
@@ -12,12 +11,15 @@ export function useSubclans() {
     useEffect(() => {
         if (requestedRef.current) return;
         requestedRef.current = true;
-
+        const token = localStorage.getItem("token");
         (async () => {
             try {
                 const url = process.env.NEXT_PUBLIC_API_URL;
-                const response = await fetch(`${url}/api/myclan`, {
-                    credentials: "include"
+                const response = await fetch(`${url}/api/clan/clans`, {
+                    credentials: "include",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
                 });
                 const data = await response.json();
                 if (data.ok) {

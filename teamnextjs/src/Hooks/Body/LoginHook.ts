@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { LoginStep } from "@/src/types/LoginStep.ts";
-import { authStore } from "@/src/Store/authStore.ts";
+import { authStore } from "@/src/Store/authStore";
 import {useRouter} from "next/navigation";
 
 export function useLoginHook() {
@@ -19,7 +19,7 @@ export function useLoginHook() {
     const sendCodeSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const url = process.env.NEXT_PUBLIC_API_URL;
-        const backendServer = `${url}/api/sendcode`;
+        const backendServer = `${url}/api/auth/sendcode`;
 
         try {
             const response = await fetch(backendServer, {
@@ -53,7 +53,7 @@ export function useLoginHook() {
     const verifyCodeSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const url = process.env.NEXT_PUBLIC_API_URL;
-        const backendServer = `${url}/api/verifycode`;
+        const backendServer = `${url}/api/auth/verify`;
 
         try {
             const response = await fetch(backendServer, {
@@ -64,7 +64,9 @@ export function useLoginHook() {
             });
 
             const data = await response.json();
+            console.log(data);
             if (data.ok) {
+                localStorage.setItem("token", data.token);
                 setUser(data.user);
                 setPubgId("");
                 setCode("");

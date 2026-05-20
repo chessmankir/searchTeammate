@@ -1,5 +1,5 @@
-import {Header} from "@/src/Components/Header/Header.tsx";
-import MessagesSidebarWrapper from "@/src/Components/LeftSideBar/Messages/MessagesSidebarWrapper.tsx";
+import {Header} from "@/src/Components/Header/Header";
+import MessagesSidebarWrapper from "@/src/Components/LeftSideBar/Messages/MessagesSidebarWrapper";
 import MessagesPage from "@/src/Components/Body/Messages/MessagesPage";
 
 export function MessagesLayout() {

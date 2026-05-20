@@ -1,8 +1,8 @@
 
 import { useEffect, useRef, useState } from "react";
-import type { Conversation } from "@/src/types/Conversation.ts";
-import type { Message } from "@/src/types/Message.ts";
-import { socket } from "@/src/Api/socket.ts";
+import type { Conversation } from "@/src/types/Conversation";
+import type { Message } from "@/src/types/Message";
+import { socket } from "@/src/Api/socket";
 import {useSearchParams} from "next/navigation";
 
 export function useMessagesHook() {
@@ -20,11 +20,15 @@ export function useMessagesHook() {
 
         (async () => {
             const url = process.env.NEXT_PUBLIC_API_URL;
-            const backendServer = `${url}/api/conversations/${conversationId}/read`;
+            const backendServer = `${url}/api/chat/${conversationId}/read`;
             try {
+                const token = localStorage.getItem("token");
                 const response = await fetch(backendServer, {
                     method: "PUT",
                     credentials: "include",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
                 });
                 const data = await response.json();
                 if(data.ok) {
@@ -49,9 +53,13 @@ export function useMessagesHook() {
         if (!conversationId) return;
         const url = process.env.NEXT_PUBLIC_API_URL;
         (async () => {
-            const backend = `${url}/api/conversations/${conversationId}/`;
+            const backend = `${url}/api/chat/conversations/${conversationId}/`;
+            const token = localStorage.getItem("token");
             const response = await fetch(backend, {
                 credentials: "include",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
             });
             const data = await response.json();
 
@@ -65,10 +73,13 @@ export function useMessagesHook() {
         if (!conversationId) return;
         const url = process.env.NEXT_PUBLIC_API_URL;
         (async () => {
-
-            const backend = `${url}/api/conversations/${conversationId}/messages`;
+            const token = localStorage.getItem("token");
+            const backend = `${url}/api/chat/${conversationId}/messages`;
             const response = await fetch(backend, {
                 credentials: "include",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
             });
             const data = await response.json();
 
@@ -89,8 +100,12 @@ export function useMessagesHook() {
     useEffect(() => {
         const url = process.env.NEXT_PUBLIC_API_URL;
         (async () => {
-            const backend = `${url}/api/get/conversations`;
+            const token = localStorage.getItem("token");
+            const backend = `${url}/api/chat/conversations`;
             const response = await fetch(backend, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
                 credentials: "include",
             });
             const data = await response.json();
@@ -106,7 +121,7 @@ export function useMessagesHook() {
 
             const isActiveChat =
                 Number(conversationId) === Number(newMessage.conversation_id);
-
+            const token = localStorage.getItem("token");
             if (isActiveChat) {
                 setActiveMessages((prev) => {
                     const exists = prev.some((msg) => msg.id === newMessage.id);
@@ -119,8 +134,11 @@ export function useMessagesHook() {
                 try {
                     const url = process.env.NEXT_PUBLIC_API_URL;
                     await fetch(
-                        `${url}/api/conversations/${newMessage.conversation_id}/read`,
+                        `${url}/api/chat/${newMessage.conversation_id}/read`,
                         {
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                            },
                             method: "PUT",
                             credentials: "include",
                         }
@@ -171,13 +189,16 @@ export function useMessagesHook() {
 
     const sendMessage = async () => {
         const url = process.env.NEXT_PUBLIC_API_URL;
-        const backend = `${url}/api/conversations/${conversationId}/messages`;
-
+        const backend = `${url}/api/chat/${conversationId}/messages`;
+        const token = localStorage.getItem("token");
         try {
             const response = await fetch(backend, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                },
                 credentials: "include",
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     message: message.trim(),
                 }),
