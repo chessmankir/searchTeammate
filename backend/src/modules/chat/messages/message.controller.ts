@@ -58,7 +58,7 @@ export class MessageController {
             };
 
             const serializedMessage = serializeBigInt(messageClient);
-
+            console.log("pre socket");
             io.to(`user:${userId}`).emit("message:new", serializedMessage);
 
             if (targetId) {

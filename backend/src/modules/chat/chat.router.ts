@@ -8,7 +8,7 @@ const conversationController = new ConversationController();
 const messageController = new MessageController();
 router.get('/conversations', authMiddleware, conversationController.getConversations.bind(conversationController));
 router.get('/conversations/:conversationId', authMiddleware, conversationController.getConversations.bind(conversationController));
-router.get('/:conversationId/read', authMiddleware, conversationController.markConversationAsRead.bind(conversationController));
+router.put('/:conversationId/read', authMiddleware, conversationController.markConversationAsRead.bind(conversationController));
 
 router.get('/:conversation/messages', authMiddleware, messageController.getMessages.bind(conversationController));
 router.post('/:conversation/messages', authMiddleware, messageController.createMessage.bind(conversationController));

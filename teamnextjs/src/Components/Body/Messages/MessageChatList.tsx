@@ -1,4 +1,4 @@
-import { MessageChatItem } from "./MessageChatItem.tsx";
+import { MessageChatItem } from "./MessageChatItem";
 import type { Conversation } from "../../../types/Conversation.ts";
 
 type Props = {
@@ -9,9 +9,9 @@ type Props = {
 export function MessageChatList({ conversations, conversationId }: Props) {
     return (
         <div className="messages-sidebar-list">
-            {conversations?.map((conversation) => (
+            {conversations?.map((conversation, index) => (
                 <MessageChatItem
-                    key={conversation.id}
+                    key={index}
                     conversationId={conversationId}
                     conversation={conversation}
                 />

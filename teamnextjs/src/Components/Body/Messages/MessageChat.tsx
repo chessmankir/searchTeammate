@@ -1,8 +1,8 @@
 import type { RefObject } from "react";
 import type { Conversation } from "../../../types/Conversation.ts";
 import type { Message } from "../../../types/Message.ts";
-import { MessageList } from "./MessageList.tsx";
-import { MessageSend } from "./MessageSend.tsx";
+import { MessageList } from "./MessageList";
+import { MessageSend } from "./MessageSend";
 
 type Props = {
     messageRef: RefObject<HTMLDivElement | null>;
