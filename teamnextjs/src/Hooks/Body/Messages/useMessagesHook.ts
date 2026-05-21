@@ -62,7 +62,6 @@ export function useMessagesHook() {
                 },
             });
             const data = await response.json();
-            console.log(data.ok);
             if (data.ok) {
                 setActiveConversation(data.data);
             }
@@ -84,7 +83,6 @@ export function useMessagesHook() {
             const data = await response.json();
 
             if (data.ok) {
-                console.log(data.messages);
                 const updatedMessages = data.messages.map((message: Message) => ({
                     ...message,
                     time: new Date(message.created_at).toLocaleTimeString([], {
@@ -119,9 +117,6 @@ export function useMessagesHook() {
 
     useEffect(() => {
         const handleNewMessage = async (newMessage: Message) => {
-            console.log("handleNewMessage");
-            console.log(newMessage);
-            
             const isActiveChat =
                 Number(conversationId) === Number(newMessage.conversation_id);
             const token = localStorage.getItem("token");
@@ -208,9 +203,6 @@ export function useMessagesHook() {
             });
 
             const data = await response.json();
-            console.log("sendMessage1");
-            console.log(data);
-            console.log(activeMessages);
             if (data.ok) {
                 setMessage("");
                 return true;

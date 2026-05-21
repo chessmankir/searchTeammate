@@ -8,7 +8,6 @@ export class ConversationController {
     async getConversations(req: AuthRequest, res: Response) {
         try {
             const userId = req.user!.id;
-            console.log(userId);
             if (!userId) {
                 return res.json({ ok: false });
             }
@@ -79,7 +78,6 @@ export class ConversationController {
     }
 
     async markConversationAsRead(req: AuthRequest, res: Response) {
-        console.log("ConversationController.getConversationAsRead");
         try {
             const conversationId = Number(req.params.conversationId);
 

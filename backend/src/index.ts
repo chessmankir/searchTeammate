@@ -81,8 +81,6 @@ export const io = new Server(server, {
 export const onlineUsers = new Map<number, string>();
 
 io.on("connection", (socket) => {
-    console.log("socket connected ", socket.id);
-
     socket.on("join", (userId: number) => {
         if (!userId) return;
         onlineUsers.set(userId, socket.id);
