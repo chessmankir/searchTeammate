@@ -10,7 +10,7 @@ import {MessageChat} from "@/src/Components/Body/Messages/MessageChat";
 
 export default function MessagesPage() {
     const user = authStore((state) => state.user);
-    useSocketJoin(user?.id);
+    if(!user?.id){useSocketJoin(user?.id);}
     const {activeConversation, message, setMessage, sendMessage,
         activeMessages, conversations, conversationId,messageRef}  = useMessagesHook();
     return (
