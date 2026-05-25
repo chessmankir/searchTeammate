@@ -46,11 +46,7 @@ FROM user_card uc
 INNER JOIN clan_members cm ON cm.id = uc.id_user
 WHERE uc.card_id = $1
   AND uc.count > 1`;
-    console.log(query);
-    console.log(card_id);
     const data = await pool.query(query, [card_id])
-    console.log('user cards');
-    console.log(data.rows);
     return  res.json({
         ok: true,
         data: data.rows

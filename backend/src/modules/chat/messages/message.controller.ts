@@ -7,7 +7,6 @@ import {AuthRequest} from "../../../middleware/auth.middleware";
 
 export class MessageController {
     async createMessage(req: AuthRequest, res: Response) {
-        console.log('createMessage');
         try {
             const { message } = req.body;
             const conversationId = Number(req.params.conversation);
@@ -58,7 +57,6 @@ export class MessageController {
             };
 
             const serializedMessage = serializeBigInt(messageClient);
-            console.log("pre socket");
             io.to(`user:${userId}`).emit("message:new", serializedMessage);
 
             if (targetId) {
@@ -80,7 +78,6 @@ export class MessageController {
     }
 
     async getMessages(req: AuthRequest, res: Response) {
-        console.log('getMessages');
         try {
             const conversationId = Number(req.params.conversation);
 
@@ -115,6 +112,86 @@ export class MessageController {
                 ok: false,
                 message: "Ошибка сервера",
             });
+        }
+    }
+
+    async getStatus(req: AuthRequest, res: Response) {
+        try {
+            const { user_ban_id } = req.body;
+            const user_id = Number(req.user?.id);
+
+            if (!user_id || !user_ban_id) {
+                return res.status(400).json({
+                    ok: false,
+                    message: "Invalid user",
+                });
+            }
+
+            const status = await messageService.getStatus(
+                Number(user_id),
+                Number(user_ban_id)
+            );
+
+            return res.json({
+                ok: true,
+                ...status,
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({ ok: false });
+        }
+    }
+
+    async blockUser(req: AuthRequest, res: Response) {
+        try {
+            const { user_ban_id } = req.body;
+            const user_id = Number(req.user?.id);
+            if (!user_id || !user_ban_id) {
+                return res.status(400).json({
+                    ok: false,
+                    message: "Invalid user",
+                });
+            }
+
+            const result = await messageService.blockUser(
+                Number(user_id),
+                Number(user_ban_id)
+            );
+
+            return res.json({
+                ok: true,
+                ...result,
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({ ok: false });
+        }
+    }
+
+    async unblockUser(req: Request, res: Response) {
+        try {
+            const { user_ban_id } = req.body;
+            const user_id = Number(req.user?.id);
+
+            if (!user_id || !user_ban_id) {
+                return res.status(400).json({
+                    ok: false,
+                    message: "Invalid user",
+                });
+            }
+
+            const result = await messageService.unblockUser(
+                Number(user_id),
+                Number(user_ban_id)
+            );
+
+            return res.json({
+                ok: true,
+                ...result,
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({ ok: false });
         }
     }
 }

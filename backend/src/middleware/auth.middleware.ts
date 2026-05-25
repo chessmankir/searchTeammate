@@ -30,7 +30,6 @@ export function authMiddleware(req: AuthRequest, res: Response, next: NextFuncti
     }
 
     const jwtSecret = process.env.JWT_SECRET;
-
     if (!jwtSecret) {
         return res.status(500).json({
             ok: false,
@@ -44,6 +43,7 @@ export function authMiddleware(req: AuthRequest, res: Response, next: NextFuncti
         next()
     }
     catch (e) {
+        console.error(e);
         return res.status(401).json({
             ok: false,
             message: "Токен недействителен",

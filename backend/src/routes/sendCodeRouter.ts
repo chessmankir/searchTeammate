@@ -36,10 +36,7 @@ router.post('/', async ( req: Request , res: Response) => {
 
 
         const code : string = createLoginCode(pubgId);
-        console.log(code);
         const answerSendMessage = await bot.sendMessage(Number(member.actor_id), `Код для входа: ${code}` );
-        console.log("answerSendMessage");
-        console.log(answerSendMessage);
         if (result.rows.length > 0){
             return res.json({
                 ok: true,

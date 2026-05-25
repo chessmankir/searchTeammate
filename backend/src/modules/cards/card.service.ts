@@ -3,6 +3,7 @@ import {serializeBigInt} from "../../libs/serializeBigInt";
 
 export class CardService {
     async getCards(albumSlug: string, userId: number) {
+        console.log(albumSlug);
         const cards = await prisma.cards.findMany({
             where: {
                 album: {

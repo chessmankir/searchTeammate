@@ -13,7 +13,6 @@ export class ConversationController {
             }
 
             const conversations = await conversationService.getConversations(userId);
-
             return res.json(
                 serializeBigInt({
                     ok: true,
@@ -28,10 +27,9 @@ export class ConversationController {
 
     async getConversationById(req: AuthRequest, res: Response) {
         try {
-
             const userId = req.user!.id;
 
-            if (userId) {
+            if (!userId) {
                 return res.status(401).json({
                     ok: false,
                     message: "Не авторизован",
@@ -53,7 +51,6 @@ export class ConversationController {
                     currentUserId,
                     conversationId
                 );
-
             if (!conversation) {
                 return res.status(404).json({
                     ok: false,

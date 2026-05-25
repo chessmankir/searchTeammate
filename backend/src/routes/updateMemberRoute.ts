@@ -5,21 +5,6 @@ import {userInfo} from "node:os";
 
 const router = Router();
 router.put('/', async (req: Request, res: Response) => {
-/*    const sid = req.cookies?.sid;
-    if (!sid) {
-        return res.status(401).json({
-            ok: false,
-            message: "Не авторизован",
-        });
-    }
-    const user = await getSession(sid);
-    if (!user) {
-        return res.status(401).json({
-            ok: false,
-            message: "Сессия не найдена",
-        });
-    }*/
-
     const {nickname, age,  city, name, pubgId, id, availableMicro, modes, status} = req.body;
     const query = `UPDATE clan_members SET
                             nickname=$1, age=$2, city=$3, pubg_id=$4, name=$5, available_micro=$6, status_game=$8 WHERE id = $7 

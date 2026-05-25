@@ -8,11 +8,9 @@ export class CardContoller {
     async getCards(req: AuthRequest, res: Response) {
         try {
             const {slug} = req.params;
-            console.log(slug);
             const userId = req.user!.id;
 
             const cards = await cardService.getCards(slug.toString(), userId);
-
             return res.status(200).json({
                 ok: true,
                 cards,
@@ -28,7 +26,6 @@ export class CardContoller {
     }
 
     async getAlbums(req: AuthRequest, res: Response){
-        console.log("getAlbums");
         try {
             const albums = await cardService.getAlbums();
             return res.status(200).json({

@@ -35,43 +35,89 @@ export class AuthService {
         const answerSendMessage = await bot.sendMessage(actorId, `Код для входа: ${code}`);
     }
 
-    async verifyCode(pubgId: number, code: string){
+    async verifyCode(pubgId: number, code: string) {
         if (!code) {
-            throw new Error('CODE_NOT_FOUND');
+            throw new Error("CODE_NOT_FOUND");
         }
+
         const codePubgId = this.loginCodes.get(pubgId)?.code;
+
         if (codePubgId !== code) {
-            throw new Error('CODE_NO_EQUAL');
+            throw new Error("CODE_NO_EQUAL");
         }
+
         const user = await prisma.clan_members.findUnique({
             where: {
                 pubg_id: pubgId,
-            }
+            },
         });
+
         if (!user) {
-            throw new Error('USER_NOT_FOUND');
+            throw new Error("USER_NOT_FOUND");
         }
+
         this.loginCodes.delete(pubgId);
-        const  jwtSecret = process.env.JWT_SECRET;
+
+        const jwtSecret = process.env.JWT_SECRET;
+
         if (!jwtSecret) {
             throw new Error("JWT_SECRET_NOT_FOUND");
         }
-        console.log(user);
-        const token = jwt.sign({
-            id: user.id,
-            pubgId: pubgId.toString(),
-            actorId: user.actor_id?.toString(),
-            clanId: user.clan_id?.toString(),
-        }, jwtSecret,
-            {expiresIn: '30d'});
+
+        let isLeader = false;
+        let isModerator = false;
+
+        if (user.clan_id !== null && user.clan !== null) {
+            const subclan = await prisma.subclans.findFirst({
+                where: {
+                    clan_id: user.clan_id,
+                    number: user.clan,
+                },
+            });
+
+            isLeader = subclan?.leader_actor_id === user.actor_id;
+        }
+
+        if (user.clan_id !== null && user.actor_id !== null) {
+            const moderator = await prisma.clan_moderators.findFirst({
+                where: {
+                    actor_id: user.actor_id,
+                    clan_id: user.clan_id,
+                },
+            });
+
+            isModerator = Boolean(moderator);
+        }
+
+        const token = jwt.sign(
+            {
+                id: user.id,
+                pubgId: pubgId.toString(),
+                actorId: user.actor_id?.toString(),
+                clanId: user.clan_id?.toString(),
+              /*  isLeader,
+                isModerator,*/
+            },
+            jwtSecret,
+            { expiresIn: "30d" }
+        );
+
         const savedUser = {
             ...user,
+
             pubg_id: user.pubg_id.toString(),
             actor_id: user.actor_id ? user.actor_id.toString() : null,
             vk_id: user.vk_id ? user.vk_id.toString() : null,
             clan_id: user.clan_id ? Number(user.clan_id) : null,
-        }
-        return {token, user:savedUser };
+
+            isLeader,
+            isModerator,
+        };
+
+        return {
+            token,
+            user: savedUser,
+        };
     }
 
     async authMe(userId: number){

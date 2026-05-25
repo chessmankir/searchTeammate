@@ -5,7 +5,6 @@ export async function getUserByPubId(pubId: number){
     const sql = `SELECT * FROM clan_members WHERE pubg_id=$1`;
     try{
         const response = await pool.query(sql,[pubId]);
-        console.log(response.rows);
         if(response.rows.length > 0) return response.rows[0];
         return null;
     }

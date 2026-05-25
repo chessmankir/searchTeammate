@@ -6,8 +6,6 @@ import { mapCardRows } from "../utils/mapCardRows";
 const router = Router();
 
 router.get("/", async (req: Request, res: Response) => {
-    console.log("no albumId");
-
     const sid = req.cookies?.sid;
     const user = await getSession(sid);
 
@@ -17,8 +15,6 @@ router.get("/", async (req: Request, res: Response) => {
 
     const userid = user.id;
     const filter = String(req.query.filter || "all");
-    console.log("filter");
-    console.log(req.query.filter);
     const allowedFilters = ["all", "missing", "duplicates", "trades"];
     if (!allowedFilters.includes(filter)) {
         return res.status(400).json({

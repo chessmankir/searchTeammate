@@ -5,10 +5,7 @@ import {Router, Request, Response, response} from "express";
 const router = Router();
 
 router.post("/", async (req: Request, res: Response) => {
-    console.log('add card');
     const { card_id, userid } = req.body;
-    console.log(userid);
-    console.log(card_id);
     try {
 
         const findQuery = `
@@ -42,7 +39,6 @@ router.post("/", async (req: Request, res: Response) => {
             VALUES ($1, $2, 1)
             RETURNING *
         `;
-        console.log('insertQuery');
         const insertResult = await pool.query(insertQuery, [userid, card_id]);
 
         return res.json({
