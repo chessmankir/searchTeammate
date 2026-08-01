@@ -96,7 +96,7 @@ app.get("/api", (req, res) => {
     return res.json({ ok: true, message: "Welcome Backend API" });
 });
 
-const PORT = Number(process.env.PORT) || 4000;
+const PORT = Number(process.env.PORT) || 4001;
 server.listen(PORT, "0.0.0.0", () => {
     console.log(`Backend running on http://0.0.0.0:${PORT}`);
 });

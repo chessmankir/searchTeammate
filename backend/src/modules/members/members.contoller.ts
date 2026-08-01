@@ -10,7 +10,7 @@ export class MembersController {
         req: Request,
         res: Response
     ) {
-
+        console.log("controller");
         try {
 
             const result =
