@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import { getSession } from "../../../auth/session";
 import { io } from "../../../index";
 import { messageService } from "./messages.service";
@@ -168,7 +168,7 @@ export class MessageController {
         }
     }
 
-    async unblockUser(req: Request, res: Response) {
+    async unblockUser(req: AuthRequest, res: Response) {
         try {
             const { user_ban_id } = req.body;
             const user_id = Number(req.user?.id);

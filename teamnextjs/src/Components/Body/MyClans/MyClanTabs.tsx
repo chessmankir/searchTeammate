@@ -8,7 +8,6 @@ type Props = {
 
 export function MyClanTabs({ clans, currentClan }: Props) {
     const navigate = useRouter();
-    console.log(clans);
     return (
         <div className="myclan-tabs">
             {clans.map((clan) => (

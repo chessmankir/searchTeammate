@@ -110,7 +110,6 @@ export function useCards({ slug, filter }: UseCardParams = {}) {
                 });
 
                 const data = await response.json();
-                console.log(data);
                 if (data?.ok) {
                     setCards(data.cards);
                 } else {

@@ -13,7 +13,6 @@ export function useLoadAlbums() {
                 const token = localStorage.getItem("token");
                 const url = process.env.NEXT_PUBLIC_API_URL;
                 const backendURL = `${url}/api/card/albums`;
-                console.log(backendURL);
                 const response = await fetch(backendURL,{
                     headers: {
                         Authorization: `Bearer ${token}`,
